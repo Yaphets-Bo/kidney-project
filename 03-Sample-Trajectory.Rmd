@@ -1,0 +1,72 @@
+# Pseudo-time trajectory prediction
+
+```{r monocle-trajectory, cache = T, include = F}
+library(data.table)
+library(Rtsne)
+library(dplyr)
+library(RColorBrewer)
+library(ggplot2)
+library(reshape2)
+library(stringr)
+library(monocle)
+options(useFancyQuotes = FALSE)
+dt <- fread("C:/Users/Ryan/Documents/3.Kidney/HUMAN_all.gene_RPKM.xls")
+dt <- dt[!duplicated(dt$external_gene_name)]
+
+setcolorder(dt,
+            c(names(dt)[1:7],
+              names(dt)[-(1:7)][order(names(dt)[-(1:7)])])
+)
+
+expr <- as.matrix(dt[,-(1:7)])
+expr <- expr[,grep("pre|post", colnames(expr))]
+gene_ann <- data.frame(dt[,1:7])
+setnames(gene_ann, "external_gene_name", "gene_short_name")
+rownames(gene_ann) = dt$ensembl_gene_id
+rownames(expr) <- dt$ensembl_gene_id
+sample_ann <- data.frame(sampleID = colnames(expr), person = substr(colnames(expr), 15,16),
+                         time = substr(colnames(expr), 18, nchar(colnames(expr))))
+rownames(sample_ann) = sample_ann$sampleID
+
+fd <- new("AnnotatedDataFrame", data = gene_ann)
+pd <- new("AnnotatedDataFrame", data = sample_ann)
+
+
+human <- newCellDataSet(expr, phenoData = pd, featureData = fd,
+                        expressionFamily = tobit())
+
+save(human, file = 'monocle.RData') # you can load it when you have problem
+
+human <- detectGenes(human, min_expr = 0.1)
+plot(density(fData(human)$num_cells_expressed))
+expressed.gene <- row.names(subset(fData(human), num_cells_expressed >= 50))
+
+```
+
+## Set ordering genes to be used in Monocle's trajectory construction
+```{r de, cache = T}
+diff_test_res <- differentialGeneTest(human[expressed.gene,],
+                                      fullModelFormulaStr = "~time")
+
+ordering_genes <- row.names (subset(diff_test_res, qval < 0.01))
+ordering_genes <- intersect(ordering_genes, expressed.gene)
+human <- setOrderingFilter(human, ordering_genes)
+human <- reduceDimension(human, max_components = 2,
+                            method = 'DDRTree')
+human <- orderCells(human)
+```
+
+17985 of 22047 genes left. (The 22047 genes are the genes that pass the fitering described in 3.1). 
+
+```{r time, fic.cap = 'Sample trajectory colored by time(pre/post)'}
+plot_cell_trajectory(human, color_by = "time")
+```
+
+```{r pseudotime, fig.cap = 'Same trajectory colored by Pseudotime'}
+plot_cell_trajectory(human, color_by = "Pseudotime")
+```
+
+Monocle doesn't know a priori which of the trajectory of the tree to call the "beginning". So the Pseudotime is plotted reversly. It's a little bit tricky to make it right. But in our case, it's clear that the left is beginning and the right is end since the left points are pre and right points are post, as suggested in the previous figuer. 
+
+
+

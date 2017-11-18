@@ -1,0 +1,16 @@
+base
+bookdown
+data.table
+Rtsne
+dplyr
+RColorBrewer
+ggplot2
+reshape2
+stringr
+Matrix
+BiocGenerics
+Biobase
+VGAM
+irlba
+DDRTree
+monocle

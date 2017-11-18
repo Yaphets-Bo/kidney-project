@@ -1,0 +1,44 @@
+# Quality Control
+
+  Note that Monocle assume the gene expresison is log-normally distributed. So here we perform some filtering and then give it a check.
+
+## gene filtering
+```{r}
+human <- detectGenes(human, min_expr = 0.1)
+plot(density(fData(human)$num_cells_expressed))
+```
+The number of cells express a certain gene is bimodal distributed, for $threshold = .1$, some genes are expressed in all 163 samples, and some genes are only expressed in a little few samples.
+```{r}
+expressed.gene <- row.names(subset(fData(human), num_cells_expressed >= 50))
+```
+* Genes has >= 50 samples with $RPKM >= .1$ are kept. (22047/54514 genes left)
+
+***
+## check log-nomality
+  As suggest in Monocle mannual, take log(rpkm + 1), scale each log-transformed gene expression(subtract the mean and divided by $sd$), make the whole log-rpkm matrix a single vector then compare it to a standard normal.
+```{r}
+L <- log(exprs(human[expressed.gene,]) + 1)
+```
+
+Apparently, our filtered data pass the log-normality test.
+```{r, echo=F}
+melt.L.scaled <- melt(t(scale(t(L))))
+ggplot(melt.L.scaled, aes(x=value)) + geom_density(aes(color = "scaled log-expr")) +
+  stat_function(aes(color = "std. normal"), fun = dnorm, size = 0.5) +
+  xlab('Standardized log(Expression)') + ylab('Density') +
+  scale_colour_manual("Legend", values = c("black", "red")) +
+  ggtitle("Scaled log-expression v.s. Std.normal")
+```
+
+I don't understand why do we need to scale log-transformed rpkm for each gene and then make the matrix a single "log-expr matrix". Because in our first project about Huber regerssion, we claim the RPKM to be heavy-tailed by examining every single gene. Why Monocle assume that the whole matrix has a log-normally distribution, instead of examning each gene? And why even scale then compare, wouldn't it be all normal-like by CLT if we scale it?
+  So here is the un-scaling version.
+
+```{r, echo = F}
+melt.L <- melt(L)
+ggplot(melt.L, aes(x=value)) + geom_density(aes(color = "log-expr")) +
+  stat_function(aes(color = "std. normal"), fun = dnorm, size = 0.5) +
+  xlab('Standardized log(Expression)') + ylab('Density') +
+  scale_colour_manual("Legend", values = c("black", "red")) +
+  ggtitle("Non-scale log-expression v.s. Std.normal")
+
+```

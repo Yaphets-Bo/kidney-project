@@ -1,0 +1,102 @@
+# t-SNE analysis 
+
+## Dataset Human
+total 163 columns rpkm data  
+kidney 20, 41, 42 miss 1 year  
+kidney 29 miss pre  
+kidney 19 miss 3 months  
+```{r message=FALSE, include=FALSE}
+
+library(data.table)
+library(Rtsne)
+library(dplyr)
+library(RColorBrewer)
+library(ggplot2)
+library(reshape2)
+library(stringr)
+get_time_point <- function(x) substr(x, 18, nchar(x))
+dt <- fread("C:/Users/Ryan/Documents/3.Kidney/HUMAN_all.gene_RPKM.xls")
+## regexp: regexpr("[[:digit:]]_", names(dt)[-(1:7)], perl =T)
+#table(substr(names(dt)[-(1:7)],1,16))
+# total 163 columns rpkm data
+# kidney 41, 20, 42 miss 1 year
+# kidney 29 miss pre
+# kidney 19 miss 3 months
+
+setcolorder(dt,
+            c(names(dt)[1:7],
+              names(dt)[-(1:7)][order(names(dt)[-(1:7)])])
+)
+
+#dt[,ensembl_gene_id] rownames contains duplicates.
+ge <- dt[, -(1:7)]
+ge <- log2(ge + 1)
+ge <- t(ge) # matrix
+
+dummy <- rep(0, dim(ge)[2])
+pre <- ge[grep("pre", rownames(ge)),]
+post <- ge[grep("post", rownames(ge)),] ;post = post[-29,]
+year <- ge[grep("year", rownames(ge)),] ;year = year[-29,]
+year <- rbind(year[1:18,], dummy, year[19:38,], dummy, dummy)
+month <- ge[grep("month", rownames(ge)),] ;month = month[-28,]
+month <- rbind(month[1:18,], dummy, month[19:40,])
+
+
+post.remove <- post - pre
+year.remove <- (year - pre); year.remove <- year.remove[-grep("dummy",rownames(year.remove)),]
+month.remove <- month - pre; month.remove <- month.remove[-grep("dummy",rownames(month.remove)),]
+
+ge.remove <- rbind(pre, post.remove, month.remove, year.remove )
+Labels <- unname(sapply(rownames(ge.remove), get_time_point))
+persons <- substr(rownames(ge.remove), 15, 16)
+set.seed(100)
+tsne <- Rtsne(ge.remove, dims = 2, perplexity = 30, verbose = T, max_iter = 500)
+```
+```{r human, fig.cap = 'Similarity between samples and time points(backgroud deducted).'}
+tbl <- tbl_df(tsne$Y)
+tbl$persons = persons
+tbl$time_point = Labels
+tbl %>% ggplot(aes(x = V1, y = V2, label = persons, col = time_point)) +
+  geom_text()
+```
+Figure \@ref{fig:human} shows:  
+The clustering is a lot better after we decuction the __pre__ expression profile from __post__, __1 year__, and __3 months__. And is pretty conservative among different seeds and proper perplexity(20-30 tested). 
+
+* Long-time profiles are adjacent to each other and can be separated from the post cluster. 
+* For kidney 26, 12, and 22, etc. The post is near the long-time ones, may suggest a better healing ability of the person or a low-level injury??
+* For kidneys which __1 year__ is far from __3 months__, like 37, 01, 23. May suggest a high-variablity person or kidney-influnced lifystyle...? 
+    + 23 is a little more interesting, the 3 months is more close to post, which may suggest the long-term influnce comes slow on this person  
+
+## Dataset Mouse
+
+  
+```{r tSNE_mouse, echo = T, fig.cap = 'Same t-SNE analysis for mouse data.'}
+mouse <- fread("C:/Users/Ryan/Documents/3.Kidney/MOUSE_all.gene_RPKM.csv")
+
+setnames(mouse, "V1", "EnsembleID")
+mouse.ge <- mouse[, -(1:3)]
+mouse.ge <- log2(mouse.ge + 1)
+mouse.ge <- t(mouse.ge)
+
+Labels <- colsplit(rownames(mouse.ge), pattern = "-", names = c("Mouse", "grp"))$Mouse
+ind <- regexpr("[[:digit:]]", Labels, perl =T)
+prefix = c(); time_point = c()
+for(i in 1:length(Labels)) {
+  prefix <- append(prefix, substr(Labels[i], 1, ind[i] - 1))
+  time_point <- append(time_point, substr(Labels[i], ind[i], nchar(Labels[i])))
+}
+
+set.seed(81)
+tsne <- Rtsne(mouse.ge, dims = 2, perplexity = 9, verbose = T, max_iter = 500)
+tbl <- tbl_df(tsne$Y)
+tbl$sample_type = prefix
+tbl$time_point = time_point
+tbl %>% ggplot(aes(x = V1, y = V2, label = time_point, col = sample_type)) + 
+  geom_text()
+
+```
+As shown in the Figure \@ref{fig:tSNE_mouse}:  
+
+1. The syntaxis of same time-point and same mouse-type are stronger in this Mouse data, though it has less sample points here--49 samples in total, divided into three types(IRI, NORM, SHAM), each time point with 3 replicate except for 6mN has 4.
+
+2. The perplexity = 9 and set.seed(81) were tuned mannualy by hands-and-eyes. Based on tens of runs, the results are alike--the clustering is good. Perplexity >5 and <= 10 generally works here for limitied times of run done by myself.
