@@ -6,26 +6,26 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>A Report Example</title>
-  <meta name="description" content="A Report Example">
+  <meta name="description" content="My first attemp to write scientific report via bookdown.">
   <meta name="generator" content="bookdown 0.5 and GitBook 2.6.7">
 
   <meta property="og:title" content="A Report Example" />
   <meta property="og:type" content="book" />
   
   
-  
-  
+  <meta property="og:description" content="My first attemp to write scientific report via bookdown." />
+  <meta name="github-repo" content="Yaphets-Bo/kidneyproject" />
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="A Report Example" />
   
-  
+  <meta name="twitter:description" content="My first attemp to write scientific report via bookdown." />
   
 
 <meta name="author" content="Bo Sun">
 
 
-<meta name="date" content="2017-11-18">
+<meta name="date" content="2017-11-19">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -105,11 +105,12 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="2.2" data-path="t-sne-analysis.html"><a href="t-sne-analysis.html#dataset-mouse"><i class="fa fa-check"></i><b>2.2</b> Dataset Mouse</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="quality-control.html"><a href="quality-control.html"><i class="fa fa-check"></i><b>3</b> Quality Control</a><ul>
-<li class="chapter" data-level="3.1" data-path="quality-control.html"><a href="quality-control.html#gene-filtering"><i class="fa fa-check"></i><b>3.1</b> gene filtering</a></li>
+<li class="chapter" data-level="3.1" data-path="quality-control.html"><a href="quality-control.html#gf"><i class="fa fa-check"></i><b>3.1</b> gene filtering</a></li>
 <li class="chapter" data-level="3.2" data-path="quality-control.html"><a href="quality-control.html#check-log-nomality"><i class="fa fa-check"></i><b>3.2</b> check log-nomality</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="pseudo-time-trajectory-prediction.html"><a href="pseudo-time-trajectory-prediction.html"><i class="fa fa-check"></i><b>4</b> Pseudo-time trajectory prediction</a><ul>
-<li class="chapter" data-level="4.1" data-path="pseudo-time-trajectory-prediction.html"><a href="pseudo-time-trajectory-prediction.html#set-ordering-genes-to-be-used-in-monocles-trajectory-construction"><i class="fa fa-check"></i><b>4.1</b> Set ordering genes to be used in Monocle’s trajectory construction</a></li>
+<li class="chapter" data-level="4.1" data-path="pseudo-time-trajectory-prediction.html"><a href="pseudo-time-trajectory-prediction.html#step-1-2-set-ordering-genes-and-reduce-demisionality"><i class="fa fa-check"></i><b>4.1</b> Step 1-2: Set ordering genes and reduce demisionality</a></li>
+<li class="chapter" data-level="4.2" data-path="pseudo-time-trajectory-prediction.html"><a href="pseudo-time-trajectory-prediction.html#step-3-ordering-the-cells-in-pseudotime"><i class="fa fa-check"></i><b>4.2</b> Step 3: ordering the cells in pseudotime</a></li>
 </ul></li>
 </ul>
 
@@ -130,8 +131,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
             <section class="normal" id="section-">
 <div id="quality-control" class="section level1">
 <h1><span class="header-section-number">3</span> Quality Control</h1>
-<p>Note that Monocle assume the gene expresison is log-normally distributed. So here we perform some filtering and then give it a check.</p>
-<div id="gene-filtering" class="section level2">
+<p>Note that Monocle assume the gene expresison is log-normally distributed. So here we perform some filtering and then give it a check..<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a> And it won’t intervere following analysis since in this bulk analysis, we are not facing issues of Single-Cell protocol like <em>low mRNA cell sample</em> or <em>doublets or triplets</em>, etc.</p>
+<div id="gf" class="section level2">
 <h2><span class="header-section-number">3.1</span> gene filtering</h2>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">human &lt;-<span class="st"> </span><span class="kw">detectGenes</span>(human, <span class="dt">min_expr =</span> <span class="fl">0.1</span>)
 <span class="kw">plot</span>(<span class="kw">density</span>(<span class="kw">fData</span>(human)<span class="op">$</span>num_cells_expressed))</code></pre></div>
@@ -147,10 +148,15 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>As suggest in Monocle mannual, take log(rpkm + 1), scale each log-transformed gene expression(subtract the mean and divided by <span class="math inline">\(sd\)</span>), make the whole log-rpkm matrix a single vector then compare it to a standard normal.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">L &lt;-<span class="st"> </span><span class="kw">log</span>(<span class="kw">exprs</span>(human[expressed.gene,]) <span class="op">+</span><span class="st"> </span><span class="dv">1</span>)</code></pre></div>
 <p>Apparently, our filtered data pass the log-normality test. <img src="_main_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
-<p>I don’t understand why do we need to scale log-transformed rpkm for each gene and then make the matrix a single “log-expr matrix”. Because in our first project about Huber regerssion, we claim the RPKM to be heavy-tailed by examining every single gene. Why Monocle assume that the whole matrix has a log-normally distribution, instead of examning each gene? And why even scale then compare, wouldn’t it be all normal-like by CLT if we scale it? So here is the un-scaling version.</p>
 <p><img src="_main_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
 
 </div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="1">
+<li id="fn1"><p>Monocle is tuned for Single-Cell RNA-seq, so does the quality control described in the <a href="http://cole-trapnell-lab.github.io/monocle-release/docs/#recommended-analysis-protocol">Recommended Analysis Protocol</a><a href="quality-control.html#fnref1">↩</a></p></li>
+</ol>
 </div>
             </section>
 

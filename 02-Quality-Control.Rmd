@@ -1,8 +1,44 @@
 # Quality Control
 
-  Note that Monocle assume the gene expresison is log-normally distributed. So here we perform some filtering and then give it a check.
+  Note that Monocle assume the gene expresison is log-normally distributed. So here we perform some filtering and then give it a check. ^[Monocle is tuned for Single-Cell RNA-seq, so does the quality control described in the [Recommended Analysis Protocol](http://cole-trapnell-lab.github.io/monocle-release/docs/#recommended-analysis-protocol)]. And it won't intervere following analysis since in this bulk analysis, we are not facing issues of Single-Cell protocol like *low mRNA cell sample* or *doublets or triplets*, etc. 
 
-## gene filtering
+## gene filtering{#gf}
+```{r include=FALSE}
+library(data.table)
+library(Rtsne)
+library(dplyr)
+library(RColorBrewer)
+library(ggplot2)
+library(reshape2)
+library(stringr)
+library(monocle)
+options(useFancyQuotes = FALSE)
+dt <- fread("C:/Users/Ryan/Documents/3.Kidney/HUMAN_all.gene_RPKM.xls")
+dt <- dt[!duplicated(dt$external_gene_name)]
+
+setcolorder(dt,
+            c(names(dt)[1:7],
+              names(dt)[-(1:7)][order(names(dt)[-(1:7)])])
+)
+
+expr <- as.matrix(dt[,-(1:7)])
+expr <- expr[,grep("pre|post", colnames(expr))]
+gene_ann <- data.frame(dt[,1:7])
+setnames(gene_ann, "external_gene_name", "gene_short_name")
+rownames(gene_ann) = dt$ensembl_gene_id
+rownames(expr) <- dt$ensembl_gene_id
+sample_ann <- data.frame(sampleID = colnames(expr), person = substr(colnames(expr), 15,16),
+                         time = substr(colnames(expr), 18, nchar(colnames(expr))))
+rownames(sample_ann) = sample_ann$sampleID
+
+fd <- new("AnnotatedDataFrame", data = gene_ann)
+pd <- new("AnnotatedDataFrame", data = sample_ann)
+
+
+human <- newCellDataSet(expr, phenoData = pd, featureData = fd,
+                        expressionFamily = tobit())
+
+```
 ```{r}
 human <- detectGenes(human, min_expr = 0.1)
 plot(density(fData(human)$num_cells_expressed))
@@ -30,8 +66,6 @@ ggplot(melt.L.scaled, aes(x=value)) + geom_density(aes(color = "scaled log-expr"
   ggtitle("Scaled log-expression v.s. Std.normal")
 ```
 
-I don't understand why do we need to scale log-transformed rpkm for each gene and then make the matrix a single "log-expr matrix". Because in our first project about Huber regerssion, we claim the RPKM to be heavy-tailed by examining every single gene. Why Monocle assume that the whole matrix has a log-normally distribution, instead of examning each gene? And why even scale then compare, wouldn't it be all normal-like by CLT if we scale it?
-  So here is the un-scaling version.
 
 ```{r, echo = F}
 melt.L <- melt(L)

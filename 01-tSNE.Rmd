@@ -14,6 +14,7 @@ library(RColorBrewer)
 library(ggplot2)
 library(reshape2)
 library(stringr)
+library(monocle)
 get_time_point <- function(x) substr(x, 18, nchar(x))
 dt <- fread("C:/Users/Ryan/Documents/3.Kidney/HUMAN_all.gene_RPKM.xls")
 ## regexp: regexpr("[[:digit:]]_", names(dt)[-(1:7)], perl =T)
@@ -46,31 +47,27 @@ post.remove <- post - pre
 year.remove <- (year - pre); year.remove <- year.remove[-grep("dummy",rownames(year.remove)),]
 month.remove <- month - pre; month.remove <- month.remove[-grep("dummy",rownames(month.remove)),]
 
-ge.remove <- rbind(pre, post.remove, month.remove, year.remove )
+ge.remove <- rbind(post.remove, month.remove, year.remove )
 Labels <- unname(sapply(rownames(ge.remove), get_time_point))
 persons <- substr(rownames(ge.remove), 15, 16)
 set.seed(100)
 tsne <- Rtsne(ge.remove, dims = 2, perplexity = 30, verbose = T, max_iter = 500)
 ```
-```{r human, fig.cap = 'Similarity between samples and time points(backgroud deducted).'}
+
+```{r human, fig.cap = "**Similarity between samples and time points(backgroud deducted).**"}
 tbl <- tbl_df(tsne$Y)
 tbl$persons = persons
 tbl$time_point = Labels
 tbl %>% ggplot(aes(x = V1, y = V2, label = persons, col = time_point)) +
   geom_text()
-```
-Figure \@ref{fig:human} shows:  
-The clustering is a lot better after we decuction the __pre__ expression profile from __post__, __1 year__, and __3 months__. And is pretty conservative among different seeds and proper perplexity(20-30 tested). 
 
-* Long-time profiles are adjacent to each other and can be separated from the post cluster. 
-* For kidney 26, 12, and 22, etc. The post is near the long-time ones, may suggest a better healing ability of the person or a low-level injury??
-* For kidneys which __1 year__ is far from __3 months__, like 37, 01, 23. May suggest a high-variablity person or kidney-influnced lifystyle...? 
-    + 23 is a little more interesting, the 3 months is more close to post, which may suggest the long-term influnce comes slow on this person  
+```
+In figure \@ref(fig:human): __pre__ expression profile($log(FPKM + 1)$) was deducted from __post__, __1 year__, and __3 months__. And then the dimension reduction was done using [t-SNE](https://lvdmaaten.github.io/tsne/) algorithm.  
+The plot makes more sense now: later time points(**3 months**, **1 year**) stick together and are separated from **post** points, upon which a *Pseudotime Sample Trajectory* was constructed by means of [Monocle 2](http://cole-trapnell-lab.github.io/monocle-release/docs/#constructing-single-cell-trajectories).  
 
 ## Dataset Mouse
 
-  
-```{r tSNE_mouse, echo = T, fig.cap = 'Same t-SNE analysis for mouse data.'}
+```{r mouse, echo = F, fig.cap = 'Same t-SNE analysis for mouse data.'}
 mouse <- fread("C:/Users/Ryan/Documents/3.Kidney/MOUSE_all.gene_RPKM.csv")
 
 setnames(mouse, "V1", "EnsembleID")
@@ -95,7 +92,7 @@ tbl %>% ggplot(aes(x = V1, y = V2, label = time_point, col = sample_type)) +
   geom_text()
 
 ```
-As shown in the Figure \@ref{fig:tSNE_mouse}:  
+As shown in the Figure \@ref(fig:mouse):  
 
 1. The syntaxis of same time-point and same mouse-type are stronger in this Mouse data, though it has less sample points here--49 samples in total, divided into three types(IRI, NORM, SHAM), each time point with 3 replicate except for 6mN has 4.
 

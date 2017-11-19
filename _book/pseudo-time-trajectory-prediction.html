@@ -6,26 +6,26 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>A Report Example</title>
-  <meta name="description" content="A Report Example">
+  <meta name="description" content="My first attemp to write scientific report via bookdown.">
   <meta name="generator" content="bookdown 0.5 and GitBook 2.6.7">
 
   <meta property="og:title" content="A Report Example" />
   <meta property="og:type" content="book" />
   
   
-  
-  
+  <meta property="og:description" content="My first attemp to write scientific report via bookdown." />
+  <meta name="github-repo" content="Yaphets-Bo/kidneyproject" />
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="A Report Example" />
   
-  
+  <meta name="twitter:description" content="My first attemp to write scientific report via bookdown." />
   
 
 <meta name="author" content="Bo Sun">
 
 
-<meta name="date" content="2017-11-18">
+<meta name="date" content="2017-11-19">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -105,11 +105,12 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="2.2" data-path="t-sne-analysis.html"><a href="t-sne-analysis.html#dataset-mouse"><i class="fa fa-check"></i><b>2.2</b> Dataset Mouse</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="quality-control.html"><a href="quality-control.html"><i class="fa fa-check"></i><b>3</b> Quality Control</a><ul>
-<li class="chapter" data-level="3.1" data-path="quality-control.html"><a href="quality-control.html#gene-filtering"><i class="fa fa-check"></i><b>3.1</b> gene filtering</a></li>
+<li class="chapter" data-level="3.1" data-path="quality-control.html"><a href="quality-control.html#gf"><i class="fa fa-check"></i><b>3.1</b> gene filtering</a></li>
 <li class="chapter" data-level="3.2" data-path="quality-control.html"><a href="quality-control.html#check-log-nomality"><i class="fa fa-check"></i><b>3.2</b> check log-nomality</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="pseudo-time-trajectory-prediction.html"><a href="pseudo-time-trajectory-prediction.html"><i class="fa fa-check"></i><b>4</b> Pseudo-time trajectory prediction</a><ul>
-<li class="chapter" data-level="4.1" data-path="pseudo-time-trajectory-prediction.html"><a href="pseudo-time-trajectory-prediction.html#set-ordering-genes-to-be-used-in-monocles-trajectory-construction"><i class="fa fa-check"></i><b>4.1</b> Set ordering genes to be used in Monocle’s trajectory construction</a></li>
+<li class="chapter" data-level="4.1" data-path="pseudo-time-trajectory-prediction.html"><a href="pseudo-time-trajectory-prediction.html#step-1-2-set-ordering-genes-and-reduce-demisionality"><i class="fa fa-check"></i><b>4.1</b> Step 1-2: Set ordering genes and reduce demisionality</a></li>
+<li class="chapter" data-level="4.2" data-path="pseudo-time-trajectory-prediction.html"><a href="pseudo-time-trajectory-prediction.html#step-3-ordering-the-cells-in-pseudotime"><i class="fa fa-check"></i><b>4.2</b> Step 3: ordering the cells in pseudotime</a></li>
 </ul></li>
 </ul>
 
@@ -130,8 +131,13 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
             <section class="normal" id="section-">
 <div id="pseudo-time-trajectory-prediction" class="section level1">
 <h1><span class="header-section-number">4</span> Pseudo-time trajectory prediction</h1>
-<div id="set-ordering-genes-to-be-used-in-monocles-trajectory-construction" class="section level2">
-<h2><span class="header-section-number">4.1</span> Set ordering genes to be used in Monocle’s trajectory construction</h2>
+<div id="step-1-2-set-ordering-genes-and-reduce-demisionality" class="section level2">
+<h2><span class="header-section-number">4.1</span> Step 1-2: Set ordering genes and reduce demisionality</h2>
+<blockquote>
+<p>&quot; Monocle looks for genes that vary in “interesting” (i.e. not just noisy) ways, and uses these to structure the data.&quot;</p>
+<p>— Monocle Mannual</p>
+</blockquote>
+<p>This is the <em>feature selection</em> step in the Monocle’s machine learning algorithm for this job, which has major impact of the shape of the trajectory to be constructed.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">diff_test_res &lt;-<span class="st"> </span><span class="kw">differentialGeneTest</span>(human[expressed.gene,],
                                       <span class="dt">fullModelFormulaStr =</span> <span class="st">&quot;~time&quot;</span>)
 
@@ -141,141 +147,10 @@ human &lt;-<span class="st"> </span><span class="kw">setOrderingFilter</span>(hu
 human &lt;-<span class="st"> </span><span class="kw">reduceDimension</span>(human, <span class="dt">max_components =</span> <span class="dv">2</span>,
                             <span class="dt">method =</span> <span class="st">&#39;DDRTree&#39;</span>)
 human &lt;-<span class="st"> </span><span class="kw">orderCells</span>(human)</code></pre></div>
-<pre><code>## Warning in (ap %*% ab)/(ab %*% ab) * ab: Recycling array of length 1 in array-vector arithmetic is deprecated.
-##   Use c() or as.vector() instead.
-
-## Warning in (ap %*% ab)/(ab %*% ab) * ab: Recycling array of length 1 in array-vector arithmetic is deprecated.
-##   Use c() or as.vector() instead.
-
-## Warning in (ap %*% ab)/(ab %*% ab) * ab: Recycling array of length 1 in array-vector arithmetic is deprecated.
-##   Use c() or as.vector() instead.
-
-## Warning in (ap %*% ab)/(ab %*% ab) * ab: Recycling array of length 1 in array-vector arithmetic is deprecated.
-##   Use c() or as.vector() instead.
-
-## Warning in (ap %*% ab)/(ab %*% ab) * ab: Recycling array of length 1 in array-vector arithmetic is deprecated.
-##   Use c() or as.vector() instead.
-
-## Warning in (ap %*% ab)/(ab %*% ab) * ab: Recycling array of length 1 in array-vector arithmetic is deprecated.
-##   Use c() or as.vector() instead.
-
-## Warning in (ap %*% ab)/(ab %*% ab) * ab: Recycling array of length 1 in array-vector arithmetic is deprecated.
-##   Use c() or as.vector() instead.
-
-## Warning in (ap %*% ab)/(ab %*% ab) * ab: Recycling array of length 1 in array-vector arithmetic is deprecated.
-##   Use c() or as.vector() instead.
-
-## Warning in (ap %*% ab)/(ab %*% ab) * ab: Recycling array of length 1 in array-vector arithmetic is deprecated.
-##   Use c() or as.vector() instead.
-
-## Warning in (ap %*% ab)/(ab %*% ab) * ab: Recycling array of length 1 in array-vector arithmetic is deprecated.
-##   Use c() or as.vector() instead.
-
-## Warning in (ap %*% ab)/(ab %*% ab) * ab: Recycling array of length 1 in array-vector arithmetic is deprecated.
-##   Use c() or as.vector() instead.
-
-## Warning in (ap %*% ab)/(ab %*% ab) * ab: Recycling array of length 1 in array-vector arithmetic is deprecated.
-##   Use c() or as.vector() instead.
-
-## Warning in (ap %*% ab)/(ab %*% ab) * ab: Recycling array of length 1 in array-vector arithmetic is deprecated.
-##   Use c() or as.vector() instead.
-
-## Warning in (ap %*% ab)/(ab %*% ab) * ab: Recycling array of length 1 in array-vector arithmetic is deprecated.
-##   Use c() or as.vector() instead.
-
-## Warning in (ap %*% ab)/(ab %*% ab) * ab: Recycling array of length 1 in array-vector arithmetic is deprecated.
-##   Use c() or as.vector() instead.
-
-## Warning in (ap %*% ab)/(ab %*% ab) * ab: Recycling array of length 1 in array-vector arithmetic is deprecated.
-##   Use c() or as.vector() instead.
-
-## Warning in (ap %*% ab)/(ab %*% ab) * ab: Recycling array of length 1 in array-vector arithmetic is deprecated.
-##   Use c() or as.vector() instead.
-
-## Warning in (ap %*% ab)/(ab %*% ab) * ab: Recycling array of length 1 in array-vector arithmetic is deprecated.
-##   Use c() or as.vector() instead.
-
-## Warning in (ap %*% ab)/(ab %*% ab) * ab: Recycling array of length 1 in array-vector arithmetic is deprecated.
-##   Use c() or as.vector() instead.
-
-## Warning in (ap %*% ab)/(ab %*% ab) * ab: Recycling array of length 1 in array-vector arithmetic is deprecated.
-##   Use c() or as.vector() instead.
-
-## Warning in (ap %*% ab)/(ab %*% ab) * ab: Recycling array of length 1 in array-vector arithmetic is deprecated.
-##   Use c() or as.vector() instead.
-
-## Warning in (ap %*% ab)/(ab %*% ab) * ab: Recycling array of length 1 in array-vector arithmetic is deprecated.
-##   Use c() or as.vector() instead.
-
-## Warning in (ap %*% ab)/(ab %*% ab) * ab: Recycling array of length 1 in array-vector arithmetic is deprecated.
-##   Use c() or as.vector() instead.
-
-## Warning in (ap %*% ab)/(ab %*% ab) * ab: Recycling array of length 1 in array-vector arithmetic is deprecated.
-##   Use c() or as.vector() instead.
-
-## Warning in (ap %*% ab)/(ab %*% ab) * ab: Recycling array of length 1 in array-vector arithmetic is deprecated.
-##   Use c() or as.vector() instead.
-
-## Warning in (ap %*% ab)/(ab %*% ab) * ab: Recycling array of length 1 in array-vector arithmetic is deprecated.
-##   Use c() or as.vector() instead.
-
-## Warning in (ap %*% ab)/(ab %*% ab) * ab: Recycling array of length 1 in array-vector arithmetic is deprecated.
-##   Use c() or as.vector() instead.
-
-## Warning in (ap %*% ab)/(ab %*% ab) * ab: Recycling array of length 1 in array-vector arithmetic is deprecated.
-##   Use c() or as.vector() instead.
-
-## Warning in (ap %*% ab)/(ab %*% ab) * ab: Recycling array of length 1 in array-vector arithmetic is deprecated.
-##   Use c() or as.vector() instead.
-
-## Warning in (ap %*% ab)/(ab %*% ab) * ab: Recycling array of length 1 in array-vector arithmetic is deprecated.
-##   Use c() or as.vector() instead.
-
-## Warning in (ap %*% ab)/(ab %*% ab) * ab: Recycling array of length 1 in array-vector arithmetic is deprecated.
-##   Use c() or as.vector() instead.
-
-## Warning in (ap %*% ab)/(ab %*% ab) * ab: Recycling array of length 1 in array-vector arithmetic is deprecated.
-##   Use c() or as.vector() instead.
-
-## Warning in (ap %*% ab)/(ab %*% ab) * ab: Recycling array of length 1 in array-vector arithmetic is deprecated.
-##   Use c() or as.vector() instead.
-
-## Warning in (ap %*% ab)/(ab %*% ab) * ab: Recycling array of length 1 in array-vector arithmetic is deprecated.
-##   Use c() or as.vector() instead.
-
-## Warning in (ap %*% ab)/(ab %*% ab) * ab: Recycling array of length 1 in array-vector arithmetic is deprecated.
-##   Use c() or as.vector() instead.
-
-## Warning in (ap %*% ab)/(ab %*% ab) * ab: Recycling array of length 1 in array-vector arithmetic is deprecated.
-##   Use c() or as.vector() instead.
-
-## Warning in (ap %*% ab)/(ab %*% ab) * ab: Recycling array of length 1 in array-vector arithmetic is deprecated.
-##   Use c() or as.vector() instead.
-
-## Warning in (ap %*% ab)/(ab %*% ab) * ab: Recycling array of length 1 in array-vector arithmetic is deprecated.
-##   Use c() or as.vector() instead.
-
-## Warning in (ap %*% ab)/(ab %*% ab) * ab: Recycling array of length 1 in array-vector arithmetic is deprecated.
-##   Use c() or as.vector() instead.
-
-## Warning in (ap %*% ab)/(ab %*% ab) * ab: Recycling array of length 1 in array-vector arithmetic is deprecated.
-##   Use c() or as.vector() instead.
-
-## Warning in (ap %*% ab)/(ab %*% ab) * ab: Recycling array of length 1 in array-vector arithmetic is deprecated.
-##   Use c() or as.vector() instead.
-
-## Warning in (ap %*% ab)/(ab %*% ab) * ab: Recycling array of length 1 in array-vector arithmetic is deprecated.
-##   Use c() or as.vector() instead.
-
-## Warning in (ap %*% ab)/(ab %*% ab) * ab: Recycling array of length 1 in array-vector arithmetic is deprecated.
-##   Use c() or as.vector() instead.
-
-## Warning in (ap %*% ab)/(ab %*% ab) * ab: Recycling array of length 1 in array-vector arithmetic is deprecated.
-##   Use c() or as.vector() instead.
-
-## Warning in (ap %*% ab)/(ab %*% ab) * ab: Recycling array of length 1 in array-vector arithmetic is deprecated.
-##   Use c() or as.vector() instead.</code></pre>
-<p>17985 of 22047 genes left. (The 22047 genes are the genes that pass the fitering described in 3.1).</p>
+<p>17985 of 22047 genes left. (The 22047 genes are the genes that express “interestingly” as described in Section <a href="quality-control.html#gf">3.1</a>).</p>
+</div>
+<div id="step-3-ordering-the-cells-in-pseudotime" class="section level2">
+<h2><span class="header-section-number">4.2</span> Step 3: ordering the cells in pseudotime</h2>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot_cell_trajectory</span>(human, <span class="dt">color_by =</span> <span class="st">&quot;time&quot;</span>)</code></pre></div>
 <p><img src="_main_files/figure-html/time-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot_cell_trajectory</span>(human, <span class="dt">color_by =</span> <span class="st">&quot;Pseudotime&quot;</span>)</code></pre></div>
@@ -286,9 +161,532 @@ Figure 4.1: Same trajectory colored by Pseudotime
 </p>
 </div>
 <p>Monocle doesn’t know a priori which of the trajectory of the tree to call the “beginning”. So the Pseudotime is plotted reversly. It’s a little bit tricky to make it right. But in our case, it’s clear that the left is beginning and the right is end since the left points are pre and right points are post, as suggested in the previous figuer.</p>
+<hr />
+<p>I don’t know how to add labels to this figure since it was plotted by Monocle built-in functions. And it will also be messy on the plot. So a table will be good?</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">knitr<span class="op">::</span><span class="kw">kable</span>(
+  <span class="kw">pData</span>(human)[,<span class="kw">c</span>(<span class="st">&quot;person&quot;</span>, <span class="st">&quot;time&quot;</span>, <span class="st">&quot;Pseudotime&quot;</span>)], <span class="dt">booktabs =</span> <span class="ot">TRUE</span>,
+  <span class="dt">caption =</span> <span class="st">&#39;A table of the Pseudotime generated&#39;</span>
+)</code></pre></div>
+<table>
+<caption><span id="tab:unnamed-chunk-9">Table 4.1: </span>A table of the Pseudotime generated</caption>
+<thead>
+<tr class="header">
+<th></th>
+<th align="left">person</th>
+<th align="left">time</th>
+<th align="right">Pseudotime</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>sample.kidney_01_baseline_post</td>
+<td align="left">01</td>
+<td align="left">baseline_post</td>
+<td align="right">16.343957</td>
+</tr>
+<tr class="even">
+<td>sample.kidney_01_baseline_pre</td>
+<td align="left">01</td>
+<td align="left">baseline_pre</td>
+<td align="right">18.759666</td>
+</tr>
+<tr class="odd">
+<td>sample.kidney_02_baseline_post</td>
+<td align="left">02</td>
+<td align="left">baseline_post</td>
+<td align="right">15.905122</td>
+</tr>
+<tr class="even">
+<td>sample.kidney_02_baseline_pre</td>
+<td align="left">02</td>
+<td align="left">baseline_pre</td>
+<td align="right">23.558735</td>
+</tr>
+<tr class="odd">
+<td>sample.kidney_03_baseline_post</td>
+<td align="left">03</td>
+<td align="left">baseline_post</td>
+<td align="right">15.546759</td>
+</tr>
+<tr class="even">
+<td>sample.kidney_03_baseline_pre</td>
+<td align="left">03</td>
+<td align="left">baseline_pre</td>
+<td align="right">23.977949</td>
+</tr>
+<tr class="odd">
+<td>sample.kidney_04_baseline_post</td>
+<td align="left">04</td>
+<td align="left">baseline_post</td>
+<td align="right">3.471537</td>
+</tr>
+<tr class="even">
+<td>sample.kidney_04_baseline_pre</td>
+<td align="left">04</td>
+<td align="left">baseline_pre</td>
+<td align="right">37.794212</td>
+</tr>
+<tr class="odd">
+<td>sample.kidney_05_baseline_post</td>
+<td align="left">05</td>
+<td align="left">baseline_post</td>
+<td align="right">19.294851</td>
+</tr>
+<tr class="even">
+<td>sample.kidney_05_baseline_pre</td>
+<td align="left">05</td>
+<td align="left">baseline_pre</td>
+<td align="right">37.268242</td>
+</tr>
+<tr class="odd">
+<td>sample.kidney_06_baseline_post</td>
+<td align="left">06</td>
+<td align="left">baseline_post</td>
+<td align="right">19.417621</td>
+</tr>
+<tr class="even">
+<td>sample.kidney_06_baseline_pre</td>
+<td align="left">06</td>
+<td align="left">baseline_pre</td>
+<td align="right">36.971777</td>
+</tr>
+<tr class="odd">
+<td>sample.kidney_07_baseline_post</td>
+<td align="left">07</td>
+<td align="left">baseline_post</td>
+<td align="right">0.000000</td>
+</tr>
+<tr class="even">
+<td>sample.kidney_07_baseline_pre</td>
+<td align="left">07</td>
+<td align="left">baseline_pre</td>
+<td align="right">36.049794</td>
+</tr>
+<tr class="odd">
+<td>sample.kidney_08_baseline_post</td>
+<td align="left">08</td>
+<td align="left">baseline_post</td>
+<td align="right">19.006155</td>
+</tr>
+<tr class="even">
+<td>sample.kidney_08_baseline_pre</td>
+<td align="left">08</td>
+<td align="left">baseline_pre</td>
+<td align="right">20.959575</td>
+</tr>
+<tr class="odd">
+<td>sample.kidney_09_baseline_post</td>
+<td align="left">09</td>
+<td align="left">baseline_post</td>
+<td align="right">2.493296</td>
+</tr>
+<tr class="even">
+<td>sample.kidney_09_baseline_pre</td>
+<td align="left">09</td>
+<td align="left">baseline_pre</td>
+<td align="right">36.291851</td>
+</tr>
+<tr class="odd">
+<td>sample.kidney_10_baseline_post</td>
+<td align="left">10</td>
+<td align="left">baseline_post</td>
+<td align="right">3.972422</td>
+</tr>
+<tr class="even">
+<td>sample.kidney_10_baseline_pre</td>
+<td align="left">10</td>
+<td align="left">baseline_pre</td>
+<td align="right">37.515398</td>
+</tr>
+<tr class="odd">
+<td>sample.kidney_11_baseline_post</td>
+<td align="left">11</td>
+<td align="left">baseline_post</td>
+<td align="right">14.915194</td>
+</tr>
+<tr class="even">
+<td>sample.kidney_11_baseline_pre</td>
+<td align="left">11</td>
+<td align="left">baseline_pre</td>
+<td align="right">26.426196</td>
+</tr>
+<tr class="odd">
+<td>sample.kidney_12_baseline_post</td>
+<td align="left">12</td>
+<td align="left">baseline_post</td>
+<td align="right">15.076965</td>
+</tr>
+<tr class="even">
+<td>sample.kidney_12_baseline_pre</td>
+<td align="left">12</td>
+<td align="left">baseline_pre</td>
+<td align="right">37.998821</td>
+</tr>
+<tr class="odd">
+<td>sample.kidney_13_baseline_post</td>
+<td align="left">13</td>
+<td align="left">baseline_post</td>
+<td align="right">4.481699</td>
+</tr>
+<tr class="even">
+<td>sample.kidney_13_baseline_pre</td>
+<td align="left">13</td>
+<td align="left">baseline_pre</td>
+<td align="right">26.022365</td>
+</tr>
+<tr class="odd">
+<td>sample.kidney_14_baseline_post</td>
+<td align="left">14</td>
+<td align="left">baseline_post</td>
+<td align="right">15.254758</td>
+</tr>
+<tr class="even">
+<td>sample.kidney_14_baseline_pre</td>
+<td align="left">14</td>
+<td align="left">baseline_pre</td>
+<td align="right">37.207727</td>
+</tr>
+<tr class="odd">
+<td>sample.kidney_15_baseline_post</td>
+<td align="left">15</td>
+<td align="left">baseline_post</td>
+<td align="right">13.139552</td>
+</tr>
+<tr class="even">
+<td>sample.kidney_15_baseline_pre</td>
+<td align="left">15</td>
+<td align="left">baseline_pre</td>
+<td align="right">37.565014</td>
+</tr>
+<tr class="odd">
+<td>sample.kidney_16_baseline_post</td>
+<td align="left">16</td>
+<td align="left">baseline_post</td>
+<td align="right">23.509750</td>
+</tr>
+<tr class="even">
+<td>sample.kidney_16_baseline_pre</td>
+<td align="left">16</td>
+<td align="left">baseline_pre</td>
+<td align="right">38.203048</td>
+</tr>
+<tr class="odd">
+<td>sample.kidney_17_baseline_post</td>
+<td align="left">17</td>
+<td align="left">baseline_post</td>
+<td align="right">4.411050</td>
+</tr>
+<tr class="even">
+<td>sample.kidney_17_baseline_pre</td>
+<td align="left">17</td>
+<td align="left">baseline_pre</td>
+<td align="right">37.731035</td>
+</tr>
+<tr class="odd">
+<td>sample.kidney_18_baseline_post</td>
+<td align="left">18</td>
+<td align="left">baseline_post</td>
+<td align="right">14.734395</td>
+</tr>
+<tr class="even">
+<td>sample.kidney_18_baseline_pre</td>
+<td align="left">18</td>
+<td align="left">baseline_pre</td>
+<td align="right">34.592928</td>
+</tr>
+<tr class="odd">
+<td>sample.kidney_19_baseline_post</td>
+<td align="left">19</td>
+<td align="left">baseline_post</td>
+<td align="right">3.049479</td>
+</tr>
+<tr class="even">
+<td>sample.kidney_19_baseline_pre</td>
+<td align="left">19</td>
+<td align="left">baseline_pre</td>
+<td align="right">37.095411</td>
+</tr>
+<tr class="odd">
+<td>sample.kidney_20_baseline_post</td>
+<td align="left">20</td>
+<td align="left">baseline_post</td>
+<td align="right">16.851456</td>
+</tr>
+<tr class="even">
+<td>sample.kidney_20_baseline_pre</td>
+<td align="left">20</td>
+<td align="left">baseline_pre</td>
+<td align="right">31.596650</td>
+</tr>
+<tr class="odd">
+<td>sample.kidney_21_baseline_post</td>
+<td align="left">21</td>
+<td align="left">baseline_post</td>
+<td align="right">3.494093</td>
+</tr>
+<tr class="even">
+<td>sample.kidney_21_baseline_pre</td>
+<td align="left">21</td>
+<td align="left">baseline_pre</td>
+<td align="right">36.670486</td>
+</tr>
+<tr class="odd">
+<td>sample.kidney_22_baseline_post</td>
+<td align="left">22</td>
+<td align="left">baseline_post</td>
+<td align="right">3.542999</td>
+</tr>
+<tr class="even">
+<td>sample.kidney_22_baseline_pre</td>
+<td align="left">22</td>
+<td align="left">baseline_pre</td>
+<td align="right">28.310753</td>
+</tr>
+<tr class="odd">
+<td>sample.kidney_23_baseline_post</td>
+<td align="left">23</td>
+<td align="left">baseline_post</td>
+<td align="right">3.524408</td>
+</tr>
+<tr class="even">
+<td>sample.kidney_23_baseline_pre</td>
+<td align="left">23</td>
+<td align="left">baseline_pre</td>
+<td align="right">37.322141</td>
+</tr>
+<tr class="odd">
+<td>sample.kidney_24_baseline_post</td>
+<td align="left">24</td>
+<td align="left">baseline_post</td>
+<td align="right">11.445690</td>
+</tr>
+<tr class="even">
+<td>sample.kidney_24_baseline_pre</td>
+<td align="left">24</td>
+<td align="left">baseline_pre</td>
+<td align="right">28.211771</td>
+</tr>
+<tr class="odd">
+<td>sample.kidney_25_baseline_post</td>
+<td align="left">25</td>
+<td align="left">baseline_post</td>
+<td align="right">11.453034</td>
+</tr>
+<tr class="even">
+<td>sample.kidney_25_baseline_pre</td>
+<td align="left">25</td>
+<td align="left">baseline_pre</td>
+<td align="right">24.934383</td>
+</tr>
+<tr class="odd">
+<td>sample.kidney_26_baseline_post</td>
+<td align="left">26</td>
+<td align="left">baseline_post</td>
+<td align="right">28.857246</td>
+</tr>
+<tr class="even">
+<td>sample.kidney_26_baseline_pre</td>
+<td align="left">26</td>
+<td align="left">baseline_pre</td>
+<td align="right">27.860759</td>
+</tr>
+<tr class="odd">
+<td>sample.kidney_27_baseline_post</td>
+<td align="left">27</td>
+<td align="left">baseline_post</td>
+<td align="right">14.729848</td>
+</tr>
+<tr class="even">
+<td>sample.kidney_27_baseline_pre</td>
+<td align="left">27</td>
+<td align="left">baseline_pre</td>
+<td align="right">35.940841</td>
+</tr>
+<tr class="odd">
+<td>sample.kidney_28_baseline_post</td>
+<td align="left">28</td>
+<td align="left">baseline_post</td>
+<td align="right">14.675554</td>
+</tr>
+<tr class="even">
+<td>sample.kidney_28_baseline_pre</td>
+<td align="left">28</td>
+<td align="left">baseline_pre</td>
+<td align="right">28.178635</td>
+</tr>
+<tr class="odd">
+<td>sample.kidney_29_baseline_post</td>
+<td align="left">29</td>
+<td align="left">baseline_post</td>
+<td align="right">28.788652</td>
+</tr>
+<tr class="even">
+<td>sample.kidney_30_baseline_post</td>
+<td align="left">30</td>
+<td align="left">baseline_post</td>
+<td align="right">18.839448</td>
+</tr>
+<tr class="odd">
+<td>sample.kidney_30_baseline_pre</td>
+<td align="left">30</td>
+<td align="left">baseline_pre</td>
+<td align="right">24.448409</td>
+</tr>
+<tr class="even">
+<td>sample.kidney_31_baseline_post</td>
+<td align="left">31</td>
+<td align="left">baseline_post</td>
+<td align="right">4.439941</td>
+</tr>
+<tr class="odd">
+<td>sample.kidney_31_baseline_pre</td>
+<td align="left">31</td>
+<td align="left">baseline_pre</td>
+<td align="right">35.922339</td>
+</tr>
+<tr class="even">
+<td>sample.kidney_32_baseline_post</td>
+<td align="left">32</td>
+<td align="left">baseline_post</td>
+<td align="right">4.611549</td>
+</tr>
+<tr class="odd">
+<td>sample.kidney_32_baseline_pre</td>
+<td align="left">32</td>
+<td align="left">baseline_pre</td>
+<td align="right">30.455091</td>
+</tr>
+<tr class="even">
+<td>sample.kidney_33_baseline_post</td>
+<td align="left">33</td>
+<td align="left">baseline_post</td>
+<td align="right">15.234127</td>
+</tr>
+<tr class="odd">
+<td>sample.kidney_33_baseline_pre</td>
+<td align="left">33</td>
+<td align="left">baseline_pre</td>
+<td align="right">25.032899</td>
+</tr>
+<tr class="even">
+<td>sample.kidney_34_baseline_post</td>
+<td align="left">34</td>
+<td align="left">baseline_post</td>
+<td align="right">4.359224</td>
+</tr>
+<tr class="odd">
+<td>sample.kidney_34_baseline_pre</td>
+<td align="left">34</td>
+<td align="left">baseline_pre</td>
+<td align="right">30.551365</td>
+</tr>
+<tr class="even">
+<td>sample.kidney_35_baseline_post</td>
+<td align="left">35</td>
+<td align="left">baseline_post</td>
+<td align="right">6.274882</td>
+</tr>
+<tr class="odd">
+<td>sample.kidney_35_baseline_pre</td>
+<td align="left">35</td>
+<td align="left">baseline_pre</td>
+<td align="right">30.838598</td>
+</tr>
+<tr class="even">
+<td>sample.kidney_36_baseline_post</td>
+<td align="left">36</td>
+<td align="left">baseline_post</td>
+<td align="right">4.345997</td>
+</tr>
+<tr class="odd">
+<td>sample.kidney_36_baseline_pre</td>
+<td align="left">36</td>
+<td align="left">baseline_pre</td>
+<td align="right">36.929690</td>
+</tr>
+<tr class="even">
+<td>sample.kidney_37_baseline_post</td>
+<td align="left">37</td>
+<td align="left">baseline_post</td>
+<td align="right">20.928901</td>
+</tr>
+<tr class="odd">
+<td>sample.kidney_37_baseline_pre</td>
+<td align="left">37</td>
+<td align="left">baseline_pre</td>
+<td align="right">35.107001</td>
+</tr>
+<tr class="even">
+<td>sample.kidney_38_baseline_post</td>
+<td align="left">38</td>
+<td align="left">baseline_post</td>
+<td align="right">14.790778</td>
+</tr>
+<tr class="odd">
+<td>sample.kidney_38_baseline_pre</td>
+<td align="left">38</td>
+<td align="left">baseline_pre</td>
+<td align="right">33.732354</td>
+</tr>
+<tr class="even">
+<td>sample.kidney_39_baseline_post</td>
+<td align="left">39</td>
+<td align="left">baseline_post</td>
+<td align="right">17.537571</td>
+</tr>
+<tr class="odd">
+<td>sample.kidney_39_baseline_pre</td>
+<td align="left">39</td>
+<td align="left">baseline_pre</td>
+<td align="right">30.476172</td>
+</tr>
+<tr class="even">
+<td>sample.kidney_40_baseline_post</td>
+<td align="left">40</td>
+<td align="left">baseline_post</td>
+<td align="right">3.428423</td>
+</tr>
+<tr class="odd">
+<td>sample.kidney_40_baseline_pre</td>
+<td align="left">40</td>
+<td align="left">baseline_pre</td>
+<td align="right">28.065158</td>
+</tr>
+<tr class="even">
+<td>sample.kidney_41_baseline_post</td>
+<td align="left">41</td>
+<td align="left">baseline_post</td>
+<td align="right">10.472033</td>
+</tr>
+<tr class="odd">
+<td>sample.kidney_41_baseline_pre</td>
+<td align="left">41</td>
+<td align="left">baseline_pre</td>
+<td align="right">27.043803</td>
+</tr>
+<tr class="even">
+<td>sample.kidney_42_baseline_post</td>
+<td align="left">42</td>
+<td align="left">baseline_post</td>
+<td align="right">15.210156</td>
+</tr>
+<tr class="odd">
+<td>sample.kidney_42_baseline_pre</td>
+<td align="left">42</td>
+<td align="left">baseline_pre</td>
+<td align="right">24.953453</td>
+</tr>
+</tbody>
+</table>
 
 </div>
 </div>
+
+
+
+
+
+
             </section>
 
           </div>

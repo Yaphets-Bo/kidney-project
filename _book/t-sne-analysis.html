@@ -6,26 +6,26 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>A Report Example</title>
-  <meta name="description" content="A Report Example">
+  <meta name="description" content="My first attemp to write scientific report via bookdown.">
   <meta name="generator" content="bookdown 0.5 and GitBook 2.6.7">
 
   <meta property="og:title" content="A Report Example" />
   <meta property="og:type" content="book" />
   
   
-  
-  
+  <meta property="og:description" content="My first attemp to write scientific report via bookdown." />
+  <meta name="github-repo" content="Yaphets-Bo/kidneyproject" />
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="A Report Example" />
   
-  
+  <meta name="twitter:description" content="My first attemp to write scientific report via bookdown." />
   
 
 <meta name="author" content="Bo Sun">
 
 
-<meta name="date" content="2017-11-18">
+<meta name="date" content="2017-11-19">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -105,11 +105,12 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="2.2" data-path="t-sne-analysis.html"><a href="t-sne-analysis.html#dataset-mouse"><i class="fa fa-check"></i><b>2.2</b> Dataset Mouse</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="quality-control.html"><a href="quality-control.html"><i class="fa fa-check"></i><b>3</b> Quality Control</a><ul>
-<li class="chapter" data-level="3.1" data-path="quality-control.html"><a href="quality-control.html#gene-filtering"><i class="fa fa-check"></i><b>3.1</b> gene filtering</a></li>
+<li class="chapter" data-level="3.1" data-path="quality-control.html"><a href="quality-control.html#gf"><i class="fa fa-check"></i><b>3.1</b> gene filtering</a></li>
 <li class="chapter" data-level="3.2" data-path="quality-control.html"><a href="quality-control.html#check-log-nomality"><i class="fa fa-check"></i><b>3.2</b> check log-nomality</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="pseudo-time-trajectory-prediction.html"><a href="pseudo-time-trajectory-prediction.html"><i class="fa fa-check"></i><b>4</b> Pseudo-time trajectory prediction</a><ul>
-<li class="chapter" data-level="4.1" data-path="pseudo-time-trajectory-prediction.html"><a href="pseudo-time-trajectory-prediction.html#set-ordering-genes-to-be-used-in-monocles-trajectory-construction"><i class="fa fa-check"></i><b>4.1</b> Set ordering genes to be used in Monocle’s trajectory construction</a></li>
+<li class="chapter" data-level="4.1" data-path="pseudo-time-trajectory-prediction.html"><a href="pseudo-time-trajectory-prediction.html#step-1-2-set-ordering-genes-and-reduce-demisionality"><i class="fa fa-check"></i><b>4.1</b> Step 1-2: Set ordering genes and reduce demisionality</a></li>
+<li class="chapter" data-level="4.2" data-path="pseudo-time-trajectory-prediction.html"><a href="pseudo-time-trajectory-prediction.html#step-3-ordering-the-cells-in-pseudotime"><i class="fa fa-check"></i><b>4.2</b> Step 3: ordering the cells in pseudotime</a></li>
 </ul></li>
 </ul>
 
@@ -142,41 +143,16 @@ tbl<span class="op">$</span>time_point =<span class="st"> </span>Labels
 tbl <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> V1, <span class="dt">y =</span> V2, <span class="dt">label =</span> persons, <span class="dt">col =</span> time_point)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_text</span>()</code></pre></div>
 <div class="figure"><span id="fig:human"></span>
-<img src="_main_files/figure-html/human-1.png" alt="Similarity between samples and time points(backgroud deducted)." width="672" />
+<img src="_main_files/figure-html/human-1.png" alt="**Similarity between samples and time points(backgroud deducted).**" width="672" />
 <p class="caption">
-Figure 2.1: Similarity between samples and time points(backgroud deducted).
+Figure 2.1: <strong>Similarity between samples and time points(backgroud deducted).</strong>
 </p>
 </div>
-<p>Figure @ref{fig:human} shows:<br />
-The clustering is a lot better after we decuction the <strong>pre</strong> expression profile from <strong>post</strong>, <strong>1 year</strong>, and <strong>3 months</strong>. And is pretty conservative among different seeds and proper perplexity(20-30 tested).</p>
-<ul>
-<li>Long-time profiles are adjacent to each other and can be separated from the post cluster.</li>
-<li>For kidney 26, 12, and 22, etc. The post is near the long-time ones, may suggest a better healing ability of the person or a low-level injury??</li>
-<li>For kidneys which <strong>1 year</strong> is far from <strong>3 months</strong>, like 37, 01, 23. May suggest a high-variablity person or kidney-influnced lifystyle…?
-<ul>
-<li>23 is a little more interesting, the 3 months is more close to post, which may suggest the long-term influnce comes slow on this person</li>
-</ul></li>
-</ul>
+<p>In figure <a href="t-sne-analysis.html#fig:human">2.1</a>: <strong>pre</strong> expression profile(<span class="math inline">\(log(FPKM + 1)\)</span>) was deducted from <strong>post</strong>, <strong>1 year</strong>, and <strong>3 months</strong>. And then the dimension reduction was done using <a href="https://lvdmaaten.github.io/tsne/">t-SNE</a> algorithm.<br />
+The plot makes more sense now: later time points(<strong>3 months</strong>, <strong>1 year</strong>) stick together and are separated from <strong>post</strong> points, upon which a <em>Pseudotime Sample Trajectory</em> was constructed by means of <a href="http://cole-trapnell-lab.github.io/monocle-release/docs/#constructing-single-cell-trajectories">Monocle 2</a>.</p>
 </div>
 <div id="dataset-mouse" class="section level2">
 <h2><span class="header-section-number">2.2</span> Dataset Mouse</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mouse &lt;-<span class="st"> </span><span class="kw">fread</span>(<span class="st">&quot;C:/Users/Ryan/Documents/3.Kidney/MOUSE_all.gene_RPKM.csv&quot;</span>)
-
-<span class="kw">setnames</span>(mouse, <span class="st">&quot;V1&quot;</span>, <span class="st">&quot;EnsembleID&quot;</span>)
-mouse.ge &lt;-<span class="st"> </span>mouse[, <span class="op">-</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>)]
-mouse.ge &lt;-<span class="st"> </span><span class="kw">log2</span>(mouse.ge <span class="op">+</span><span class="st"> </span><span class="dv">1</span>)
-mouse.ge &lt;-<span class="st"> </span><span class="kw">t</span>(mouse.ge)
-
-Labels &lt;-<span class="st"> </span><span class="kw">colsplit</span>(<span class="kw">rownames</span>(mouse.ge), <span class="dt">pattern =</span> <span class="st">&quot;-&quot;</span>, <span class="dt">names =</span> <span class="kw">c</span>(<span class="st">&quot;Mouse&quot;</span>, <span class="st">&quot;grp&quot;</span>))<span class="op">$</span>Mouse
-ind &lt;-<span class="st"> </span><span class="kw">regexpr</span>(<span class="st">&quot;[[:digit:]]&quot;</span>, Labels, <span class="dt">perl =</span>T)
-prefix =<span class="st"> </span><span class="kw">c</span>(); time_point =<span class="st"> </span><span class="kw">c</span>()
-<span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(Labels)) {
-  prefix &lt;-<span class="st"> </span><span class="kw">append</span>(prefix, <span class="kw">substr</span>(Labels[i], <span class="dv">1</span>, ind[i] <span class="op">-</span><span class="st"> </span><span class="dv">1</span>))
-  time_point &lt;-<span class="st"> </span><span class="kw">append</span>(time_point, <span class="kw">substr</span>(Labels[i], ind[i], <span class="kw">nchar</span>(Labels[i])))
-}
-
-<span class="kw">set.seed</span>(<span class="dv">81</span>)
-tsne &lt;-<span class="st"> </span><span class="kw">Rtsne</span>(mouse.ge, <span class="dt">dims =</span> <span class="dv">2</span>, <span class="dt">perplexity =</span> <span class="dv">9</span>, <span class="dt">verbose =</span> T, <span class="dt">max_iter =</span> <span class="dv">500</span>)</code></pre></div>
 <pre><code>## Read the 49 x 49 data matrix successfully!
 ## Using no_dims = 2, perplexity = 9.000000, and theta = 0.500000
 ## Computing input similarities...
@@ -194,20 +170,15 @@ tsne &lt;-<span class="st"> </span><span class="kw">Rtsne</span>(mouse.ge, <span
 ## Iteration 350: error is 0.545783 (50 iterations in 0.00 seconds)
 ## Iteration 400: error is 0.351512 (50 iterations in 0.00 seconds)
 ## Iteration 450: error is 0.204200 (50 iterations in 0.01 seconds)
-## Iteration 500: error is 0.186298 (50 iterations in 0.00 seconds)
+## Iteration 500: error is 0.186298 (50 iterations in 0.01 seconds)
 ## Fitting performed in 0.06 seconds.</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tbl &lt;-<span class="st"> </span><span class="kw">tbl_df</span>(tsne<span class="op">$</span>Y)
-tbl<span class="op">$</span>sample_type =<span class="st"> </span>prefix
-tbl<span class="op">$</span>time_point =<span class="st"> </span>time_point
-tbl <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> V1, <span class="dt">y =</span> V2, <span class="dt">label =</span> time_point, <span class="dt">col =</span> sample_type)) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">geom_text</span>()</code></pre></div>
-<div class="figure">
-<img src="_main_files/figure-html/tSNE_mouse-1.png" alt="Same t-SNE analysis for mouse data." width="672" />
+<div class="figure"><span id="fig:mouse"></span>
+<img src="_main_files/figure-html/mouse-1.png" alt="Same t-SNE analysis for mouse data." width="672" />
 <p class="caption">
-(#fig:tSNE_mouse)Same t-SNE analysis for mouse data.
+Figure 2.2: Same t-SNE analysis for mouse data.
 </p>
 </div>
-<p>As shown in the Figure @ref{fig:tSNE_mouse}:</p>
+<p>As shown in the Figure <a href="t-sne-analysis.html#fig:mouse">2.2</a>:</p>
 <ol style="list-style-type: decimal">
 <li><p>The syntaxis of same time-point and same mouse-type are stronger in this Mouse data, though it has less sample points here–49 samples in total, divided into three types(IRI, NORM, SHAM), each time point with 3 replicate except for 6mN has 4.</p></li>
 <li><p>The perplexity = 9 and set.seed(81) were tuned mannualy by hands-and-eyes. Based on tens of runs, the results are alike–the clustering is good. Perplexity &gt;5 and &lt;= 10 generally works here for limitied times of run done by myself.</p></li>

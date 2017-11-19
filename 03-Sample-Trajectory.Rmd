@@ -1,6 +1,6 @@
 # Pseudo-time trajectory prediction
 
-```{r monocle-trajectory, cache = T, include = F}
+```{r monocle-trajectory, cache = T, include = F, warning = F}
 library(data.table)
 library(Rtsne)
 library(dplyr)
@@ -35,16 +35,21 @@ pd <- new("AnnotatedDataFrame", data = sample_ann)
 human <- newCellDataSet(expr, phenoData = pd, featureData = fd,
                         expressionFamily = tobit())
 
-save(human, file = 'monocle.RData') # you can load it when you have problem
-
 human <- detectGenes(human, min_expr = 0.1)
 plot(density(fData(human)$num_cells_expressed))
 expressed.gene <- row.names(subset(fData(human), num_cells_expressed >= 50))
 
 ```
 
-## Set ordering genes to be used in Monocle's trajectory construction
-```{r de, cache = T}
+## Step 1-2: Set ordering genes and reduce demisionality
+
+> " Monocle looks for genes that vary in "interesting" (i.e. not just noisy) ways, and uses these to structure the data."
+>
+> --- Monocle Mannual
+
+This is the *feature selection* step in the Monocle's machine learning algorithm for this job, which has major impact of the shape of the trajectory to be constructed.
+
+```{r de, cache = T, warning = F}
 diff_test_res <- differentialGeneTest(human[expressed.gene,],
                                       fullModelFormulaStr = "~time")
 
@@ -56,9 +61,11 @@ human <- reduceDimension(human, max_components = 2,
 human <- orderCells(human)
 ```
 
-17985 of 22047 genes left. (The 22047 genes are the genes that pass the fitering described in 3.1). 
+17985 of 22047 genes left. (The 22047 genes are the genes that express "interestingly" as described in Section \@ref(gf)). 
 
-```{r time, fic.cap = 'Sample trajectory colored by time(pre/post)'}
+
+## Step 3: ordering the cells in pseudotime
+```{r time, fic.cap = 'Sample trajectory colored by real time points'}
 plot_cell_trajectory(human, color_by = "time")
 ```
 
@@ -68,5 +75,14 @@ plot_cell_trajectory(human, color_by = "Pseudotime")
 
 Monocle doesn't know a priori which of the trajectory of the tree to call the "beginning". So the Pseudotime is plotted reversly. It's a little bit tricky to make it right. But in our case, it's clear that the left is beginning and the right is end since the left points are pre and right points are post, as suggested in the previous figuer. 
 
+***
 
+I don't know how to add labels to this figure since it was plotted by Monocle built-in functions. And it will also be messy on the plot. So a table will be good?  
+
+```{r}
+knitr::kable(
+  pData(human)[,c("person", "time", "Pseudotime")], booktabs = TRUE,
+  caption = 'A table of the Pseudotime generated'
+)
+```
 
