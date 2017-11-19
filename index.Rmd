@@ -14,7 +14,7 @@ description: "My first attemp to write scientific report via bookdown."
 
 # Prerequsites
 
-For now, you have to install the development versions of **bookdown** from Github:
+For now, you have to install the development versions of **bookdown**[@R-bookdown] from Github:
 
 ```{r eval=FALSE}
 devtools::install_github("rstudio/bookdown")

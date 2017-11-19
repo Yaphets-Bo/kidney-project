@@ -33,7 +33,7 @@
   
   
 <link rel="prev" href="quality-control.html">
-
+<link rel="next" href="references.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -112,6 +112,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="4.1" data-path="pseudo-time-trajectory-prediction.html"><a href="pseudo-time-trajectory-prediction.html#step-1-2-set-ordering-genes-and-reduce-demisionality"><i class="fa fa-check"></i><b>4.1</b> Step 1-2: Set ordering genes and reduce demisionality</a></li>
 <li class="chapter" data-level="4.2" data-path="pseudo-time-trajectory-prediction.html"><a href="pseudo-time-trajectory-prediction.html#step-3-ordering-the-cells-in-pseudotime"><i class="fa fa-check"></i><b>4.2</b> Step 3: ordering the cells in pseudotime</a></li>
 </ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 </ul>
 
       </nav>
@@ -137,7 +138,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>&quot; Monocle looks for genes that vary in “interesting” (i.e. not just noisy) ways, and uses these to structure the data.&quot;</p>
 <p>— Monocle Mannual</p>
 </blockquote>
-<p>This is the <em>feature selection</em> step in the Monocle’s machine learning algorithm for this job, which has major impact of the shape of the trajectory to be constructed.</p>
+<p>This is the <em>feature selection</em> step in the Monocle’s machine learning algorithm for this job, which has major impact of the shape of the trajectory to be constructed<span class="citation">(Trapnell <a href="#ref-R-monocle">2017</a>)</span>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">diff_test_res &lt;-<span class="st"> </span><span class="kw">differentialGeneTest</span>(human[expressed.gene,],
                                       <span class="dt">fullModelFormulaStr =</span> <span class="st">&quot;~time&quot;</span>)
 
@@ -678,22 +679,21 @@ Figure 4.1: Same trajectory colored by Pseudotime
 </tr>
 </tbody>
 </table>
-
 </div>
 </div>
-
-
-
-
-
-
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-R-monocle">
+<p>Trapnell, Cole. 2017. <em>Monocle: Clustering, Differential Expression, and Trajectory Analysis for Single- Cell Rna-Seq</em>. <a href="https://bioconductor.org/packages/release/bioc/html/monocle.html" class="uri">https://bioconductor.org/packages/release/bioc/html/monocle.html</a>.</p>
+</div>
+</div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="quality-control.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="quality-control.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

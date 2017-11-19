@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="t-sne-analysis.html">
-<link rel="next" href="pseudo-time-trajectory-prediction.html">
+<link rel="prev" href="pseudo-time-trajectory-prediction.html">
+
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -130,42 +130,31 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="quality-control" class="section level1">
-<h1><span class="header-section-number">3</span> Quality Control</h1>
-<p>Note that Monocle assume the gene expresison is log-normally distributed. So here we perform some filtering and then give it a check..<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a> And it won’t intervere following analysis since in this bulk analysis, we are not facing issues of Single-Cell protocol like <em>low mRNA cell sample</em> or <em>doublets or triplets</em>, etc.</p>
-<div id="gf" class="section level2">
-<h2><span class="header-section-number">3.1</span> gene filtering</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">human &lt;-<span class="st"> </span><span class="kw">detectGenes</span>(human, <span class="dt">min_expr =</span> <span class="fl">0.1</span>)
-<span class="kw">plot</span>(<span class="kw">density</span>(<span class="kw">fData</span>(human)<span class="op">$</span>num_cells_expressed))</code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-4-1.png" width="672" /> The number of cells express a certain gene is bimodal distributed, for <span class="math inline">\(threshold = .1\)</span>, some genes are expressed in all 163 samples, and some genes are only expressed in a little few samples.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">expressed.gene &lt;-<span class="st"> </span><span class="kw">row.names</span>(<span class="kw">subset</span>(<span class="kw">fData</span>(human), num_cells_expressed <span class="op">&gt;=</span><span class="st"> </span><span class="dv">50</span>))</code></pre></div>
-<ul>
-<li>Genes has &gt;= 50 samples with <span class="math inline">\(RPKM &gt;= .1\)</span> are kept. (22047/54514 genes left)</li>
-</ul>
-<hr />
-</div>
-<div id="check-log-nomality" class="section level2">
-<h2><span class="header-section-number">3.2</span> check log-nomality</h2>
-<p>As suggest in Monocle mannual, take log(rpkm + 1), scale each log-transformed gene expression(subtract the mean and divided by <span class="math inline">\(sd\)</span>), make the whole log-rpkm matrix a single vector then compare it to a standard normal.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">L &lt;-<span class="st"> </span><span class="kw">log</span>(<span class="kw">exprs</span>(human[expressed.gene,]) <span class="op">+</span><span class="st"> </span><span class="dv">1</span>)</code></pre></div>
-<p>Apparently, our filtered data pass the log-normality test. <img src="_main_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
-<p><img src="_main_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<div id="references" class="section level1 unnumbered">
+<h1>References</h1>
 
+<div id="refs" class="references">
+<div>
+<p>Trapnell, Cole. 2017. <em>Monocle: Clustering, Differential Expression, and Trajectory Analysis for Single- Cell Rna-Seq</em>. <a href="https://bioconductor.org/packages/release/bioc/html/monocle.html" class="uri">https://bioconductor.org/packages/release/bioc/html/monocle.html</a>.</p>
+</div>
+<div>
+<p>Xie, Yihui. 2017. <em>Bookdown: Authoring Books and Technical Documents with R Markdown</em>. <a href="https://CRAN.R-project.org/package=bookdown" class="uri">https://CRAN.R-project.org/package=bookdown</a>.</p>
 </div>
 </div>
-<div class="footnotes">
-<hr />
-<ol start="1">
-<li id="fn1"><p>Monocle is tuned for Single-Cell RNA-seq, so does the quality control described in the <a href="http://cole-trapnell-lab.github.io/monocle-release/docs/#recommended-analysis-protocol">Recommended Analysis Protocol</a><a href="quality-control.html#fnref1">↩</a></p></li>
-</ol>
 </div>
+
+
+
+
+
+
             </section>
 
           </div>
         </div>
       </div>
-<a href="t-sne-analysis.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="pseudo-time-trajectory-prediction.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="pseudo-time-trajectory-prediction.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

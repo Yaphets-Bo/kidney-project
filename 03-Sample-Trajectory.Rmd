@@ -47,7 +47,7 @@ expressed.gene <- row.names(subset(fData(human), num_cells_expressed >= 50))
 >
 > --- Monocle Mannual
 
-This is the *feature selection* step in the Monocle's machine learning algorithm for this job, which has major impact of the shape of the trajectory to be constructed.
+This is the *feature selection* step in the Monocle's machine learning algorithm for this job, which has major impact of the shape of the trajectory to be constructed[@R-monocle].
 
 ```{r de, cache = T, warning = F}
 diff_test_res <- differentialGeneTest(human[expressed.gene,],
@@ -86,3 +86,4 @@ knitr::kable(
 )
 ```
 
+`r if (knitr:::is_html_output()) '# References {-}'`
