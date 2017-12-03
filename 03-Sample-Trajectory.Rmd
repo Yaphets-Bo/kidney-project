@@ -75,15 +75,76 @@ plot_cell_trajectory(human, color_by = "Pseudotime")
 
 Monocle doesn't know a priori which of the trajectory of the tree to call the "beginning". So the Pseudotime is plotted reversly. It's a little bit tricky to make it right. But in our case, it's clear that the left is beginning and the right is end since the left points are pre and right points are post, as suggested in the previous figuer. 
 
-***
-
-I don't know how to add labels to this figure since it was plotted by Monocle built-in functions. And it will also be messy on the plot. So a table will be good?  
-
 ```{r}
 knitr::kable(
   pData(human)[,c("person", "time", "Pseudotime")], booktabs = TRUE,
   caption = 'A table of the Pseudotime generated'
 )
+```
+
+## Two-dimensional case
+```{r pseudo-time-conjecture, cache = T, include = F, warning = F}
+dt <- fread("C:/Users/Ryan/Documents/3.Kidney/HUMAN_all.gene_RPKM.xls")
+dt <- dt[!duplicated(dt$external_gene_name)]
+
+setcolorder(dt,
+            c(names(dt)[1:7],
+              names(dt)[-(1:7)][order(names(dt)[-(1:7)])])
+)
+
+expr <- as.matrix(dt[,-(1:7)])
+expr <- expr[,grep("pre|post", colnames(expr))]
+gene_ann <- data.frame(dt[,1:7])
+setnames(gene_ann, "external_gene_name", "gene_short_name")
+rownames(gene_ann) = dt$ensembl_gene_id
+rownames(expr) <- dt$ensembl_gene_id
+sample_ann <- data.frame(sampleID = colnames(expr), person = substr(colnames(expr), 15,16),
+                         time = substr(colnames(expr), 18, nchar(colnames(expr))))
+rownames(sample_ann) = sample_ann$sampleID
+
+fd <- new("AnnotatedDataFrame", data = gene_ann)
+pd <- new("AnnotatedDataFrame", data = sample_ann)
+
+
+human <- newCellDataSet(expr, phenoData = pd, featureData = fd,
+                        expressionFamily = tobit())
+
+human <- detectGenes(human, min_expr = 0.1)
+plot(density(fData(human)$num_cells_expressed))
+expressed.gene <- row.names(subset(fData(human), num_cells_expressed >= 50))
+
+diff_test_res <- differentialGeneTest(human[expressed.gene,],
+                                      fullModelFormulaStr = "~time + person", cores = 2)
+
+ordering_genes <- row.names (subset(diff_test_res, qval < 0.01))
+ordering_genes <- intersect(ordering_genes, expressed.gene)
+human <- setOrderingFilter(human, ordering_genes)
+
+human <- reduceDimension(human, max_components = 2,
+                         method = 'DDRTree')
+human <- orderCells(human)
+```
+
+```{r 2-covar-traj, fic.cap = 'A two dimensional trajectory colored by real time points'}
+plot_cell_trajectory(human, color_by = "time")
+```
+
+The sample rank and corresponding pseudo-time:
+```{r, echo = F}
+cat(as.character(pData(human)$person[grep("post",pData(human)$time)][order(pData(human)$Pseudo[grep("post",pData(human)$time)], decreasing = T)]), sep = " ")
+
+m = max(pData(human)$Pseudo[grep("post",pData(human)$time)][order(pData(human)$Pseudo[grep("post",pData(human)$time)], decreasing = T)])
+cat(as.character(round(-pData(human)$Pseudo[grep("post",pData(human)$time)][order(pData(human)$Pseudo[grep("post",pData(human)$time)], decreasing = T)] +ｍ,2)), sep = " ")
+
+```
+
+Or reversily: 
+```{r, echo = F}
+cat(as.character(pData(human)$person[grep("post",pData(human)$time)][order(pData(human)$Pseudo[grep("post",pData(human)$time)])]), sep = " ")
+
+
+cat(as.character(round(pData(human)$Pseudo[grep("post",pData(human)$time)][order(pData(human)$Pseudo[grep("post",pData(human)$time)])],2)), sep = " ")
+
 ```
 
 `r if (knitr:::is_html_output()) '# References {-}'`

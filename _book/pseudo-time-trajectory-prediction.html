@@ -25,7 +25,7 @@
 <meta name="author" content="Bo Sun">
 
 
-<meta name="date" content="2017-11-19">
+<meta name="date" content="2017-12-01">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -111,6 +111,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="4" data-path="pseudo-time-trajectory-prediction.html"><a href="pseudo-time-trajectory-prediction.html"><i class="fa fa-check"></i><b>4</b> Pseudo-time trajectory prediction</a><ul>
 <li class="chapter" data-level="4.1" data-path="pseudo-time-trajectory-prediction.html"><a href="pseudo-time-trajectory-prediction.html#step-1-2-set-ordering-genes-and-reduce-demisionality"><i class="fa fa-check"></i><b>4.1</b> Step 1-2: Set ordering genes and reduce demisionality</a></li>
 <li class="chapter" data-level="4.2" data-path="pseudo-time-trajectory-prediction.html"><a href="pseudo-time-trajectory-prediction.html#step-3-ordering-the-cells-in-pseudotime"><i class="fa fa-check"></i><b>4.2</b> Step 3: ordering the cells in pseudotime</a></li>
+<li class="chapter" data-level="4.3" data-path="pseudo-time-trajectory-prediction.html"><a href="pseudo-time-trajectory-prediction.html#two-dimensional-case"><i class="fa fa-check"></i><b>4.3</b> Two-dimensional case</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 </ul>
@@ -162,14 +163,12 @@ Figure 4.1: Same trajectory colored by Pseudotime
 </p>
 </div>
 <p>Monocle doesn’t know a priori which of the trajectory of the tree to call the “beginning”. So the Pseudotime is plotted reversly. It’s a little bit tricky to make it right. But in our case, it’s clear that the left is beginning and the right is end since the left points are pre and right points are post, as suggested in the previous figuer.</p>
-<hr />
-<p>I don’t know how to add labels to this figure since it was plotted by Monocle built-in functions. And it will also be messy on the plot. So a table will be good?</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">knitr<span class="op">::</span><span class="kw">kable</span>(
   <span class="kw">pData</span>(human)[,<span class="kw">c</span>(<span class="st">&quot;person&quot;</span>, <span class="st">&quot;time&quot;</span>, <span class="st">&quot;Pseudotime&quot;</span>)], <span class="dt">booktabs =</span> <span class="ot">TRUE</span>,
   <span class="dt">caption =</span> <span class="st">&#39;A table of the Pseudotime generated&#39;</span>
 )</code></pre></div>
 <table>
-<caption><span id="tab:unnamed-chunk-9">Table 4.1: </span>A table of the Pseudotime generated</caption>
+<caption><span id="tab:unnamed-chunk-12">Table 4.1: </span>A table of the Pseudotime generated</caption>
 <thead>
 <tr class="header">
 <th></th>
@@ -679,6 +678,17 @@ Figure 4.1: Same trajectory colored by Pseudotime
 </tr>
 </tbody>
 </table>
+</div>
+<div id="two-dimensional-case" class="section level2">
+<h2><span class="header-section-number">4.3</span> Two-dimensional case</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot_cell_trajectory</span>(human, <span class="dt">color_by =</span> <span class="st">&quot;time&quot;</span>)</code></pre></div>
+<p><img src="_main_files/figure-html/2-covar-traj-1.png" width="672" /></p>
+<p>The sample rank and corresponding pseudo-time:</p>
+<pre><code>## 07 21 22 09 17 04 26 10 35 23 34 19 15 31 28 03 29 32 01 02 13 20 40 36 16 18 38 11 05 24 25 14 27 41 30 06 42 12 08 39 33 37</code></pre>
+<pre><code>## 0 5.51 6.25 7.56 9.01 9.77 26.39 26.4 30.68 33.46 33.55 33.72 40.93 43.48 45.92 46.7 47.11 47.85 48.75 48.9 48.93 49.58 53.56 53.96 56.18 61.76 64.31 65.68 67.09 72.56 73.62 75.71 86.21 86.42 86.43 86.7 87.21 87.43 87.89 88.13 88.93 89.98</code></pre>
+<p>Or reversily:</p>
+<pre><code>## 37 33 39 08 12 42 06 30 41 27 14 25 24 05 11 38 18 16 36 40 20 13 02 01 32 29 03 28 31 15 19 34 23 35 10 26 04 17 09 22 21 07</code></pre>
+<pre><code>## 0 1.05 1.85 2.09 2.55 2.77 3.28 3.55 3.56 3.77 14.27 16.36 17.42 22.89 24.31 25.67 28.22 33.8 36.02 36.42 40.4 41.05 41.08 41.23 42.13 42.87 43.28 44.06 46.5 49.05 56.26 56.43 56.53 59.3 63.58 63.59 80.21 80.97 82.42 83.73 84.47 89.98</code></pre>
 </div>
 </div>
 <h3>References</h3>
