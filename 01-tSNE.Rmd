@@ -6,7 +6,7 @@ kidney 20, 41, 42 miss 1 year
 kidney 29 miss pre  
 kidney 19 miss 3 months  
 ```{r message=FALSE, include=FALSE}
-
+library(VennDiagram)
 library(data.table)
 library(Rtsne)
 library(dplyr)

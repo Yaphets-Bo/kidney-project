@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>A Report Example</title>
+  <meta name="description" content="My first attemp to write scientific report via bookdown.">
+  <meta name="generator" content="bookdown 0.5 and GitBook 2.6.7">
+
+  <meta property="og:title" content="A Report Example" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="My first attemp to write scientific report via bookdown." />
+  <meta name="github-repo" content="Yaphets-Bo/kidneyproject" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="A Report Example" />
+  
+  <meta name="twitter:description" content="My first attemp to write scientific report via bookdown." />
+  
+
+<meta name="author" content="Bo Sun">
+
+
+<meta name="date" content="2017-12-06">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="pseudo-time-trajectory-prediction.html">
+<link rel="next" href="references.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Prerequsites</a></li>
+<li class="chapter" data-level="2" data-path="t-sne-analysis.html"><a href="t-sne-analysis.html"><i class="fa fa-check"></i><b>2</b> t-SNE analysis</a><ul>
+<li class="chapter" data-level="2.1" data-path="t-sne-analysis.html"><a href="t-sne-analysis.html#dataset-human"><i class="fa fa-check"></i><b>2.1</b> Dataset Human</a></li>
+<li class="chapter" data-level="2.2" data-path="t-sne-analysis.html"><a href="t-sne-analysis.html#dataset-mouse"><i class="fa fa-check"></i><b>2.2</b> Dataset Mouse</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="quality-control.html"><a href="quality-control.html"><i class="fa fa-check"></i><b>3</b> Quality Control</a><ul>
+<li class="chapter" data-level="3.1" data-path="quality-control.html"><a href="quality-control.html#gf"><i class="fa fa-check"></i><b>3.1</b> gene filtering</a></li>
+<li class="chapter" data-level="3.2" data-path="quality-control.html"><a href="quality-control.html#check-log-nomality"><i class="fa fa-check"></i><b>3.2</b> check log-nomality</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="pseudo-time-trajectory-prediction.html"><a href="pseudo-time-trajectory-prediction.html"><i class="fa fa-check"></i><b>4</b> Pseudo-time trajectory prediction</a><ul>
+<li class="chapter" data-level="4.1" data-path="pseudo-time-trajectory-prediction.html"><a href="pseudo-time-trajectory-prediction.html#step-1-2-set-ordering-genes-and-reduce-demisionality"><i class="fa fa-check"></i><b>4.1</b> Step 1-2: Set ordering genes and reduce demisionality</a></li>
+<li class="chapter" data-level="4.2" data-path="pseudo-time-trajectory-prediction.html"><a href="pseudo-time-trajectory-prediction.html#step-3-ordering-the-cells-in-pseudotime"><i class="fa fa-check"></i><b>4.2</b> Step 3: ordering the cells in pseudotime</a></li>
+<li class="chapter" data-level="4.3" data-path="pseudo-time-trajectory-prediction.html"><a href="pseudo-time-trajectory-prediction.html#two-dimensional-case"><i class="fa fa-check"></i><b>4.3</b> Two-dimensional case</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="homologs-reduction-of-de-gene-set.html"><a href="homologs-reduction-of-de-gene-set.html"><i class="fa fa-check"></i><b>5</b> Homologs Reduction of DE gene set</a><ul>
+<li class="chapter" data-level="5.1" data-path="homologs-reduction-of-de-gene-set.html"><a href="homologs-reduction-of-de-gene-set.html#download-orthology-information-from-biomart"><i class="fa fa-check"></i><b>5.1</b> Download orthology information from BioMart</a></li>
+<li class="chapter" data-level="5.2" data-path="homologs-reduction-of-de-gene-set.html"><a href="homologs-reduction-of-de-gene-set.html#focus-de-genes-of-human-and-mouse-on-homologous-genes-only"><i class="fa fa-check"></i><b>5.2</b> Focus DE genes of Human and Mouse on homologous genes only</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">A Report Example</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="homologs-reduction-of-de-gene-set" class="section level1">
+<h1><span class="header-section-number">5</span> Homologs Reduction of DE gene set</h1>
+<div id="download-orthology-information-from-biomart" class="section level2">
+<h2><span class="header-section-number">5.1</span> Download orthology information from BioMart</h2>
+<ul>
+<li>Select the dataset Human genes(GRCh38.p10), and look for homologous information in “Attributes”.
+<ul>
+<li>Select Mouse Orthologues, output <strong>Mouse gene stable ID</strong> and <strong>Mouse gene name</strong></li>
+<li>unique resutls only</li>
+<li>if you want, you could also output homology type and orthology confidence if further filtering needed</li>
+</ul></li>
+</ul>
+</div>
+<div id="focus-de-genes-of-human-and-mouse-on-homologous-genes-only" class="section level2">
+<h2><span class="header-section-number">5.2</span> Focus DE genes of Human and Mouse on homologous genes only</h2>
+<p>For DE genes you provided, <strong><em>group_kidney_baseline_post-group_kidney_baseline_pre_Differential_Expression</em></strong>, duplicated rows are observed.</p>
+<p>Here, after reduction to homologous genes, 74 duplicated rows are observed, and removed. A table showing some duplicated rows is attached in the end of this chapter.</p>
+<p>A few of duplicated rows are shown below go give you a sense of what’s going on:</p>
+<p>These duplicates should be removed, since all effective informaiton(e.g., gene id, gene exprs, etc.) is duplicated, except for the column <em>entrezgene</em>, which is nonsense here.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">humanDE.dedup.homo.logFC &lt;-<span class="st"> </span>human.de.dedup.homo[<span class="kw">abs</span>(logFC) <span class="op">&gt;=</span><span class="st"> </span><span class="dv">1</span>,]
+<span class="kw">dim</span>(humanDE.dedup.homo.logFC)</code></pre></div>
+<pre><code>## [1] 199 179</code></pre>
+<p><strong>199</strong> Human DE genes has <span class="math inline">\(|\textbf{logFC}| &gt;= 1\)</span>. And these 199 genes enters the following Venn Diagram Comparison with mouse.</p>
+<hr />
+<p>For mouse early response genes, <em>IRI2h</em> and <em>IRI4h</em> DE gene lists are united and removed duplicates.<br />
+<strong>1340</strong> Mouse genes enters the Venn Diagram comparison.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sum</span>(humanDE.dedup.homo.logFC[,external_gene_name] <span class="op">%in%</span><span class="st"> </span>mouse.DE.dedup.homo[,name])</code></pre></div>
+<pre><code>## [1] 120</code></pre>
+<blockquote>
+<p>120 genes shared by human and mouse early response genes.</p>
+</blockquote>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">common &lt;-<span class="st"> </span><span class="kw">sum</span>(humanDE.dedup.homo.logFC[,external_gene_name] <span class="op">%in%</span><span class="st"> </span>mouse.DE.dedup.homo[,name])
+human.de =<span class="st"> </span><span class="kw">dim</span>(humanDE.dedup.homo.logFC)[<span class="dv">1</span>]
+mouse.de =<span class="st"> </span><span class="kw">dim</span>(mouse.DE.dedup.homo)[<span class="dv">1</span>]
+Pop.Size =<span class="st"> </span><span class="dv">20435</span> <span class="co"># acquired from BioMart orthology file, 19949 out of 63967 human genes</span>
+                 <span class="co"># has orthology in mouse, and the number in Mouse is 20435 </span>
+
+<span class="co"># the Hypergeometric Test</span>
+p.value =<span class="st"> </span><span class="kw">phyper</span>(common <span class="op">-</span><span class="st"> </span><span class="dv">1</span>,human.de,Pop.Size<span class="op">-</span>human.de,mouse.de,<span class="dt">lower.tail =</span> <span class="ot">FALSE</span>, <span class="dt">log.p =</span> <span class="ot">FALSE</span>)
+<span class="kw">formatC</span>(p.value, <span class="dt">format =</span> <span class="st">&quot;e&quot;</span>, <span class="dt">digits =</span> <span class="dv">2</span>)</code></pre></div>
+<pre><code>## [1] &quot;3.03e-90&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># same thing, switch the role of white/black ball</span>
+<span class="kw">formatC</span>(<span class="kw">phyper</span>(common <span class="op">-</span><span class="st"> </span><span class="dv">1</span>, mouse.de, Pop.Size <span class="op">-</span><span class="st"> </span>mouse.de, human.de, <span class="dt">lower.tail =</span> <span class="ot">FALSE</span>), <span class="dt">format =</span> <span class="st">&quot;e&quot;</span>, <span class="dt">digits =</span> <span class="dv">2</span>)</code></pre></div>
+<pre><code>## [1] &quot;3.03e-90&quot;</code></pre>
+<p>P.value given by Hypergeometric Test, which tells us observing this number of shared (homologous) genes are highly impossible. So the result is significant.</p>
+<div class="figure"><span id="fig:VennDiag"></span>
+<img src="_main_files/figure-html/VennDiag-1.png" alt="Intersection of early response genes after kidney injury bewteen Human and Mouse(homologous genes only)" width="672" />
+<p class="caption">
+Figure 5.1: Intersection of early response genes after kidney injury bewteen Human and Mouse(homologous genes only)
+</p>
+</div>
+<pre><code>##         Feature_ID entrezgene external_gene_name   gene_biotype
+## 1: ENSG00000120709      51307             FAM53C protein_coding
+## 2: ENSG00000120709  100128966             FAM53C protein_coding
+## 3: ENSG00000215126     644019              CBWD6 protein_coding
+## 4: ENSG00000215126     150472              CBWD6 protein_coding
+## 5: ENSG00000063587  105373378             ZNF275 protein_coding
+##    external_gene_source transcript_count
+## 1:          HGNC Symbol               11
+## 2:          HGNC Symbol               11
+## 3:          HGNC Symbol               18
+## 4:          HGNC Symbol               18
+## 5:          HGNC Symbol                3
+##                                                                       description
+## 1: family with sequence similarity 53 member C [Source:HGNC Symbol;Acc:HGNC:1336]
+## 2: family with sequence similarity 53 member C [Source:HGNC Symbol;Acc:HGNC:1336]
+## 3:                   COBW domain containing 6 [Source:HGNC Symbol;Acc:HGNC:31978]
+## 4:                   COBW domain containing 6 [Source:HGNC Symbol;Acc:HGNC:31978]
+## 5:                    zinc finger protein 275 [Source:HGNC Symbol;Acc:HGNC:13069]
+##    logFC   CI.L  CI.R  AveExpr     t  P.Value adj.P.Val         B linearFC
+## 1: 0.987 0.8300 1.140 3.299295 12.40 3.41e-25  4.31e-23 46.550878 1.982385
+## 2: 0.987 0.8300 1.140 3.299295 12.40 3.41e-25  4.31e-23 46.550878 1.982385
+## 3: 0.467 0.2970 0.636 1.187655  5.44 1.93e-07  4.12e-06  6.574506 1.382015
+## 4: 0.467 0.2970 0.636 1.187655  5.44 1.93e-07  4.12e-06  6.574506 1.382015
+## 5: 0.208 0.0901 0.326 3.978464  3.48 6.39e-04  5.21e-03 -1.646858 1.155210
+##    sample.kidney_03_1year sample.kidney_03_3months
+## 1:               3.636576                 3.368154
+## 2:               3.636576                 3.368154
+## 3:               1.243292                 1.488880
+## 4:               1.243292                 1.488880
+## 5:               4.003438                 4.169844
+##    sample.kidney_03_baseline_post sample.kidney_03_baseline_pre
+## 1:                       3.723797                      3.202024
+## 2:                       3.723797                      3.202024
+## 3:                       1.360814                      0.475842
+## 4:                       1.360814                      0.475842
+## 5:                       4.102976                      3.907095
+##    sample.kidney_02_1year sample.kidney_02_3months
+## 1:              3.8372542                3.7170117
+## 2:              3.8372542                3.7170117
+## 3:              0.4459626                0.4180447
+## 4:              0.4459626                0.4180447
+## 5:              3.9779259                4.1980232
+##    sample.kidney_02_baseline_post sample.kidney_02_baseline_pre
+## 1:                       5.371776                    3.86086070
+## 2:                       5.371776                    3.86086070
+## 3:                       1.098375                   -0.04108916
+## 4:                       1.098375                   -0.04108916
+## 5:                       3.967791                    3.90952281
+##    sample.kidney_01_1year sample.kidney_01_3months
+## 1:               4.355517                 3.348491
+## 2:               4.355517                 3.348491
+## 3:               1.123410                 1.060116
+## 4:               1.123410                 1.060116
+## 5:               4.020737                 4.007341
+##    sample.kidney_01_baseline_post sample.kidney_01_baseline_pre
+## 1:                       4.103783                      3.634818
+## 2:                       4.103783                      3.634818
+## 3:                       2.198686                      1.115985
+## 4:                       2.198686                      1.115985
+## 5:                       4.030160                      3.859914
+##    sample.kidney_15_1year sample.kidney_15_3months
+## 1:               2.925190                2.8846271
+## 2:               2.925190                2.8846271
+## 3:               1.455244                0.6010454
+## 4:               1.455244                0.6010454
+## 5:               4.295389                4.4663476
+##    sample.kidney_15_baseline_post sample.kidney_15_baseline_pre
+## 1:                       3.939071                      3.153092
+## 2:                       3.939071                      3.153092
+## 3:                       1.388874                      1.217730
+## 4:                       1.388874                      1.217730
+## 5:                       3.705945                      3.592231
+##    sample.kidney_14_1year sample.kidney_14_3months
+## 1:                   3.30                2.6855608
+## 2:                   3.30                2.6855608
+## 3:                   1.27                0.8249638
+## 4:                   1.27                0.8249638
+## 5:                   3.91                3.6609588
+##    sample.kidney_14_baseline_post sample.kidney_14_baseline_pre
+## 1:                       3.812431                      3.087868
+## 2:                       3.812431                      3.087868
+## 3:                       1.694800                      1.629818
+## 4:                       1.694800                      1.629818
+## 5:                       3.396317                      2.808155
+##    sample.kidney_13_1year sample.kidney_13_3months
+## 1:               3.182494                 3.071436
+## 2:               3.182494                 3.071436
+## 3:               1.056486                 1.184290
+## 4:               1.056486                 1.184290
+## 5:               3.844078                 3.921956
+##    sample.kidney_13_baseline_post sample.kidney_13_baseline_pre
+## 1:                       3.970925                      3.178906
+## 2:                       3.970925                      3.178906
+## 3:                       1.721018                      1.637831
+## 4:                       1.721018                      1.637831
+## 5:                       3.826813                      3.346973
+##    sample.kidney_12_1year sample.kidney_12_3months
+## 1:                   2.68                 2.450010
+## 2:                   2.68                 2.450010
+## 3:                   1.44                 1.442105
+## 4:                   1.44                 1.442105
+## 5:                   4.18                 3.738441
+##    sample.kidney_12_baseline_post sample.kidney_12_baseline_pre
+## 1:                       4.691675                      3.130082
+## 2:                       4.691675                      3.130082
+## 3:                       1.404869                      1.100818
+## 4:                       1.404869                      1.100818
+## 5:                       4.356117                      3.867048
+##    sample.kidney_11_1year sample.kidney_11_3months
+## 1:              3.0348320                2.9327618
+## 2:              3.0348320                2.9327618
+## 3:              0.7539799                0.6685492
+## 4:              0.7539799                0.6685492
+## 5:              3.9295185                4.3203045
+##    sample.kidney_11_baseline_post sample.kidney_11_baseline_pre
+## 1:                       3.948736                      2.738106
+## 2:                       3.948736                      2.738106
+## 3:                       1.899936                      1.385946
+## 4:                       1.899936                      1.385946
+## 5:                       3.903242                      3.527302
+##    sample.kidney_10_1year sample.kidney_10_3months
+## 1:               3.165478                 3.167038
+## 2:               3.165478                 3.167038
+## 3:               1.333828                 1.479765
+## 4:               1.333828                 1.479765
+## 5:               4.082349                 4.114962
+##    sample.kidney_10_baseline_post sample.kidney_10_baseline_pre
+## 1:                       4.654543                      3.117740
+## 2:                       4.654543                      3.117740
+## 3:                       2.046198                      0.959828
+## 4:                       2.046198                      0.959828
+## 5:                       4.419987                      4.139292
+##    sample.kidney_09_1year sample.kidney_09_3months
+## 1:               2.057278                2.8896593
+## 2:               2.057278                2.8896593
+## 3:               1.221909                0.7095385
+## 4:               1.221909                0.7095385
+## 5:               4.123131                3.8238346
+##    sample.kidney_09_baseline_post sample.kidney_09_baseline_pre
+## 1:                       4.360746                      2.981969
+## 2:                       4.360746                      2.981969
+## 3:                       1.354082                      1.123388
+## 4:                       1.354082                      1.123388
+## 5:                       4.392310                      4.012792
+##    sample.kidney_08_1year sample.kidney_08_3months
+## 1:               2.595078                 2.950199
+## 2:               2.595078                 2.950199
+## 3:               1.276067                 1.336382
+## 4:               1.276067                 1.336382
+## 5:               4.168311                 4.456895
+##    sample.kidney_08_baseline_post sample.kidney_08_baseline_pre
+## 1:                       4.055230                      3.973813
+## 2:                       4.055230                      3.973813
+## 3:                       1.509119                      1.462407
+## 4:                       1.509119                      1.462407
+## 5:                       3.575520                      4.632332
+##    sample.kidney_07_1year sample.kidney_07_3months
+## 1:               2.671736                2.6974463
+## 2:               2.671736                2.6974463
+## 3:               1.402801                0.8511557
+## 4:               1.402801                0.8511557
+## 5:               4.250140                3.8395987
+##    sample.kidney_07_baseline_post sample.kidney_07_baseline_pre
+## 1:                       4.958264                      3.136365
+## 2:                       4.958264                      3.136365
+## 3:                       1.047413                      1.671697
+## 4:                       1.047413                      1.671697
+## 5:                       4.448908                      3.922658
+##    sample.kidney_06_1year sample.kidney_06_3months
+## 1:               3.167117                2.9898675
+## 2:               3.167117                2.9898675
+## 3:               1.004609                0.6471059
+## 4:               1.004609                0.6471059
+## 5:               4.129446                4.2210973
+##    sample.kidney_06_baseline_post sample.kidney_06_baseline_pre
+## 1:                       3.268565                      2.784081
+## 2:                       3.268565                      2.784081
+## 3:                       1.934358                      1.615881
+## 4:                       1.934358                      1.615881
+## 5:                       4.127389                      4.039618
+##    sample.kidney_05_1year sample.kidney_05_3months
+## 1:               2.972610                 2.979861
+## 2:               2.972610                 2.979861
+## 3:               1.634354                 1.563405
+## 4:               1.634354                 1.563405
+## 5:               4.128551                 3.925659
+##    sample.kidney_05_baseline_post sample.kidney_05_baseline_pre
+## 1:                       3.156818                     3.0780948
+## 2:                       3.156818                     3.0780948
+## 3:                       1.369928                     0.7972426
+## 4:                       1.369928                     0.7972426
+## 5:                       4.177282                     4.1267440
+##    sample.kidney_04_1year sample.kidney_04_3months
+## 1:              2.8052919                2.9218685
+## 2:              2.8052919                2.9218685
+## 3:              0.0387226                0.3430846
+## 4:              0.0387226                0.3430846
+## 5:              4.3013904                4.3221250
+##    sample.kidney_04_baseline_post sample.kidney_04_baseline_pre
+## 1:                      4.8790647                     2.9076009
+## 2:                      4.8790647                     2.9076009
+## 3:                     -0.2713377                     0.2961662
+## 4:                     -0.2713377                     0.2961662
+## 5:                      4.3762367                     3.7966445
+##    sample.kidney_28_baseline_post sample.kidney_28_baseline_pre
+## 1:                       3.991503                      2.709511
+## 2:                       3.991503                      2.709511
+## 3:                       1.348396                      1.029600
+## 4:                       1.348396                      1.029600
+## 5:                       4.192745                      3.723229
+##    sample.kidney_27_1year sample.kidney_27_3months
+## 1:              2.6689769                 2.814248
+## 2:              2.6689769                 2.814248
+## 3:              0.8887581                 1.893418
+## 4:              0.8887581                 1.893418
+## 5:              4.1133890                 3.896916
+##    sample.kidney_27_baseline_post sample.kidney_27_baseline_pre
+## 1:                       4.390169                      3.589825
+## 2:                       4.390169                      3.589825
+## 3:                       1.858862                      1.113175
+## 4:                       1.858862                      1.113175
+## 5:                       4.423066                      3.711684
+##    sample.kidney_26_1year sample.kidney_26_3months
+## 1:               3.173197                3.0888375
+## 2:               3.173197                3.0888375
+## 3:               0.482193                0.6586565
+## 4:               0.482193                0.6586565
+## 5:               4.073256                4.1180881
+##    sample.kidney_26_baseline_post sample.kidney_26_baseline_pre
+## 1:                      3.4921919                      3.658894
+## 2:                      3.4921919                      3.658894
+## 3:                      0.7024848                     -1.118318
+## 4:                      0.7024848                     -1.118318
+## 5:                      4.4356083                      4.413474
+##    sample.kidney_25_1year sample.kidney_25_3months
+## 1:               3.318434                 3.153726
+## 2:               3.318434                 3.153726
+## 3:               1.017840                 1.351576
+## 4:               1.017840                 1.351576
+## 5:               3.840243                 3.311627
+##    sample.kidney_25_baseline_post sample.kidney_25_baseline_pre
+## 1:                       4.430946                      2.763700
+## 2:                       4.430946                      2.763700
+## 3:                       1.838859                      2.044196
+## 4:                       1.838859                      2.044196
+## 5:                       3.791673                      2.994538
+##    sample.kidney_24_1year sample.kidney_24_3months
+## 1:              2.7811014                3.5830059
+## 2:              2.7811014                3.5830059
+## 3:              0.7163311                0.7160817
+## 4:              0.7163311                0.7160817
+## 5:              3.8397135                3.8433361
+##    sample.kidney_24_baseline_post sample.kidney_24_baseline_pre
+## 1:                       4.106711                      3.262075
+## 2:                       4.106711                      3.262075
+## 3:                       1.828357                      1.310685
+## 4:                       1.828357                      1.310685
+## 5:                       4.224644                      3.673737
+##    sample.kidney_23_1year sample.kidney_23_3months
+## 1:              4.1260520                 3.277965
+## 2:              4.1260520                 3.277965
+## 3:             -0.9357242                 2.140462
+## 4:             -0.9357242                 2.140462
+## 5:              3.7310323                 3.434084
+##    sample.kidney_23_baseline_post sample.kidney_23_baseline_pre
+## 1:                       4.570647                     3.0652924
+## 2:                       4.570647                     3.0652924
+## 3:                       1.491774                     0.4762603
+## 4:                       1.491774                     0.4762603
+## 5:                       4.020506                     3.6132080
+##    sample.kidney_22_1year sample.kidney_22_3months
+## 1:              3.1617064                3.0901368
+## 2:              3.1617064                3.0901368
+## 3:              0.9716547                0.8108006
+## 4:              0.9716547                0.8108006
+## 5:              4.0890440                3.8591636
+##    sample.kidney_22_baseline_post sample.kidney_22_baseline_pre
+## 1:                       3.527308                     2.5799672
+## 2:                       3.527308                     2.5799672
+## 3:                       1.581635                     0.8204001
+## 4:                       1.581635                     0.8204001
+## 5:                       3.565867                     3.5762248
+##    sample.kidney_21_1year sample.kidney_21_3months
+## 1:               3.097208                 3.178145
+## 2:               3.097208                 3.178145
+## 3:               1.429997                 1.214388
+## 4:               1.429997                 1.214388
+## 5:               3.941971                 4.034275
+##    sample.kidney_21_baseline_post sample.kidney_21_baseline_pre
+## 1:                       3.922814                     2.9330034
+## 2:                       3.922814                     2.9330034
+## 3:                       1.546359                     0.7379874
+## 4:                       1.546359                     0.7379874
+## 5:                       3.914558                     3.7599658
+##    sample.kidney_20_3months sample.kidney_20_baseline_post
+## 1:                 3.571412                       3.467311
+## 2:                 3.571412                       3.467311
+## 3:                 1.778758                       1.220454
+## 4:                 1.778758                       1.220454
+## 5:                 4.047598                       3.881278
+##    sample.kidney_20_baseline_pre sample.kidney_19_1year
+## 1:                      2.745181               2.729800
+## 2:                      2.745181               2.729800
+## 3:                      1.011163               1.482788
+## 4:                      1.011163               1.482788
+## 5:                      3.520574               3.885825
+##    sample.kidney_19_baseline_post sample.kidney_19_baseline_pre
+## 1:                       4.596293                      3.298999
+## 2:                       4.596293                      3.298999
+## 3:                       1.212492                      1.091404
+## 4:                       1.212492                      1.091404
+## 5:                       3.996502                      3.830429
+##    sample.kidney_18_1year sample.kidney_18_3months
+## 1:               3.389652                 2.673397
+## 2:               3.389652                 2.673397
+## 3:               1.067724                 1.026374
+## 4:               1.067724                 1.026374
+## 5:               4.142528                 4.265093
+##    sample.kidney_18_baseline_post sample.kidney_18_baseline_pre
+## 1:                       4.256085                      2.891728
+## 2:                       4.256085                      2.891728
+## 3:                       1.052361                      1.160116
+## 4:                       1.052361                      1.160116
+## 5:                       3.809385                      3.687545
+##    sample.kidney_17_1year sample.kidney_17_3months
+## 1:               2.754587                 2.789595
+## 2:               2.754587                 2.789595
+## 3:               1.296664                 1.673308
+## 4:               1.296664                 1.673308
+## 5:               4.327426                 4.692919
+##    sample.kidney_17_baseline_post sample.kidney_17_baseline_pre
+## 1:                       3.808945                     3.4670617
+## 2:                       3.808945                     3.4670617
+## 3:                       1.757156                     0.9182588
+## 4:                       1.757156                     0.9182588
+## 5:                       3.891973                     3.6715583
+##    sample.kidney_16_1year sample.kidney_16_3months
+## 1:               2.802769                 2.921634
+## 2:               2.802769                 2.921634
+## 3:               1.340142                 1.780131
+## 4:               1.340142                 1.780131
+## 5:               4.021509                 3.815486
+##    sample.kidney_16_baseline_post sample.kidney_16_baseline_pre
+## 1:                       3.282166                      3.087817
+## 2:                       3.282166                      3.087817
+## 3:                       1.683431                      1.014411
+## 4:                       1.683431                      1.014411
+## 5:                       3.856811                      3.947485
+##    sample.kidney_42_3months sample.kidney_42_baseline_post
+## 1:                2.4782025                       4.649737
+## 2:                2.4782025                       4.649737
+## 3:                0.5522031                       1.222131
+## 4:                0.5522031                       1.222131
+## 5:                4.4590937                       4.374855
+##    sample.kidney_42_baseline_pre sample.kidney_41_3months
+## 1:                     2.4025780                 2.956463
+## 2:                     2.4025780                 2.956463
+## 3:                     0.4279633                 1.449768
+## 4:                     0.4279633                 1.449768
+## 5:                     3.8689773                 3.938761
+##    sample.kidney_41_baseline_post sample.kidney_41_baseline_pre
+## 1:                       4.465626                      2.629605
+## 2:                       4.465626                      2.629605
+## 3:                       2.013930                      1.289061
+## 4:                       2.013930                      1.289061
+## 5:                       4.687068                      4.101759
+##    sample.kidney_40_1year sample.kidney_40_3months
+## 1:               2.434292                 3.185191
+## 2:               2.434292                 3.185191
+## 3:               1.183160                 1.179973
+## 4:               1.183160                 1.179973
+## 5:               4.134075                 3.856083
+##    sample.kidney_40_baseline_post sample.kidney_40_baseline_pre
+## 1:                       5.037357                      3.407487
+## 2:                       5.037357                      3.407487
+## 3:                       1.856569                      1.329884
+## 4:                       1.856569                      1.329884
+## 5:                       4.262376                      4.097650
+##    sample.kidney_39_1year sample.kidney_39_3months
+## 1:               2.803571                 2.666562
+## 2:               2.803571                 2.666562
+## 3:               1.484447                 1.517048
+## 4:               1.484447                 1.517048
+## 5:               4.454371                 4.357193
+##    sample.kidney_39_baseline_post sample.kidney_39_baseline_pre
+## 1:                       3.724210                      3.763980
+## 2:                       3.724210                      3.763980
+## 3:                       1.574234                      1.116066
+## 4:                       1.574234                      1.116066
+## 5:                       4.214845                      4.183064
+##    sample.kidney_38_1year sample.kidney_38_3months
+## 1:               3.025004                3.2805727
+## 2:               3.025004                3.2805727
+## 3:               1.536579                0.6483045
+## 4:               1.536579                0.6483045
+## 5:               4.165228                3.7600777
+##    sample.kidney_38_baseline_post sample.kidney_38_baseline_pre
+## 1:                       3.694075                     2.2439205
+## 2:                       3.694075                     2.2439205
+## 3:                       1.808808                     0.9353715
+## 4:                       1.808808                     0.9353715
+## 5:                       3.600751                     3.4560355
+##    sample.kidney_37_1year sample.kidney_37_3months
+## 1:              3.3243550                 3.182098
+## 2:              3.3243550                 3.182098
+## 3:              0.9970437                 1.867587
+## 4:              0.9970437                 1.867587
+## 5:              3.8386595                 3.547969
+##    sample.kidney_37_baseline_post sample.kidney_37_baseline_pre
+## 1:                       2.722123                     2.7155193
+## 2:                       2.722123                     2.7155193
+## 3:                       1.787499                     0.9946734
+## 4:                       1.787499                     0.9946734
+## 5:                       2.967534                     3.4063674
+##    sample.kidney_36_1year sample.kidney_36_3months
+## 1:               2.872892                 2.811367
+## 2:               2.872892                 2.811367
+## 3:               1.866166                 1.377794
+## 4:               1.866166                 1.377794
+## 5:               3.289606                 3.814434
+##    sample.kidney_36_baseline_post sample.kidney_36_baseline_pre
+## 1:                       4.539044                      3.107358
+## 2:                       4.539044                      3.107358
+## 3:                       1.452475                      1.031314
+## 4:                       1.452475                      1.031314
+## 5:                       3.918793                      3.995550
+##    sample.kidney_35_1year sample.kidney_35_3months
+## 1:              3.0962857                2.8925047
+## 2:              3.0962857                2.8925047
+## 3:              0.7197811                0.8973217
+## 4:              0.7197811                0.8973217
+## 5:              3.8663421                4.3913105
+##    sample.kidney_35_baseline_post sample.kidney_35_baseline_pre
+## 1:                       3.281270                     2.9019918
+## 2:                       3.281270                     2.9019918
+## 3:                       1.414315                     0.7912447
+## 4:                       1.414315                     0.7912447
+## 5:                       4.695836                     4.1162391
+##    sample.kidney_34_1year sample.kidney_34_3months
+## 1:              2.6080858                 2.821442
+## 2:              2.6080858                 2.821442
+## 3:              0.7162346                 1.418809
+## 4:              0.7162346                 1.418809
+## 5:              4.3302900                 4.013620
+##    sample.kidney_34_baseline_post sample.kidney_34_baseline_pre
+## 1:                       4.108100                      3.059178
+## 2:                       4.108100                      3.059178
+## 3:                       1.347288                      1.002796
+## 4:                       1.347288                      1.002796
+## 5:                       4.032577                      3.952263
+##    sample.kidney_33_1year sample.kidney_33_3months
+## 1:              3.3377203                 2.680017
+## 2:              3.3377203                 2.680017
+## 3:              0.8191452                 0.656170
+## 4:              0.8191452                 0.656170
+## 5:              3.8502939                 3.715064
+##    sample.kidney_33_baseline_post sample.kidney_33_baseline_pre
+## 1:                       3.817424                      2.920476
+## 2:                       3.817424                      2.920476
+## 3:                       1.953813                      1.455184
+## 4:                       1.953813                      1.455184
+## 5:                       3.597074                      3.337462
+##    sample.kidney_32_1year sample.kidney_32_3months
+## 1:               2.549287                 2.994522
+## 2:               2.549287                 2.994522
+## 3:               1.194021                 0.900340
+## 4:               1.194021                 0.900340
+## 5:               3.918757                 3.959234
+##    sample.kidney_32_baseline_post sample.kidney_32_baseline_pre
+## 1:                       3.936299                      3.386092
+## 2:                       3.936299                      3.386092
+## 3:                       1.647055                      1.415108
+## 4:                       1.647055                      1.415108
+## 5:                       4.058481                      4.010671
+##    sample.kidney_31_1year sample.kidney_31_3months
+## 1:               2.959801                 2.945229
+## 2:               2.959801                 2.945229
+## 3:               1.169565                 1.196486
+## 4:               1.169565                 1.196486
+## 5:               4.200662                 3.997068
+##    sample.kidney_31_baseline_post sample.kidney_31_baseline_pre
+## 1:                       4.118305                      3.448687
+## 2:                       4.118305                      3.448687
+## 3:                       1.547800                      1.348779
+## 4:                       1.547800                      1.348779
+## 5:                       3.778098                      3.957771
+##    sample.kidney_30_1year sample.kidney_30_3months
+## 1:              2.6546135                 3.179012
+## 2:              2.6546135                 3.179012
+## 3:              0.9521575                 1.544722
+## 4:              0.9521575                 1.544722
+## 5:              4.4445933                 4.742259
+##    sample.kidney_30_baseline_post sample.kidney_30_baseline_pre
+## 1:                       3.718265                      3.037432
+## 2:                       3.718265                      3.037432
+## 3:                       2.293425                      1.800773
+## 4:                       2.293425                      1.800773
+## 5:                       4.038238                      4.002406
+##    sample.kidney_29_1year sample.kidney_29_3months
+## 1:              2.4052298                2.7456335
+## 2:              2.4052298                2.7456335
+## 3:              0.4318649                0.8826144
+## 4:              0.4318649                0.8826144
+## 5:              4.4558558                4.2956904
+##    sample.kidney_29_baseline_post sample.kidney_28_1year
+## 1:                      3.3777824               3.161632
+## 2:                      3.3777824               3.161632
+## 3:                      0.5620397               1.187897
+## 4:                      0.5620397               1.187897
+## 5:                      4.2804852               3.662126
+##    sample.kidney_28_3months
+## 1:                3.1710238
+## 2:                3.1710238
+## 3:                0.7689254
+## 4:                0.7689254
+## 5:                3.7578419
+##  [ reached getOption(&quot;max.print&quot;) -- omitted 1 row ]</code></pre>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="pseudo-time-trajectory-prediction.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(script.src))
+      script.src  = script.src.replace(/^https?:/, '');
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

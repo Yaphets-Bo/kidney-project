@@ -65,7 +65,7 @@ human <- orderCells(human)
 
 
 ## Step 3: ordering the cells in pseudotime
-```{r time, fic.cap = 'Sample trajectory colored by real time points'}
+```{r time, fig.cap = 'Sample trajectory colored by real time points'}
 plot_cell_trajectory(human, color_by = "time")
 ```
 
@@ -146,5 +146,3 @@ cat(as.character(pData(human)$person[grep("post",pData(human)$time)][order(pData
 cat(as.character(round(pData(human)$Pseudo[grep("post",pData(human)$time)][order(pData(human)$Pseudo[grep("post",pData(human)$time)])],2)), sep = " ")
 
 ```
-
-`r if (knitr:::is_html_output()) '# References {-}'`
