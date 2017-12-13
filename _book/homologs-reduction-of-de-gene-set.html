@@ -25,7 +25,7 @@
 <meta name="author" content="Bo Sun">
 
 
-<meta name="date" content="2017-12-06">
+<meta name="date" content="2017-12-12">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -33,7 +33,7 @@
   
   
 <link rel="prev" href="pseudo-time-trajectory-prediction.html">
-<link rel="next" href="references.html">
+<link rel="next" href="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajactory.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -115,8 +115,12 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li class="chapter" data-level="5" data-path="homologs-reduction-of-de-gene-set.html"><a href="homologs-reduction-of-de-gene-set.html"><i class="fa fa-check"></i><b>5</b> Homologs Reduction of DE gene set</a><ul>
 <li class="chapter" data-level="5.1" data-path="homologs-reduction-of-de-gene-set.html"><a href="homologs-reduction-of-de-gene-set.html#download-orthology-information-from-biomart"><i class="fa fa-check"></i><b>5.1</b> Download orthology information from BioMart</a></li>
-<li class="chapter" data-level="5.2" data-path="homologs-reduction-of-de-gene-set.html"><a href="homologs-reduction-of-de-gene-set.html#focus-de-genes-of-human-and-mouse-on-homologous-genes-only"><i class="fa fa-check"></i><b>5.2</b> Focus DE genes of Human and Mouse on homologous genes only</a></li>
+<li class="chapter" data-level="5.2" data-path="homologs-reduction-of-de-gene-set.html"><a href="homologs-reduction-of-de-gene-set.html#focus-de-genes-of-human-and-mouse-on-homologous-genes-only"><i class="fa fa-check"></i><b>5.2</b> Focus DE genes of Human and Mouse on homologous genes only</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="homologs-reduction-of-de-gene-set.html"><a href="homologs-reduction-of-de-gene-set.html#take-iri2h-iri4h-as-early-response"><i class="fa fa-check"></i><b>5.2.1</b> Take IRI2h + IRI4H as “early response”</a></li>
+<li class="chapter" data-level="5.2.2" data-path="homologs-reduction-of-de-gene-set.html"><a href="homologs-reduction-of-de-gene-set.html#take-iri2h-as-early-reponse-only"><i class="fa fa-check"></i><b>5.2.2</b> Take IRI2h as early reponse only</a></li>
 </ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajactory.html"><a href="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajactory.html"><i class="fa fa-check"></i><b>6</b> Heatmap Viewing of Informative Genes Used to Predict Sample Trajactory</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 </ul>
 
@@ -150,6 +154,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </div>
 <div id="focus-de-genes-of-human-and-mouse-on-homologous-genes-only" class="section level2">
 <h2><span class="header-section-number">5.2</span> Focus DE genes of Human and Mouse on homologous genes only</h2>
+<div id="take-iri2h-iri4h-as-early-response" class="section level3">
+<h3><span class="header-section-number">5.2.1</span> Take IRI2h + IRI4H as “early response”</h3>
 <p>For DE genes you provided, <strong><em>group_kidney_baseline_post-group_kidney_baseline_pre_Differential_Expression</em></strong>, duplicated rows are observed.</p>
 <p>Here, after reduction to homologous genes, 74 duplicated rows are observed, and removed. A table showing some duplicated rows is attached in the end of this chapter.</p>
 <p>A few of duplicated rows are shown below go give you a sense of what’s going on:</p>
@@ -181,11 +187,29 @@ p.value =<span class="st"> </span><span class="kw">phyper</span>(common <span cl
 <pre><code>## [1] &quot;3.03e-90&quot;</code></pre>
 <p>P.value given by Hypergeometric Test, which tells us observing this number of shared (homologous) genes are highly impossible. So the result is significant.</p>
 <div class="figure"><span id="fig:VennDiag"></span>
-<img src="_main_files/figure-html/VennDiag-1.png" alt="Intersection of early response genes after kidney injury bewteen Human and Mouse(homologous genes only)" width="672" />
+<img src="_main_files/figure-html/VennDiag-1.png" alt="Intersection of early response(IRI2h+IRI4h) genes after kidney injury bewteen Human and Mouse(homologous genes only)" width="672" />
 <p class="caption">
-Figure 5.1: Intersection of early response genes after kidney injury bewteen Human and Mouse(homologous genes only)
+Figure 5.1: Intersection of early response(IRI2h+IRI4h) genes after kidney injury bewteen Human and Mouse(homologous genes only)
 </p>
 </div>
+</div>
+<div id="take-iri2h-as-early-reponse-only" class="section level3">
+<h3><span class="header-section-number">5.2.2</span> Take IRI2h as early reponse only</h3>
+<p>Exact the same thing as above.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p.value =<span class="st"> </span><span class="kw">phyper</span>(common <span class="op">-</span><span class="st"> </span><span class="dv">1</span>,human.de,Pop.Size<span class="op">-</span>human.de,mouse.de,<span class="dt">lower.tail =</span> <span class="ot">FALSE</span>, <span class="dt">log.p =</span> <span class="ot">FALSE</span>)
+<span class="kw">formatC</span>(p.value, <span class="dt">format =</span> <span class="st">&quot;e&quot;</span>, <span class="dt">digits =</span> <span class="dv">2</span>)</code></pre></div>
+<pre><code>## [1] &quot;1.31e-64&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># same thing, switch the role of white/black ball</span>
+<span class="kw">formatC</span>(<span class="kw">phyper</span>(common <span class="op">-</span><span class="st"> </span><span class="dv">1</span>, mouse.de, Pop.Size <span class="op">-</span><span class="st"> </span>mouse.de, human.de, <span class="dt">lower.tail =</span> <span class="ot">FALSE</span>), <span class="dt">format =</span> <span class="st">&quot;e&quot;</span>, <span class="dt">digits =</span> <span class="dv">2</span>)</code></pre></div>
+<pre><code>## [1] &quot;1.31e-64&quot;</code></pre>
+<div class="figure"><span id="fig:Venn2honly"></span>
+<img src="_main_files/figure-html/Venn2honly-1.png" alt="Intersection of early response(IRI2h) genes after kidney injury bewteen Human and Mouse(homologous genes only)" width="672" />
+<p class="caption">
+Figure 5.2: Intersection of early response(IRI2h) genes after kidney injury bewteen Human and Mouse(homologous genes only)
+</p>
+</div>
+<hr />
+<p>The table below shows duplicated rows in the RPKM data, which are removed in the analysis.</p>
 <pre><code>##         Feature_ID entrezgene external_gene_name   gene_biotype
 ## 1: ENSG00000120709      51307             FAM53C protein_coding
 ## 2: ENSG00000120709  100128966             FAM53C protein_coding
@@ -703,6 +727,8 @@ Figure 5.1: Intersection of early response genes after kidney injury bewteen Hum
 ## 4:                0.7689254
 ## 5:                3.7578419
 ##  [ reached getOption(&quot;max.print&quot;) -- omitted 1 row ]</code></pre>
+
+</div>
 </div>
 </div>
             </section>
@@ -711,7 +737,7 @@ Figure 5.1: Intersection of early response genes after kidney injury bewteen Hum
         </div>
       </div>
 <a href="pseudo-time-trajectory-prediction.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajactory.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

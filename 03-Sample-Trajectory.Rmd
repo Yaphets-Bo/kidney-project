@@ -112,10 +112,12 @@ human <- newCellDataSet(expr, phenoData = pd, featureData = fd,
 human <- detectGenes(human, min_expr = 0.1)
 plot(density(fData(human)$num_cells_expressed))
 expressed.gene <- row.names(subset(fData(human), num_cells_expressed >= 50))
-
+```
+```{r }
 diff_test_res <- differentialGeneTest(human[expressed.gene,],
-                                      fullModelFormulaStr = "~time + person", cores = 2)
-
+                                      fullModelFormulaStr = "~time + person")
+```
+```{r pseudo-time-conjecture-continued, cache = T, include = F, warning = F}
 ordering_genes <- row.names (subset(diff_test_res, qval < 0.01))
 ordering_genes <- intersect(ordering_genes, expressed.gene)
 human <- setOrderingFilter(human, ordering_genes)
@@ -125,7 +127,7 @@ human <- reduceDimension(human, max_components = 2,
 human <- orderCells(human)
 ```
 
-```{r 2-covar-traj, fic.cap = 'A two dimensional trajectory colored by real time points'}
+```{r 2-covar-traj, fig.cap = 'A two dimensional trajectory colored by real time points'}
 plot_cell_trajectory(human, color_by = "time")
 ```
 

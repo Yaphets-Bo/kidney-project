@@ -1,5 +1,6 @@
 base
-bookdown
+futile.logger
+VennDiagram
 data.table
 Rtsne
 dplyr
@@ -14,4 +15,9 @@ VGAM
 irlba
 DDRTree
 monocle
+viridisLite
+viridis
+pheatmap
+cowplot
+bookdown
 knitr

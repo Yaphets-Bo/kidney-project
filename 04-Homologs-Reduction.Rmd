@@ -5,7 +5,10 @@
     + unique resutls only
     + if you want, you could also output homology type and orthology confidence if further filtering needed
 
-## Focus DE genes of Human and Mouse on homologous genes only
+## Focus DE genes of Human and Mouse on homologous genes only  
+
+### Take IRI2h + IRI4H as "early response" 
+
 For DE genes you provided, __*group_kidney_baseline_post-group_kidney_baseline_pre_Differential_Expression*__, duplicated rows are observed.   
 
 Here, after reduction to homologous genes, 74 duplicated rows are observed, and removed. A table showing some duplicated rows is attached in the end of this chapter.  
@@ -55,7 +58,35 @@ formatC(phyper(common - 1, mouse.de, Pop.Size - mouse.de, human.de, lower.tail =
 ```
 P.value given by Hypergeometric Test, which tells us observing this number of shared (homologous) genes are highly impossible. So the result is significant. 
 
-```{r VennDiag, echo = F, fig.cap = 'Intersection of early response genes after kidney injury bewteen Human and Mouse(homologous genes only)'}
+```{r VennDiag, echo = F, fig.cap = 'Intersection of early response(IRI2h+IRI4h) genes after kidney injury bewteen Human and Mouse(homologous genes only)'}
+VENN.LIST <- list(humanDE.dedup.homo.logFC[,external_gene_name],mouse.DE.dedup.homo[,name])
+venn.plot <- venn.diagram(VENN.LIST , NULL, fill=c("darkmagenta", "darkblue"), 
+                          alpha=c(0.5,0.5), cex = 1.5, cat.fontface=4, 
+                          category.names=c("Human", "Mouse"), main=paste0("p-value=",formatC(p.value, format = "e", digits = 2)))
+grid.draw(venn.plot)
+```
+### Take IRI2h as early reponse only
+```{r include = F}
+
+mouse <- fread("C:/Users/Ryan/Documents/DE/mouse_2h_homologous_only")
+dup.mouse<- mouse[name %in% mouse[,name][duplicated(mouse[,name])]]
+mouse.DE.dedup.homo <- unique(mouse, by = "gene-id")
+mouse.DE.dedup.homo[, name := str_to_upper(name)]
+
+common <- sum(humanDE.dedup.homo.logFC[,external_gene_name] %in% mouse.DE.dedup.homo[,name])
+human.de = dim(humanDE.dedup.homo.logFC)[1]
+mouse.de = dim(mouse.DE.dedup.homo)[1]
+Pop.Size = 20435
+```
+Exact the same thing as above.
+```{r}
+p.value = phyper(common - 1,human.de,Pop.Size-human.de,mouse.de,lower.tail = FALSE, log.p = FALSE)
+formatC(p.value, format = "e", digits = 2)
+# same thing, switch the role of white/black ball
+formatC(phyper(common - 1, mouse.de, Pop.Size - mouse.de, human.de, lower.tail = FALSE), format = "e", digits = 2)
+```
+
+```{r Venn2honly, echo = F, fig.cap = 'Intersection of early response(IRI2h) genes after kidney injury bewteen Human and Mouse(homologous genes only)'}
 VENN.LIST <- list(humanDE.dedup.homo.logFC[,external_gene_name],mouse.DE.dedup.homo[,name])
 venn.plot <- venn.diagram(VENN.LIST , NULL, fill=c("darkmagenta", "darkblue"), 
                           alpha=c(0.5,0.5), cex = 1.5, cat.fontface=4, 
@@ -63,9 +94,9 @@ venn.plot <- venn.diagram(VENN.LIST , NULL, fill=c("darkmagenta", "darkblue"),
 grid.draw(venn.plot)
 ```
 
+***
+
 The table below shows duplicated rows in the RPKM data, which are removed in the analysis.
 ```{r, echo = F}
 head(dup, n = 6L)
 ```
-
-`r if (knitr:::is_html_output()) '# References {-}'`

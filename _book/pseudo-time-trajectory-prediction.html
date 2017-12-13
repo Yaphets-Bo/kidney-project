@@ -25,7 +25,7 @@
 <meta name="author" content="Bo Sun">
 
 
-<meta name="date" content="2017-12-06">
+<meta name="date" content="2017-12-12">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -115,8 +115,12 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li class="chapter" data-level="5" data-path="homologs-reduction-of-de-gene-set.html"><a href="homologs-reduction-of-de-gene-set.html"><i class="fa fa-check"></i><b>5</b> Homologs Reduction of DE gene set</a><ul>
 <li class="chapter" data-level="5.1" data-path="homologs-reduction-of-de-gene-set.html"><a href="homologs-reduction-of-de-gene-set.html#download-orthology-information-from-biomart"><i class="fa fa-check"></i><b>5.1</b> Download orthology information from BioMart</a></li>
-<li class="chapter" data-level="5.2" data-path="homologs-reduction-of-de-gene-set.html"><a href="homologs-reduction-of-de-gene-set.html#focus-de-genes-of-human-and-mouse-on-homologous-genes-only"><i class="fa fa-check"></i><b>5.2</b> Focus DE genes of Human and Mouse on homologous genes only</a></li>
+<li class="chapter" data-level="5.2" data-path="homologs-reduction-of-de-gene-set.html"><a href="homologs-reduction-of-de-gene-set.html#focus-de-genes-of-human-and-mouse-on-homologous-genes-only"><i class="fa fa-check"></i><b>5.2</b> Focus DE genes of Human and Mouse on homologous genes only</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="homologs-reduction-of-de-gene-set.html"><a href="homologs-reduction-of-de-gene-set.html#take-iri2h-iri4h-as-early-response"><i class="fa fa-check"></i><b>5.2.1</b> Take IRI2h + IRI4H as “early response”</a></li>
+<li class="chapter" data-level="5.2.2" data-path="homologs-reduction-of-de-gene-set.html"><a href="homologs-reduction-of-de-gene-set.html#take-iri2h-as-early-reponse-only"><i class="fa fa-check"></i><b>5.2.2</b> Take IRI2h as early reponse only</a></li>
 </ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajactory.html"><a href="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajactory.html"><i class="fa fa-check"></i><b>6</b> Heatmap Viewing of Informative Genes Used to Predict Sample Trajactory</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 </ul>
 
@@ -690,8 +694,15 @@ Figure 4.2: Same trajectory colored by Pseudotime
 </div>
 <div id="two-dimensional-case" class="section level2">
 <h2><span class="header-section-number">4.3</span> Two-dimensional case</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">diff_test_res &lt;-<span class="st"> </span><span class="kw">differentialGeneTest</span>(human[expressed.gene,],
+                                      <span class="dt">fullModelFormulaStr =</span> <span class="st">&quot;~time + person&quot;</span>)</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot_cell_trajectory</span>(human, <span class="dt">color_by =</span> <span class="st">&quot;time&quot;</span>)</code></pre></div>
-<p><img src="_main_files/figure-html/2-covar-traj-1.png" width="672" /></p>
+<div class="figure"><span id="fig:2-covar-traj"></span>
+<img src="_main_files/figure-html/2-covar-traj-1.png" alt="A two dimensional trajectory colored by real time points" width="672" />
+<p class="caption">
+Figure 4.3: A two dimensional trajectory colored by real time points
+</p>
+</div>
 <p>The sample rank and corresponding pseudo-time:</p>
 <pre><code>## 07 21 22 09 17 04 26 10 35 23 34 19 15 31 28 03 29 32 01 02 13 20 40 36 16 18 38 11 05 24 25 14 27 41 30 06 42 12 08 39 33 37</code></pre>
 <pre><code>## 0 5.51 6.25 7.56 9.01 9.77 26.39 26.4 30.68 33.46 33.55 33.72 40.93 43.48 45.92 46.7 47.11 47.85 48.75 48.9 48.93 49.58 53.56 53.96 56.18 61.76 64.31 65.68 67.09 72.56 73.62 75.71 86.21 86.42 86.43 86.7 87.21 87.43 87.89 88.13 88.93 89.98</code></pre>

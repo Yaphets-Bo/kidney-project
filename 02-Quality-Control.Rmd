@@ -4,14 +4,6 @@
 
 ## gene filtering{#gf}
 ```{r include=FALSE}
-library(data.table)
-library(Rtsne)
-library(dplyr)
-library(RColorBrewer)
-library(ggplot2)
-library(reshape2)
-library(stringr)
-library(monocle)
 options(useFancyQuotes = FALSE)
 dt <- fread("C:/Users/Ryan/Documents/3.Kidney/HUMAN_all.gene_RPKM.xls")
 dt <- dt[!duplicated(dt$external_gene_name)]

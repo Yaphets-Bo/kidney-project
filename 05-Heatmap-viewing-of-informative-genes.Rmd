@@ -1,0 +1,94 @@
+# Heatmap Viewing of Informative Genes Used to Predict Sample Trajactory
+
+```{r heatmap-trajectory-verifing, cache = T, include = F, warning = F}
+
+options(useFancyQuotes = FALSE)
+dt <- fread("C:/Users/Ryan/Documents/3.Kidney/HUMAN_all.gene_RPKM.xls")
+dt <- dt[!duplicated(dt$external_gene_name)]
+
+setcolorder(dt,
+            c(names(dt)[1:7],
+              names(dt)[-(1:7)][order(names(dt)[-(1:7)])])
+)
+
+expr <- as.matrix(dt[,-(1:7)])
+expr <- expr[,grep("pre|post", colnames(expr))]
+gene_ann <- data.frame(dt[,1:7])
+setnames(gene_ann, "external_gene_name", "gene_short_name")
+rownames(gene_ann) = dt$ensembl_gene_id
+rownames(expr) <- dt$ensembl_gene_id
+sample_ann <- data.frame(sampleID = colnames(expr), person = substr(colnames(expr), 15,16),
+                         time = substr(colnames(expr), 18, nchar(colnames(expr))))
+rownames(sample_ann) = sample_ann$sampleID
+
+fd <- new("AnnotatedDataFrame", data = gene_ann)
+pd <- new("AnnotatedDataFrame", data = sample_ann)
+
+human <- newCellDataSet(as.matrix(expr),
+                       phenoData = pd,
+                       featureData = fd,
+                       lowerDetectionLimit = 0.1,
+                       expressionFamily = tobit(Lower = 0.1))
+rpc_matrix <- relative2abs(human, method = "num_genes")
+
+human <- newCellDataSet(as(as.matrix(rpc_matrix), "sparseMatrix"),
+                       phenoData = pd,
+                       featureData = fd,
+                       lowerDetectionLimit = 0.5,
+                       expressionFamily = negbinomial.size())
+
+human <- estimateSizeFactors(human)
+human <- estimateDispersions(human)
+```
+
+```{r}
+human <- detectGenes(human, min_expr = 0.1)
+expressed.gene <- row.names(subset(fData(human), num_cells_expressed >= 35))
+diff_test_res <- differentialGeneTest(human[expressed.gene,],
+                                      fullModelFormulaStr = "~time", cores = 2)
+ordering_genes <- row.names (subset(diff_test_res, qval < 0.05))
+```
+Selecting genes that express in at least 35 samples with a detection threshould $RPKM >= 0.1, considering our sample size: 42 post samples and 41 pre samples.  
+
+> 191 genes pass the multiple testing correction with $Q-value < 0.05$
+
+```{r t2, cache = T, echo = F}
+human <- setOrderingFilter(human, ordering_genes)
+plot_ordering_genes(human)
+
+human <- reduceDimension(human, max_components = 2,
+                            method = 'tSNE')
+human <- orderCells(human,reverse = T)
+```
+```{r trajectory-by-time, fig.cap = 'post/pre Samples along the path predicted based on Pseudo-time'}
+plot_cell_trajectory(human, color_by = "time")
+```
+
+```{r cache = T, include = F}
+ordering.expr <- as.matrix(expr[ordering_genes, pData(human)[order(pData(human)$Pseu),]$sampleID])
+ordering.expr <- log(ordering.expr + 1)
+col_ann = pData(human)[order(pData(human)$Pseu),]["time"]
+color_ann <- list(group = inferno(2))
+names(color_ann$group) <- unique(pData(human)$time)
+```
+
+```{r heatmap, fig.cap = 'The heatmap viewing of the informative genes used in Pseudo-time trajectory prediction'}
+pheatmap(
+  mat               = ordering.expr,
+  scale             = "row",  # notice the quantities here are scaled log(RPKM + 1)
+  color             = brewer.pal(4, "Set3"),
+  border_color      = NA,
+  show_colnames     = FALSE,
+  show_rownames     = FALSE,
+  annotation_col    = col_ann,
+  annotation_colors = color_ann,
+  cluster_cols      = FALSE,
+  drop_levels       = TRUE,
+  fontsize          = 14,
+  main              = "Scaled log-expression Ordering by Pseudo-time"
+)
+```
+This gives us a visual verification of the reliability/effectiveness of the Pseudo-time prediction. It indicates a good separation of the expression of these 191 informative genes over pre/post samples. And it gives us a viasual sense of those genes that cause the only 3 mis-placed post samples, which will definitely be the focus of the following studies. 
+
+
+`r if (knitr:::is_html_output()) '# References {-}'`
