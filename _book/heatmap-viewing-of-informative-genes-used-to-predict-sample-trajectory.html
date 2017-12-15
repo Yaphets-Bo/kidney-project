@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>A Report Example</title>
+  <meta name="description" content="My first attemp to write scientific report via bookdown.">
+  <meta name="generator" content="bookdown 0.5 and GitBook 2.6.7">
+
+  <meta property="og:title" content="A Report Example" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="My first attemp to write scientific report via bookdown." />
+  <meta name="github-repo" content="Yaphets-Bo/kidneyproject" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="A Report Example" />
+  
+  <meta name="twitter:description" content="My first attemp to write scientific report via bookdown." />
+  
+
+<meta name="author" content="Bo Sun">
+
+
+<meta name="date" content="2017-12-13">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="homologs-reduction-of-de-gene-set.html">
+<link rel="next" href="references.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Prerequsites</a></li>
+<li class="chapter" data-level="2" data-path="t-sne-analysis.html"><a href="t-sne-analysis.html"><i class="fa fa-check"></i><b>2</b> t-SNE analysis</a><ul>
+<li class="chapter" data-level="2.1" data-path="t-sne-analysis.html"><a href="t-sne-analysis.html#dataset-human"><i class="fa fa-check"></i><b>2.1</b> Dataset Human</a></li>
+<li class="chapter" data-level="2.2" data-path="t-sne-analysis.html"><a href="t-sne-analysis.html#dataset-mouse"><i class="fa fa-check"></i><b>2.2</b> Dataset Mouse</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="quality-control.html"><a href="quality-control.html"><i class="fa fa-check"></i><b>3</b> Quality Control</a><ul>
+<li class="chapter" data-level="3.1" data-path="quality-control.html"><a href="quality-control.html#gf"><i class="fa fa-check"></i><b>3.1</b> gene filtering</a></li>
+<li class="chapter" data-level="3.2" data-path="quality-control.html"><a href="quality-control.html#check-log-nomality"><i class="fa fa-check"></i><b>3.2</b> check log-nomality</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="pseudo-time-trajectory-prediction.html"><a href="pseudo-time-trajectory-prediction.html"><i class="fa fa-check"></i><b>4</b> Pseudo-time trajectory prediction</a><ul>
+<li class="chapter" data-level="4.1" data-path="pseudo-time-trajectory-prediction.html"><a href="pseudo-time-trajectory-prediction.html#step-1-2-set-ordering-genes-and-reduce-demisionality"><i class="fa fa-check"></i><b>4.1</b> Step 1-2: Set ordering genes and reduce demisionality</a></li>
+<li class="chapter" data-level="4.2" data-path="pseudo-time-trajectory-prediction.html"><a href="pseudo-time-trajectory-prediction.html#step-3-ordering-the-cells-in-pseudotime"><i class="fa fa-check"></i><b>4.2</b> Step 3: ordering the cells in pseudotime</a></li>
+<li class="chapter" data-level="4.3" data-path="pseudo-time-trajectory-prediction.html"><a href="pseudo-time-trajectory-prediction.html#two-dimensional-case"><i class="fa fa-check"></i><b>4.3</b> Two-dimensional case</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="homologs-reduction-of-de-gene-set.html"><a href="homologs-reduction-of-de-gene-set.html"><i class="fa fa-check"></i><b>5</b> Homologs Reduction of DE gene set</a><ul>
+<li class="chapter" data-level="5.1" data-path="homologs-reduction-of-de-gene-set.html"><a href="homologs-reduction-of-de-gene-set.html#download-orthology-information-from-biomart"><i class="fa fa-check"></i><b>5.1</b> Download orthology information from BioMart</a></li>
+<li class="chapter" data-level="5.2" data-path="homologs-reduction-of-de-gene-set.html"><a href="homologs-reduction-of-de-gene-set.html#focus-de-genes-of-human-and-mouse-on-homologous-genes-only"><i class="fa fa-check"></i><b>5.2</b> Focus DE genes of Human and Mouse on homologous genes only</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="homologs-reduction-of-de-gene-set.html"><a href="homologs-reduction-of-de-gene-set.html#take-iri2h-iri4h-as-early-response"><i class="fa fa-check"></i><b>5.2.1</b> Take IRI2h + IRI4H as “early response”</a></li>
+<li class="chapter" data-level="5.2.2" data-path="homologs-reduction-of-de-gene-set.html"><a href="homologs-reduction-of-de-gene-set.html#take-iri2h-as-early-reponse-only"><i class="fa fa-check"></i><b>5.2.2</b> Take IRI2h as early reponse only</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory.html"><a href="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory.html"><i class="fa fa-check"></i><b>6</b> Heatmap Viewing of Informative Genes Used to Predict Sample Trajectory</a><ul>
+<li class="chapter" data-level="6.1" data-path="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory.html"><a href="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory.html#selecting-genes"><i class="fa fa-check"></i><b>6.1</b> Selecting genes</a></li>
+<li class="chapter" data-level="6.2" data-path="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory.html"><a href="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory.html#considering-the-absolute-distance-between-genes"><i class="fa fa-check"></i><b>6.2</b> Considering the absolute distance between genes</a></li>
+<li class="chapter" data-level="6.3" data-path="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory.html"><a href="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory.html#enhanced-heatmap-pay-more-attention-to-shape-of-the-curve."><i class="fa fa-check"></i><b>6.3</b> Enhanced heatmap: pay more attention to “shape” of the “curve”.</a></li>
+<li class="chapter" data-level="6.4" data-path="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory.html"><a href="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory.html#examine-certain-genes"><i class="fa fa-check"></i><b>6.4</b> Examine certain genes</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">A Report Example</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory" class="section level1">
+<h1><span class="header-section-number">6</span> Heatmap Viewing of Informative Genes Used to Predict Sample Trajectory</h1>
+<div id="selecting-genes" class="section level2">
+<h2><span class="header-section-number">6.1</span> Selecting genes</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">human &lt;-<span class="st"> </span><span class="kw">detectGenes</span>(human, <span class="dt">min_expr =</span> <span class="fl">0.1</span>)
+expressed.gene &lt;-<span class="st"> </span><span class="kw">row.names</span>(<span class="kw">subset</span>(<span class="kw">fData</span>(human), num_cells_expressed <span class="op">&gt;=</span><span class="st"> </span><span class="dv">35</span>))
+diff_test_res &lt;-<span class="st"> </span><span class="kw">differentialGeneTest</span>(human[expressed.gene,],
+                                      <span class="dt">fullModelFormulaStr =</span> <span class="st">&quot;~time&quot;</span>, <span class="dt">cores =</span> <span class="dv">2</span>)
+ordering_genes &lt;-<span class="st"> </span><span class="kw">row.names</span> (<span class="kw">subset</span>(diff_test_res, qval <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.05</span>))</code></pre></div>
+<p>Selecting genes that express in at least 35 samples with a detection threshold $RPKM &gt;= 0.1, considering our sample size: 42 post samples and 41 pre samples.</p>
+<blockquote>
+<p>191 genes pass the multiple testing correction with <span class="math inline">\(Q-value &lt; 0.05\)</span></p>
+</blockquote>
+<div class="figure"><span id="fig:t2"></span>
+<img src="_main_files/figure-html/t2-1.png" alt="Dispersion v.s. Expression of genes used in the prediction" width="672" />
+<p class="caption">
+Figure 6.1: Dispersion v.s. Expression of genes used in the prediction
+</p>
+</div>
+<p>Plots genes by mean vs. dispersion, highlighting those selected for ordering. Dispersion was estimated by first transform RPKM to RPC through Monocle 2.<br />
+Size factors help us normalize for differences in mRNA recovered across cells, and “dispersion” values will help us perform differential expression analysis later<span class="citation">(Trapnell <a href="#ref-R-monocle">2017</a>)</span>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot_cell_trajectory</span>(human, <span class="dt">color_by =</span> <span class="st">&quot;time&quot;</span>)</code></pre></div>
+<div class="figure"><span id="fig:trajectory-by-time"></span>
+<img src="_main_files/figure-html/trajectory-by-time-1.png" alt="post/pre Samples along the path predicted based on Pseudo-time" width="672" />
+<p class="caption">
+Figure 6.2: post/pre Samples along the path predicted based on Pseudo-time
+</p>
+</div>
+</div>
+<div id="considering-the-absolute-distance-between-genes" class="section level2">
+<h2><span class="header-section-number">6.2</span> Considering the absolute distance between genes</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">pheatmap</span>(
+  <span class="dt">mat               =</span> ordering.expr,
+  <span class="dt">scale             =</span> <span class="st">&quot;row&quot;</span>,
+  <span class="dt">color             =</span> <span class="kw">brewer.pal</span>(<span class="dv">4</span>, <span class="st">&quot;Set3&quot;</span>),
+  <span class="dt">border_color      =</span> <span class="ot">NA</span>,
+  <span class="dt">show_colnames     =</span> <span class="ot">FALSE</span>,
+  <span class="dt">show_rownames     =</span> T,
+  <span class="dt">annotation_col    =</span> col_ann,
+  <span class="dt">annotation_colors =</span> color_ann,
+  <span class="dt">cluster_cols      =</span> <span class="ot">FALSE</span>,
+  <span class="dt">drop_levels       =</span> <span class="ot">TRUE</span>,
+  <span class="dt">fontsize          =</span> <span class="dv">14</span>,
+  <span class="dt">main              =</span> <span class="st">&quot;Scaled log-expression Ordering by Pseudo-time&quot;</span>
+)</code></pre></div>
+<div class="figure"><span id="fig:heatmap"></span>
+<img src="_main_files/figure-html/heatmap-1.png" alt="The heatmap viewing of the informative genes used in Pseudo-time trajectory prediction" width="672" />
+<p class="caption">
+Figure 6.3: The heatmap viewing of the informative genes used in Pseudo-time trajectory prediction
+</p>
+</div>
+<p>This gives us a visual verification of the reliability/effectiveness of the Pseudo-time prediction. It indicates a good separation of the expression of these 191 informative genes over pre/post samples. And it gives us a visual sense of those genes that cause the only 3 mis-placed post samples, which will definitely be the focus of the following studies.</p>
+</div>
+<div id="enhanced-heatmap-pay-more-attention-to-shape-of-the-curve." class="section level2">
+<h2><span class="header-section-number">6.3</span> Enhanced heatmap: pay more attention to “shape” of the “curve”.</h2>
+<p>Since the distance is calculated using <strong>Euclidean distance</strong>, the heatmap in previous section focuses on only the “absolute distance” between points(gene expression is modeled as points in high-dimensional space).<br />
+In this section, another popular approach in plotting heatmap was implemented, I learned this from <a href="http://www.ark-genomics.org/events-online-training/heatmaps-r">ARK-Genomics website</a>. Using Pearson’s Correlation as distance measure, we achieved clustering on “shape” of the “curve”(gene expression profiling over time.)</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">hc &lt;-<span class="st"> </span><span class="kw">hclust</span>(<span class="kw">as.dist</span>(<span class="dv">1</span><span class="op">-</span><span class="kw">cor</span>(<span class="kw">t</span>(ordering.expr))), <span class="dt">method =</span> <span class="st">&quot;average&quot;</span>)
+
+<span class="kw">heatmap.2</span>(ordering.expr,
+  <span class="dt">Rowv  =</span> <span class="kw">as.dendrogram</span>(hc),
+  <span class="dt">Colv  =</span> <span class="ot">NULL</span>,
+  <span class="dt">col   =</span> <span class="kw">brewer.pal</span>(<span class="dv">5</span>, <span class="st">&quot;Set3&quot;</span>),
+  <span class="dt">scale =</span> <span class="st">&quot;row&quot;</span>,
+  <span class="dt">dendrogram =</span> <span class="st">&quot;row&quot;</span>
+)</code></pre></div>
+<div class="figure"><span id="fig:enhanced-heatmap"></span>
+<img src="_main_files/figure-html/enhanced-heatmap-1.png" alt="Distance measure: 1 - correlation" width="672" />
+<p class="caption">
+Figure 6.4: Distance measure: 1 - correlation
+</p>
+</div>
+<p>Again, different measures have their own focus and drawbacks, the effectiveness requires further subsequent examinations.</p>
+</div>
+<div id="examine-certain-genes" class="section level2">
+<h2><span class="header-section-number">6.4</span> Examine certain genes</h2>
+<p>You can examine certain genes of interest using this function I wrapped for you as following, only basic R &amp; RStdio operation required. * First, open a new R workspace(R empty project in RStdio) since you don’t want to mess up your other works. * Second, load the RData I provide for you. And then examine genes by EnsemblID by calling function <strong>visual_profile</strong> as shown before.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#setwd(&quot;...&quot;), or you can simply open up a empty project and copy the RData into that directory</span>
+<span class="co">#load(&quot;heatmap.RData&quot;)   # I comment these two lines since I already have them, you need to load it though</span>
+<span class="kw">visual_profile</span>(<span class="kw">c</span>(<span class="st">&quot;ENSG00000277639&quot;</span>, <span class="st">&quot;ENSG00000277452&quot;</span>, <span class="st">&quot;ENSG00000004799&quot;</span>))</code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
+<blockquote>
+<p>NOTE: the rownames(gene name on the side of the plot) of these two heatmaps are different. The first heatmap@ref{fig:heatmap} corresponds to file <strong>heatmap_genes_pre-popst_euclidean.txt</strong>, and the first gene in the file is the bottom one in this heatmap. The second heatmap@ref{fig:enhanced-heatmap} corresponds to file <strong>heatmap_genes_pre-popst_cor.txt</strong>, and and the first gene in the file is the bottom one in this heatmap. }</p>
+</blockquote>
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-R-monocle">
+<p>Trapnell, Cole. 2017. <em>Monocle: Clustering, Differential Expression, and Trajectory Analysis for Single- Cell Rna-Seq</em>. <a href="https://bioconductor.org/packages/release/bioc/html/monocle.html" class="uri">https://bioconductor.org/packages/release/bioc/html/monocle.html</a>.</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="homologs-reduction-of-de-gene-set.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(script.src))
+      script.src  = script.src.replace(/^https?:/, '');
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

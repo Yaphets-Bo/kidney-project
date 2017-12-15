@@ -145,13 +145,126 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 expressed.gene &lt;-<span class="st"> </span><span class="kw">row.names</span>(<span class="kw">subset</span>(<span class="kw">fData</span>(human), num_cells_expressed <span class="op">&gt;=</span><span class="st"> </span><span class="dv">35</span>))
 diff_test_res &lt;-<span class="st"> </span><span class="kw">differentialGeneTest</span>(human[expressed.gene,],
                                       <span class="dt">fullModelFormulaStr =</span> <span class="st">&quot;~time&quot;</span>, <span class="dt">cores =</span> <span class="dv">2</span>)</code></pre></div>
-<pre><code>## Warning in if (facCol[jj]) {: closing unused connection 7 (&lt;-AE86:11502)</code></pre>
-<pre><code>## Warning in if (facCol[jj]) {: closing unused connection 6 (&lt;-AE86:11502)</code></pre>
+<pre><code>## Warning: closing unused connection 7 (&lt;-AE86:11502)</code></pre>
+<pre><code>## Warning: closing unused connection 6 (&lt;-AE86:11502)</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ordering_genes &lt;-<span class="st"> </span><span class="kw">row.names</span> (<span class="kw">subset</span>(diff_test_res, qval <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.05</span>))</code></pre></div>
 <p>Selecting genes that express in at least 35 samples with a detection threshould $RPKM &gt;= 0.1, considering our sample size: 42 post samples and 41 pre samples.</p>
 <blockquote>
 <p>191 genes pass the multiple testing correction with <span class="math inline">\(Q-value &lt; 0.05\)</span></p>
 </blockquote>
+<pre><code>## Warning: Transformation introduced infinite values in continuous y-axis
+
+## Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
+<p><img src="_main_files/figure-html/t2-1.png" width="672" /></p>
+<pre><code>## Warning in (ap %*% ab)/(ab %*% ab) * ab: Recycling array of length 1 in array-vector arithmetic is deprecated.
+##   Use c() or as.vector() instead.</code></pre>
+<pre><code>## Warning in (ap %*% ab)/(ab %*% ab) * ab: Recycling array of length 1 in array-vector arithmetic is deprecated.
+##   Use c() or as.vector() instead.
+
+## Warning in (ap %*% ab)/(ab %*% ab) * ab: Recycling array of length 1 in array-vector arithmetic is deprecated.
+##   Use c() or as.vector() instead.
+
+## Warning in (ap %*% ab)/(ab %*% ab) * ab: Recycling array of length 1 in array-vector arithmetic is deprecated.
+##   Use c() or as.vector() instead.
+
+## Warning in (ap %*% ab)/(ab %*% ab) * ab: Recycling array of length 1 in array-vector arithmetic is deprecated.
+##   Use c() or as.vector() instead.
+
+## Warning in (ap %*% ab)/(ab %*% ab) * ab: Recycling array of length 1 in array-vector arithmetic is deprecated.
+##   Use c() or as.vector() instead.
+
+## Warning in (ap %*% ab)/(ab %*% ab) * ab: Recycling array of length 1 in array-vector arithmetic is deprecated.
+##   Use c() or as.vector() instead.
+
+## Warning in (ap %*% ab)/(ab %*% ab) * ab: Recycling array of length 1 in array-vector arithmetic is deprecated.
+##   Use c() or as.vector() instead.
+
+## Warning in (ap %*% ab)/(ab %*% ab) * ab: Recycling array of length 1 in array-vector arithmetic is deprecated.
+##   Use c() or as.vector() instead.
+
+## Warning in (ap %*% ab)/(ab %*% ab) * ab: Recycling array of length 1 in array-vector arithmetic is deprecated.
+##   Use c() or as.vector() instead.
+
+## Warning in (ap %*% ab)/(ab %*% ab) * ab: Recycling array of length 1 in array-vector arithmetic is deprecated.
+##   Use c() or as.vector() instead.
+
+## Warning in (ap %*% ab)/(ab %*% ab) * ab: Recycling array of length 1 in array-vector arithmetic is deprecated.
+##   Use c() or as.vector() instead.
+
+## Warning in (ap %*% ab)/(ab %*% ab) * ab: Recycling array of length 1 in array-vector arithmetic is deprecated.
+##   Use c() or as.vector() instead.
+
+## Warning in (ap %*% ab)/(ab %*% ab) * ab: Recycling array of length 1 in array-vector arithmetic is deprecated.
+##   Use c() or as.vector() instead.
+
+## Warning in (ap %*% ab)/(ab %*% ab) * ab: Recycling array of length 1 in array-vector arithmetic is deprecated.
+##   Use c() or as.vector() instead.
+
+## Warning in (ap %*% ab)/(ab %*% ab) * ab: Recycling array of length 1 in array-vector arithmetic is deprecated.
+##   Use c() or as.vector() instead.
+
+## Warning in (ap %*% ab)/(ab %*% ab) * ab: Recycling array of length 1 in array-vector arithmetic is deprecated.
+##   Use c() or as.vector() instead.
+
+## Warning in (ap %*% ab)/(ab %*% ab) * ab: Recycling array of length 1 in array-vector arithmetic is deprecated.
+##   Use c() or as.vector() instead.
+
+## Warning in (ap %*% ab)/(ab %*% ab) * ab: Recycling array of length 1 in array-vector arithmetic is deprecated.
+##   Use c() or as.vector() instead.
+
+## Warning in (ap %*% ab)/(ab %*% ab) * ab: Recycling array of length 1 in array-vector arithmetic is deprecated.
+##   Use c() or as.vector() instead.
+
+## Warning in (ap %*% ab)/(ab %*% ab) * ab: Recycling array of length 1 in array-vector arithmetic is deprecated.
+##   Use c() or as.vector() instead.
+
+## Warning in (ap %*% ab)/(ab %*% ab) * ab: Recycling array of length 1 in array-vector arithmetic is deprecated.
+##   Use c() or as.vector() instead.
+
+## Warning in (ap %*% ab)/(ab %*% ab) * ab: Recycling array of length 1 in array-vector arithmetic is deprecated.
+##   Use c() or as.vector() instead.
+
+## Warning in (ap %*% ab)/(ab %*% ab) * ab: Recycling array of length 1 in array-vector arithmetic is deprecated.
+##   Use c() or as.vector() instead.
+
+## Warning in (ap %*% ab)/(ab %*% ab) * ab: Recycling array of length 1 in array-vector arithmetic is deprecated.
+##   Use c() or as.vector() instead.
+
+## Warning in (ap %*% ab)/(ab %*% ab) * ab: Recycling array of length 1 in array-vector arithmetic is deprecated.
+##   Use c() or as.vector() instead.
+
+## Warning in (ap %*% ab)/(ab %*% ab) * ab: Recycling array of length 1 in array-vector arithmetic is deprecated.
+##   Use c() or as.vector() instead.
+
+## Warning in (ap %*% ab)/(ab %*% ab) * ab: Recycling array of length 1 in array-vector arithmetic is deprecated.
+##   Use c() or as.vector() instead.
+
+## Warning in (ap %*% ab)/(ab %*% ab) * ab: Recycling array of length 1 in array-vector arithmetic is deprecated.
+##   Use c() or as.vector() instead.
+
+## Warning in (ap %*% ab)/(ab %*% ab) * ab: Recycling array of length 1 in array-vector arithmetic is deprecated.
+##   Use c() or as.vector() instead.
+
+## Warning in (ap %*% ab)/(ab %*% ab) * ab: Recycling array of length 1 in array-vector arithmetic is deprecated.
+##   Use c() or as.vector() instead.
+
+## Warning in (ap %*% ab)/(ab %*% ab) * ab: Recycling array of length 1 in array-vector arithmetic is deprecated.
+##   Use c() or as.vector() instead.
+
+## Warning in (ap %*% ab)/(ab %*% ab) * ab: Recycling array of length 1 in array-vector arithmetic is deprecated.
+##   Use c() or as.vector() instead.
+
+## Warning in (ap %*% ab)/(ab %*% ab) * ab: Recycling array of length 1 in array-vector arithmetic is deprecated.
+##   Use c() or as.vector() instead.
+
+## Warning in (ap %*% ab)/(ab %*% ab) * ab: Recycling array of length 1 in array-vector arithmetic is deprecated.
+##   Use c() or as.vector() instead.
+
+## Warning in (ap %*% ab)/(ab %*% ab) * ab: Recycling array of length 1 in array-vector arithmetic is deprecated.
+##   Use c() or as.vector() instead.
+
+## Warning in (ap %*% ab)/(ab %*% ab) * ab: Recycling array of length 1 in array-vector arithmetic is deprecated.
+##   Use c() or as.vector() instead.</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot_cell_trajectory</span>(human, <span class="dt">color_by =</span> <span class="st">&quot;time&quot;</span>)</code></pre></div>
 <div class="figure"><span id="fig:trajectory-by-time"></span>
 <img src="_main_files/figure-html/trajectory-by-time-1.png" alt="post/pre Samples along the path predicted based on Pseudo-time" width="672" />

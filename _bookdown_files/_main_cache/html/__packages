@@ -1,4 +1,5 @@
 base
+bookdown
 futile.logger
 VennDiagram
 data.table
@@ -19,5 +20,4 @@ viridisLite
 viridis
 pheatmap
 cowplot
-bookdown
-knitr
+gplots
