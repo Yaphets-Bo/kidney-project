@@ -138,7 +138,7 @@ You can examine certain genes of interest using this function I wrapped for you 
 visual_profile(c("ENSG00000277639", "ENSG00000277452", "ENSG00000004799"))
 ```
 
-> NOTE: the rownames(gene name on the side of the plot) of these two heatmaps are different. The first heatmap\@ref{fig:heatmap} corresponds to file **heatmap_genes_pre-popst_euclidean.txt**, and the first gene in the file is the top one in this heatmap. The second heatmap\@ref{fig:enhanced-heatmap} corresponds to file **heatmap_genes_pre-popst_cor.txt**, and and the first gene in the file is the bottom one in this heatmap.
+> NOTE: the rownames(gene name on the side of the plot) of these two heatmaps are different. The first heatmap\@ref(fig:heatmap) corresponds to file **heatmap_genes_pre-popst_euclidean.txt**, and the first gene in the file is the top one in this heatmap. The second heatmap\@ref(fig:enhanced-heatmap) corresponds to file **heatmap_genes_pre-popst_cor.txt**, and and the first gene in the file is the bottom one in this heatmap.
 }
  
 `r if (knitr:::is_html_output()) '# References {-}'`

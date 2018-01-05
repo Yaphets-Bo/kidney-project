@@ -25,7 +25,7 @@
 <meta name="author" content="Bo Sun">
 
 
-<meta name="date" content="2017-12-13">
+<meta name="date" content="2018-01-02">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -101,7 +101,10 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <ul class="summary">
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Prerequsites</a></li>
 <li class="chapter" data-level="2" data-path="t-sne-analysis.html"><a href="t-sne-analysis.html"><i class="fa fa-check"></i><b>2</b> t-SNE analysis</a><ul>
-<li class="chapter" data-level="2.1" data-path="t-sne-analysis.html"><a href="t-sne-analysis.html#dataset-human"><i class="fa fa-check"></i><b>2.1</b> Dataset Human</a></li>
+<li class="chapter" data-level="2.1" data-path="t-sne-analysis.html"><a href="t-sne-analysis.html#dataset-human"><i class="fa fa-check"></i><b>2.1</b> Dataset Human</a><ul>
+<li class="chapter" data-level="2.1.1" data-path="t-sne-analysis.html"><a href="t-sne-analysis.html#post-samples-form-a-distinguishable-cluster"><i class="fa fa-check"></i><b>2.1.1</b> POST samples form a distinguishable cluster</a></li>
+<li class="chapter" data-level="2.1.2" data-path="t-sne-analysis.html"><a href="t-sne-analysis.html#independent-t-sne-on-each-time-point"><i class="fa fa-check"></i><b>2.1.2</b> Independent t-SNE on each time point</a></li>
+</ul></li>
 <li class="chapter" data-level="2.2" data-path="t-sne-analysis.html"><a href="t-sne-analysis.html#dataset-mouse"><i class="fa fa-check"></i><b>2.2</b> Dataset Mouse</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="quality-control.html"><a href="quality-control.html"><i class="fa fa-check"></i><b>3</b> Quality Control</a><ul>
@@ -148,10 +151,12 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h1><span class="header-section-number">2</span> t-SNE analysis</h1>
 <div id="dataset-human" class="section level2">
 <h2><span class="header-section-number">2.1</span> Dataset Human</h2>
-<p>total 163 columns rpkm data<br />
+<p>Dataset Summary: total 163 columns rpkm data<br />
 kidney 20, 41, 42 miss 1 year<br />
 kidney 29 miss pre<br />
 kidney 19 miss 3 months</p>
+<div id="post-samples-form-a-distinguishable-cluster" class="section level3">
+<h3><span class="header-section-number">2.1.1</span> POST samples form a distinguishable cluster</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tbl &lt;-<span class="st"> </span><span class="kw">tbl_df</span>(tsne<span class="op">$</span>Y)
 tbl<span class="op">$</span>persons =<span class="st"> </span>persons
 tbl<span class="op">$</span>time_point =<span class="st"> </span>Labels
@@ -165,6 +170,268 @@ Figure 2.1: <strong>Similarity between samples and time points(backgroud deducte
 </div>
 <p>In figure <a href="t-sne-analysis.html#fig:human">2.1</a>: <strong>pre</strong> expression profile(<span class="math inline">\(log(FPKM + 1)\)</span>) was deducted from <strong>post</strong>, <strong>1 year</strong>, and <strong>3 months</strong>. And then the dimension reduction was done using <a href="https://lvdmaaten.github.io/tsne/">t-SNE</a> algorithm.<br />
 The plot makes more sense now: later time points(<strong>3 months</strong>, <strong>1 year</strong>) stick together and are separated from <strong>post</strong> points, upon which a <em>Pseudotime Sample Trajectory</em> was constructed by means of <a href="http://cole-trapnell-lab.github.io/monocle-release/docs/#constructing-single-cell-trajectories">Monocle 2</a>.</p>
+</div>
+<div id="independent-t-sne-on-each-time-point" class="section level3">
+<h3><span class="header-section-number">2.1.2</span> Independent t-SNE on each time point</h3>
+<p>It looks like there is two cluster in <strong>POST</strong> sample.</p>
+<pre><code>## Read the 41 x 41 data matrix successfully!
+## Using no_dims = 2, perplexity = 6.000000, and theta = 0.500000
+## Computing input similarities...
+## Normalizing input...
+## Building tree...
+##  - point 0 of 41
+## Done in 0.00 seconds (sparsity = 0.621059)!
+## Learning embedding...
+## Iteration 50: error is 63.805382 (50 iterations in 0.01 seconds)
+## Iteration 100: error is 68.058653 (50 iterations in 0.00 seconds)
+## Iteration 150: error is 63.996707 (50 iterations in 0.01 seconds)
+## Iteration 200: error is 69.092029 (50 iterations in 0.01 seconds)
+## Iteration 250: error is 62.928042 (50 iterations in 0.00 seconds)
+## Iteration 300: error is 1.955468 (50 iterations in 0.00 seconds)
+## Iteration 350: error is 1.455246 (50 iterations in 0.00 seconds)
+## Iteration 400: error is 1.291848 (50 iterations in 0.00 seconds)
+## Iteration 450: error is 1.143067 (50 iterations in 0.00 seconds)
+## Iteration 500: error is 0.998625 (50 iterations in 0.00 seconds)
+## Iteration 550: error is 0.868421 (50 iterations in 0.00 seconds)
+## Iteration 600: error is 0.762655 (50 iterations in 0.00 seconds)
+## Iteration 650: error is 0.709098 (50 iterations in 0.00 seconds)
+## Iteration 700: error is 0.669030 (50 iterations in 0.00 seconds)
+## Iteration 750: error is 0.634407 (50 iterations in 0.00 seconds)
+## Iteration 800: error is 0.624864 (50 iterations in 0.00 seconds)
+## Fitting performed in 0.08 seconds.</code></pre>
+<pre><code>## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## font family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## font family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## font family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## font family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## font family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## font family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## font family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## font family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## font family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## font family not found in Windows font database</code></pre>
+<pre><code>## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x
+## $y, : font family not found in Windows font database</code></pre>
+<pre><code>## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## font family not found in Windows font database</code></pre>
+<div class="figure"><span id="fig:human-post-only"></span>
+<img src="_main_files/figure-html/human-post-only-1.png" alt="**t-SNE on POST samples only**" width="672" />
+<p class="caption">
+Figure 2.2: <strong>t-SNE on POST samples only</strong>
+</p>
+</div>
+<pre><code>## Read the 40 x 40 data matrix successfully!
+## Using no_dims = 2, perplexity = 6.000000, and theta = 0.500000
+## Computing input similarities...
+## Normalizing input...
+## Building tree...
+##  - point 0 of 40
+## Done in 0.00 seconds (sparsity = 0.597500)!
+## Learning embedding...
+## Iteration 50: error is 63.697473 (50 iterations in 0.00 seconds)
+## Iteration 100: error is 63.009840 (50 iterations in 0.00 seconds)
+## Iteration 150: error is 63.315584 (50 iterations in 0.01 seconds)
+## Iteration 200: error is 59.099152 (50 iterations in 0.00 seconds)
+## Iteration 250: error is 67.647811 (50 iterations in 0.01 seconds)
+## Iteration 300: error is 2.173040 (50 iterations in 0.00 seconds)
+## Iteration 350: error is 1.815526 (50 iterations in 0.00 seconds)
+## Iteration 400: error is 1.165833 (50 iterations in 0.00 seconds)
+## Iteration 450: error is 0.992057 (50 iterations in 0.00 seconds)
+## Iteration 500: error is 0.690721 (50 iterations in 0.00 seconds)
+## Iteration 550: error is 0.532175 (50 iterations in 0.00 seconds)
+## Iteration 600: error is 0.472545 (50 iterations in 0.00 seconds)
+## Iteration 650: error is 0.444015 (50 iterations in 0.00 seconds)
+## Iteration 700: error is 0.564632 (50 iterations in 0.00 seconds)
+## Iteration 750: error is 0.527065 (50 iterations in 0.00 seconds)
+## Iteration 800: error is 0.470169 (50 iterations in 0.00 seconds)
+## Fitting performed in 0.08 seconds.</code></pre>
+<pre><code>## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## font family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## font family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## font family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## font family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## font family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## font family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## font family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## font family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## font family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## font family not found in Windows font database</code></pre>
+<pre><code>## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x
+## $y, : font family not found in Windows font database</code></pre>
+<pre><code>## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## font family not found in Windows font database</code></pre>
+<div class="figure"><span id="fig:human-month-only"></span>
+<img src="_main_files/figure-html/human-month-only-1.png" alt="**t-SNE on 3 Month samples only**" width="672" />
+<p class="caption">
+Figure 2.3: <strong>t-SNE on 3 Month samples only</strong>
+</p>
+</div>
+<pre><code>## Read the 38 x 38 data matrix successfully!
+## Using no_dims = 2, perplexity = 5.000000, and theta = 0.500000
+## Computing input similarities...
+## Normalizing input...
+## Building tree...
+##  - point 0 of 38
+## Done in 0.00 seconds (sparsity = 0.519391)!
+## Learning embedding...
+## Iteration 50: error is 68.873762 (50 iterations in 0.00 seconds)
+## Iteration 100: error is 71.104464 (50 iterations in 0.01 seconds)
+## Iteration 150: error is 65.638997 (50 iterations in 0.00 seconds)
+## Iteration 200: error is 62.558994 (50 iterations in 0.00 seconds)
+## Iteration 250: error is 67.570975 (50 iterations in 0.01 seconds)
+## Iteration 300: error is 2.132609 (50 iterations in 0.00 seconds)
+## Iteration 350: error is 1.492879 (50 iterations in 0.00 seconds)
+## Iteration 400: error is 1.049527 (50 iterations in 0.00 seconds)
+## Iteration 450: error is 0.910425 (50 iterations in 0.00 seconds)
+## Iteration 500: error is 0.802701 (50 iterations in 0.00 seconds)
+## Iteration 550: error is 0.634487 (50 iterations in 0.00 seconds)
+## Iteration 600: error is 0.590204 (50 iterations in 0.00 seconds)
+## Iteration 650: error is 0.586557 (50 iterations in 0.00 seconds)
+## Iteration 700: error is 0.577414 (50 iterations in 0.00 seconds)
+## Iteration 750: error is 0.551946 (50 iterations in 0.00 seconds)
+## Iteration 800: error is 0.524491 (50 iterations in 0.00 seconds)
+## Fitting performed in 0.07 seconds.</code></pre>
+<pre><code>## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## font family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## font family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## font family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## font family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## font family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## font family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## font family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## font family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## font family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## font family not found in Windows font database</code></pre>
+<pre><code>## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x
+## $y, : font family not found in Windows font database</code></pre>
+<pre><code>## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## font family not found in Windows font database</code></pre>
+<div class="figure"><span id="fig:human-year-only"></span>
+<img src="_main_files/figure-html/human-year-only-1.png" alt="**t-SNE on 1 Year samples only**" width="672" />
+<p class="caption">
+Figure 2.4: <strong>t-SNE on 1 Year samples only</strong>
+</p>
+</div>
+<pre><code>## Read the 78 x 50 data matrix successfully!
+## Using no_dims = 2, perplexity = 15.000000, and theta = 0.500000
+## Computing input similarities...
+## Normalizing input...
+## Building tree...
+##  - point 0 of 78
+## Done in 0.00 seconds (sparsity = 0.719921)!
+## Learning embedding...
+## Iteration 50: error is 56.771105 (50 iterations in 0.01 seconds)
+## Iteration 100: error is 56.812182 (50 iterations in 0.01 seconds)
+## Iteration 150: error is 59.184410 (50 iterations in 0.01 seconds)
+## Iteration 200: error is 58.124633 (50 iterations in 0.01 seconds)
+## Iteration 250: error is 58.228015 (50 iterations in 0.01 seconds)
+## Iteration 300: error is 1.936942 (50 iterations in 0.01 seconds)
+## Iteration 350: error is 1.390766 (50 iterations in 0.01 seconds)
+## Iteration 400: error is 1.063703 (50 iterations in 0.01 seconds)
+## Iteration 450: error is 0.831150 (50 iterations in 0.01 seconds)
+## Iteration 500: error is 0.714567 (50 iterations in 0.01 seconds)
+## Iteration 550: error is 0.524069 (50 iterations in 0.01 seconds)
+## Iteration 600: error is 0.423816 (50 iterations in 0.01 seconds)
+## Iteration 650: error is 0.406842 (50 iterations in 0.01 seconds)
+## Iteration 700: error is 0.404124 (50 iterations in 0.01 seconds)
+## Iteration 750: error is 0.404819 (50 iterations in 0.01 seconds)
+## Iteration 800: error is 0.399680 (50 iterations in 0.01 seconds)
+## Fitting performed in 0.20 seconds.</code></pre>
+<pre><code>## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## font family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## font family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## font family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## font family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## font family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## font family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## font family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## font family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## font family not found in Windows font database
+
+## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## font family not found in Windows font database</code></pre>
+<pre><code>## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x
+## $y, : font family not found in Windows font database</code></pre>
+<pre><code>## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
+## font family not found in Windows font database</code></pre>
+<div class="figure"><span id="fig:human-year-month"></span>
+<img src="_main_files/figure-html/human-year-month-1.png" alt="**t-SNE on 1 Year and 3 month samples**" width="672" />
+<p class="caption">
+Figure 2.5: <strong>t-SNE on 1 Year and 3 month samples</strong>
+</p>
+</div>
+<p>But there is no sub-cluster behavior on <strong>3 months</strong> and <strong>1 year</strong> samples, and the <em>two-cluster</em> pattern in <strong>POST</strong> does not persist.</p>
+</div>
 </div>
 <div id="dataset-mouse" class="section level2">
 <h2><span class="header-section-number">2.2</span> Dataset Mouse</h2>
@@ -185,15 +452,15 @@ The plot makes more sense now: later time points(<strong>3 months</strong>, <str
 ## Iteration 350: error is 0.545783 (50 iterations in 0.00 seconds)
 ## Iteration 400: error is 0.351512 (50 iterations in 0.01 seconds)
 ## Iteration 450: error is 0.204200 (50 iterations in 0.01 seconds)
-## Iteration 500: error is 0.186298 (50 iterations in 0.01 seconds)
+## Iteration 500: error is 0.186298 (50 iterations in 0.00 seconds)
 ## Fitting performed in 0.06 seconds.</code></pre>
 <div class="figure"><span id="fig:mouse"></span>
 <img src="_main_files/figure-html/mouse-1.png" alt="Same t-SNE analysis for mouse data." width="672" />
 <p class="caption">
-Figure 2.2: Same t-SNE analysis for mouse data.
+Figure 2.6: Same t-SNE analysis for mouse data.
 </p>
 </div>
-<p>As shown in the Figure <a href="t-sne-analysis.html#fig:mouse">2.2</a>:</p>
+<p>As shown in the Figure <a href="t-sne-analysis.html#fig:mouse">2.6</a>:</p>
 <ol style="list-style-type: decimal">
 <li><p>The syntaxis of same time-point and same mouse-type are stronger in this Mouse data, though it has less sample points here–49 samples in total, divided into three types(IRI, NORM, SHAM), each time point with 3 replicate except for 6mN has 4.</p></li>
 <li><p>The perplexity = 9 and set.seed(81) were tuned mannualy by hands-and-eyes. Based on tens of runs, the results are alike–the clustering is good. Perplexity &gt;5 and &lt;= 10 generally works here for limitied times of run done by myself.</p></li>
