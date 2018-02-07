@@ -83,6 +83,8 @@ knitr::kable(
 ```
 
 ## Two-dimensional case
+Turned out to be useful, see Chapter 6 heatmap(Section \@ref(hm)).
+
 ```{r pseudo-time-conjecture, cache = T, include = F, warning = F}
 dt <- fread("C:/Users/Ryan/Documents/3.Kidney/HUMAN_all.gene_RPKM.xls")
 dt <- dt[!duplicated(dt$external_gene_name)]
@@ -148,3 +150,4 @@ cat(as.character(pData(human)$person[grep("post",pData(human)$time)][order(pData
 cat(as.character(round(pData(human)$Pseudo[grep("post",pData(human)$time)][order(pData(human)$Pseudo[grep("post",pData(human)$time)])],2)), sep = " ")
 
 ```
+

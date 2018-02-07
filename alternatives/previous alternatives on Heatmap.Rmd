@@ -1,0 +1,144 @@
+# Heatmap Viewing of Informative Genes Used to Predict Sample Trajectory
+
+## Selecting genes
+
+```{r heatmap-trajectory-verifing, cache = T, include = F, warning = F}
+
+options(useFancyQuotes = FALSE)
+dt <- fread("C:/Users/Ryan/Documents/3.Kidney/HUMAN_all.gene_RPKM.xls")
+dt <- dt[!duplicated(dt$external_gene_name)]
+
+setcolorder(dt,
+            c(names(dt)[1:7],
+              names(dt)[-(1:7)][order(names(dt)[-(1:7)])])
+)
+
+expr <- as.matrix(dt[,-(1:7)])
+expr <- expr[,grep("pre|post", colnames(expr))]
+gene_ann <- data.frame(dt[,1:7])
+setnames(gene_ann, "external_gene_name", "gene_short_name")
+rownames(gene_ann) = dt$ensembl_gene_id
+rownames(expr) <- dt$ensembl_gene_id
+sample_ann <- data.frame(sampleID = colnames(expr), person = substr(colnames(expr), 15,16),
+                         time = substr(colnames(expr), 18, nchar(colnames(expr))))
+rownames(sample_ann) = sample_ann$sampleID
+
+fd <- new("AnnotatedDataFrame", data = gene_ann)
+pd <- new("AnnotatedDataFrame", data = sample_ann)
+
+human <- newCellDataSet(as.matrix(expr),
+                       phenoData = pd,
+                       featureData = fd,
+                       lowerDetectionLimit = 0.1,
+                       expressionFamily = tobit(Lower = 0.1))
+rpc_matrix <- relative2abs(human, method = "num_genes")
+
+human <- newCellDataSet(as(as.matrix(rpc_matrix), "sparseMatrix"),
+                       phenoData = pd,
+                       featureData = fd,
+                       lowerDetectionLimit = 0.5,
+                       expressionFamily = negbinomial.size())
+
+human <- estimateSizeFactors(human)
+human <- estimateDispersions(human)
+```
+
+```{r, warning = F}
+human <- detectGenes(human, min_expr = 0.1)
+expressed.gene <- row.names(subset(fData(human), num_cells_expressed >= 35))
+diff_test_res <- differentialGeneTest(human[expressed.gene,],
+                                      fullModelFormulaStr = "~time", cores = 2)
+ordering_genes <- row.names (subset(diff_test_res, qval < 0.05))
+```
+Selecting genes that express in at least 35 samples with a detection threshold $RPKM >= 0.1, considering our sample size: 42 post samples and 41 pre samples.  
+
+> 191 genes pass the multiple testing correction with $Q-value < 0.05$
+
+```{r t2, cache = T, echo = F, warning = F, fig.cap = 'Dispersion v.s. Expression of genes used in the prediction'}
+human <- setOrderingFilter(human, ordering_genes)
+plot_ordering_genes(human)
+
+human <- reduceDimension(human, max_components = 2,
+                            method = 'tSNE')
+human <- orderCells(human,reverse = T)
+```
+Plots genes by mean vs. dispersion, highlighting those selected for ordering. Dispersion was estimated by first transform RPKM to RPC through Monocle 2.  
+Size factors help us normalize for differences in mRNA recovered across cells, and "dispersion" values will help us perform differential expression analysis later[@R-monocle].
+
+```{r trajectory-by-time, warning = F, fig.cap = 'post/pre Samples along the path predicted based on Pseudo-time'}
+plot_cell_trajectory(human, color_by = "time")
+```
+
+## Considering the absolute distance between genes
+
+```{r cache = T, include = F, warning = F}
+ordering.expr <- as.matrix(expr[ordering_genes, pData(human)[order(pData(human)$Pseu),]$sampleID])
+ordering.expr <- log(ordering.expr + 1)
+col_ann = pData(human)[order(pData(human)$Pseu),]["time"]
+color_ann <- list(group = inferno(2))
+names(color_ann$group) <- unique(pData(human)$time)
+```
+
+```{r heatmap, fig.cap = 'The heatmap viewing of the informative genes used in Pseudo-time trajectory prediction'}
+pheatmap(
+  mat               = ordering.expr,
+  scale             = "row",
+  color             = brewer.pal(4, "Set3"),
+  border_color      = NA,
+  show_colnames     = FALSE,
+  show_rownames     = T,
+  annotation_col    = col_ann,
+  annotation_colors = color_ann,
+  cluster_cols      = FALSE,
+  drop_levels       = TRUE,
+  fontsize          = 14,
+  main              = "Scaled log-expression Ordering by Pseudo-time"
+)
+
+```
+This gives us a visual verification of the reliability/effectiveness of the Pseudo-time prediction. It indicates a good separation of the expression of these 191 informative genes over pre/post samples. And it gives us a visual sense of those genes that cause the only 3 mis-placed post samples, which will definitely be the focus of the following studies. 
+
+## Enhanced heatmap: pay more attention to "shape" of the "curve".
+
+Since the distance is calculated using **Euclidean distance**, the heatmap in previous section focuses on only the "absolute distance" between points(gene expression is modeled as points in high-dimensional space).  
+In this section, another popular approach in plotting heatmap was implemented, I learned this from [ARK-Genomics website](http://www.ark-genomics.org/events-online-training/heatmaps-r). Using Pearson's Correlation as distance measure, we achieved clustering on "shape" of the "curve"(gene expression profiling over time.)
+
+```{r enhanced-heatmap, fig.cap = 'Distance measure: 1 - correlation'}
+hc <- hclust(as.dist(1-cor(t(ordering.expr))), method = "average")
+
+heatmap.2(ordering.expr,
+  Rowv  = as.dendrogram(hc),
+  Colv  = NULL,
+  col   = brewer.pal(5, "Set3"),
+  scale = "row",
+  dendrogram = "row"
+)
+
+```
+Again, different measures have their own focus and drawbacks, the effectiveness requires further subsequent examinations.  
+
+## Examine certain genes
+```{r include = F}
+visual_profile <- function(x, n=length(x)){
+  mat <- ordering.expr[x,, drop = F]
+  par(mar=c(4,4,1,1))
+  plot(1:83,rep(0,83),pch="", ylim=c(0,10))
+  for (i in 1:nrow(mat)) {
+    lines(1:83,mat[i,], lwd=3, col=i)
+  }
+  legend(1,10,rownames(mat), 1:4, cex=0.7)
+}
+```
+You can examine certain genes of interest using this function I wrapped for you as following, only basic R & RStdio operation required. 
+* First, open a new R workspace(R empty project in RStdio) since you don't want to mess up your other works.
+* Second, load the RData I provide for you. And then examine genes by EnsemblID by calling function **visual_profile** as shown before.
+```{r}
+#setwd("..."), or you can simply open up a empty project and copy the RData into that directory
+#load("heatmap.RData")   # I comment these two lines since I already have them, you need to load it though
+visual_profile(c("ENSG00000277639", "ENSG00000277452", "ENSG00000004799"))
+```
+
+> NOTE: the rownames(gene name on the side of the plot) of these two heatmaps are different. The first heatmap\@ref(fig:heatmap) corresponds to file **heatmap_genes_pre-popst_euclidean.txt**, and the first gene in the file is the top one in this heatmap. The second heatmap\@ref(fig:enhanced-heatmap) corresponds to file **heatmap_genes_pre-popst_cor.txt**, and and the first gene in the file is the bottom one in this heatmap.
+}
+ 
+`r if (knitr:::is_html_output()) '# References {-}'`

@@ -1,0 +1,64 @@
+# Gene expression patterns on kidney injury across species
+
+## Variance Decomposition
+```{r, include = F, warning = F, message = F}
+library(data.table)
+library(stringr)
+library(Rtsne)
+library(dplyr)
+library(ggplot2)
+library(RColorBrewer)
+
+get_time_point <- function(x) substr(x, 18, nchar(x))
+
+mouse <- fread("C:/Users/Ryan/Documents/variance decomposition/MOUSE_all.gene_RPKM.csv")
+human <- fread("C:/Users/Ryan/Documents/variance decomposition/HUMAN_all.gene_RPKM.CSV")
+
+homolog <- fread("C:/Users/Ryan/Documents/variance decomposition/mart_export.txt")
+homolog <- homolog[`Mouse gene stable ID` != ""]
+setnames(mouse, "V1", "GENE_ID")
+
+mouse[,GENE_ID := str_replace(mouse[,GENE_ID], '\\..*', "")]
+
+setnames(homolog, "Gene stable ID", "ensembl_gene_id")
+
+human <- human[ensembl_gene_id %in% unique(homolog[,ensembl_gene_id])]
+setcolorder(human,
+            c(names(dt)[1:7],
+              names(dt)[-(1:7)][order(names(dt)[-(1:7)])])
+)
+setkey(human,external_gene_name)
+mouse[,symbol := str_to_upper(symbol)]
+setkey(mouse, symbol)
+INNER.join = human[mouse, nomatch = F]
+
+
+
+mat <- INNER.join[, -c(1:7, 171,172)]
+mat <- mat[apply(mat[,1:163],1,max) >= .1 | apply(mat[,164:212],1,max) >= .1,]
+mat <- log10(mat + 0.01) #used log10 (RPKM) to normalize the data and
+                        #a pseudocount of 0.01 to deal with zero expression values.
+mat.t <- t(mat)
+set.seed(1234)
+tsne <- Rtsne(mat.t, dims = 2, perplexity = 40, verbose = T, max_iter = 800)
+
+tbl <- tbl_df(tsne$Y)
+tbl$Species = rep(c("Human","Mouse"),c(163,49))
+tbl$time_point = c(unname(sapply(rownames(mat.t), get_time_point))[1:163], str_replace(rownames(mat.t)[164:212], "-.*", ""))
+tbl$metadata = tbl$time_point
+time_point <- str_replace(tbl$time_point, "1year", "12m")
+time_point <- str_replace(time_point, "^[a-zA-Z]*12m", "12m")
+time_point <- str_replace(time_point, "3months", "3m")
+time_point <- str_replace(time_point, "^[a-zA-Z]*3m", "3m")
+time_point <- str_replace(time_point, "^[a-zA-Z]*4h", "4h")
+time_point <- str_replace(time_point, "^[a-zA-Z]*24h", "24h")
+tbl$time_point = time_point
+tbl$sample_type <- c(rep("human", 163), str_replace(tbl$metadata[164:212], "(4h|24h|14d|28d|6mN|12m|3m|15m|2h|48h|7d|9m|72h)", ""))
+```
+```{r tSNE_on_2_species, fig.cap = 'A t-SNE clustering on mouse and human samples'}
+tbl %>% ggplot(aes(x = V1, y = V2)) +
+  geom_point(aes(color = time_point, shape = sample_type)) + 
+  scale_color_manual(values=c(brewer.pal(12, "Paired"), brewer.pal(3,"Set3")))
+```
+
+Gene expression patterns tended to cluster more by species rather than pre/post injury or later-on time point(\@ref(tSNE_on_2_species)).

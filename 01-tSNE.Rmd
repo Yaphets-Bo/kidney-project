@@ -78,7 +78,7 @@ The plot makes more sense now: later time points(**3 months**, **1 year**) stick
 
 ### Independent t-SNE on each time point
 
-It looks like there is two cluster in __POST__ sample. 
+It looks like there is two clusters in __POST__ sample. 
 ```{r human-post-only, message=FALSE, warnings = FALSE, echo = F, catch = T, fig.cap = "**t-SNE on POST samples only**"}
 my_col = brewer.pal(8,"Set3")
 set.seed(123)
@@ -88,11 +88,11 @@ tbl <- tbl_df(tsne.post$Y)
 tbl$persons = substr(rownames(post.remove), 15, 16)
 tbl %>% ggplot(aes(x = V1, y = V2, label = persons)) +
   geom_text(col = my_col[1]) + 
-  theme(plot.title = element_text(family = "Helvetica", face = "bold", size = (15)), 
-        legend.title = element_text(colour = "steelblue",  face = "bold.italic", family = "Helvetica"), 
-        legend.text = element_text(face = "italic", colour="steelblue4",family = "Helvetica"), 
-        axis.title = element_text(family = "Helvetica", size = (10), colour = "steelblue4"),
-        axis.text = element_text(family = "Courier", colour = "cornflowerblue", size = (10))) + 
+  theme(plot.title = element_text(family = "mono", face = "bold", size = (15)), 
+        legend.title = element_text(colour = "steelblue",  face = "bold.italic", family = "mono"), 
+        legend.text = element_text(face = "italic", colour="steelblue4",family = "mono"), 
+        axis.title = element_text(family = "mono", size = (10), colour = "steelblue4"),
+        axis.text = element_text(family = "serif", colour = "cornflowerblue", size = (10))) + 
   ggtitle("POST Samples ")
 ```
 
@@ -103,9 +103,9 @@ tbl <- tbl_df(tsne.month$Y)
 tbl$persons = substr(rownames(month.remove), 15, 16)
 tbl %>% ggplot(aes(x = V1, y = V2, label = persons)) +
   geom_text(col = my_col[6]) + 
-  theme(plot.title = element_text(family = "Helvetica", face = "bold", size = (15)), 
-        axis.title = element_text(family = "Helvetica", size = (10), colour = "steelblue4"),
-        axis.text = element_text(family = "Courier", colour = "cornflowerblue", size = (10))) + 
+  theme(plot.title = element_text(family = "mono", face = "bold", size = (15)), 
+        axis.title = element_text(family = "mono", size = (10), colour = "steelblue4"),
+        axis.text = element_text(family = "serif", colour = "cornflowerblue", size = (10))) + 
   ggtitle("3 Months Samples ")
 
 ```
@@ -117,9 +117,9 @@ tbl <- tbl_df(tsne.year$Y)
 tbl$persons = substr(rownames(year.remove), 15, 16)
 tbl %>% ggplot(aes(x = V1, y = V2, label = persons)) +
   geom_text(col = my_col[4]) + 
-  theme(plot.title = element_text(family = "Helvetica", face = "bold", size = (15)), 
-        axis.title = element_text(family = "Helvetica", size = (10), colour = "steelblue4"),
-        axis.text = element_text(family = "Courier", colour = "cornflowerblue", size = (10))) + 
+  theme(plot.title = element_text(family = "mono", face = "bold", size = (15)), 
+        axis.title = element_text(family = "mono", size = (10), colour = "steelblue4"),
+        axis.text = element_text(family = "serif", colour = "cornflowerblue", size = (10))) + 
   ggtitle("1 Year Samples ")
 
 ```
@@ -135,9 +135,9 @@ Labels <- unname(sapply(rownames(my.remove), get_time_point))
 tbl$time_point = Labels
 tbl %>% ggplot(aes(x = V1, y = V2, label = persons, col = time_point)) +
   geom_text() + 
-  theme(plot.title = element_text(family = "Helvetica", face = "bold", size = (15)), 
-        axis.title = element_text(family = "Helvetica", size = (10), colour = "steelblue4"),
-        axis.text = element_text(family = "Courier", colour = "cornflowerblue", size = (10))) + 
+  theme(plot.title = element_text(family = "mono", face = "bold", size = (15)), 
+        axis.title = element_text(family = "mono", size = (10), colour = "steelblue4"),
+        axis.text = element_text(family = "serif", colour = "cornflowerblue", size = (10))) + 
   ggtitle("3 Months and 1 Year Samples ")
 
 ```
