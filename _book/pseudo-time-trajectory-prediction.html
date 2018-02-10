@@ -25,7 +25,7 @@
 <meta name="author" content="Bo Sun">
 
 
-<meta name="date" content="2018-01-02">
+<meta name="date" content="2018-02-09">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -123,11 +123,15 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="5.2.2" data-path="homologs-reduction-of-de-gene-set.html"><a href="homologs-reduction-of-de-gene-set.html#take-iri2h-as-early-reponse-only"><i class="fa fa-check"></i><b>5.2.2</b> Take IRI2h as early reponse only</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory.html"><a href="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory.html"><i class="fa fa-check"></i><b>6</b> Heatmap Viewing of Informative Genes Used to Predict Sample Trajectory</a><ul>
-<li class="chapter" data-level="6.1" data-path="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory.html"><a href="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory.html#selecting-genes"><i class="fa fa-check"></i><b>6.1</b> Selecting genes</a></li>
-<li class="chapter" data-level="6.2" data-path="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory.html"><a href="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory.html#considering-the-absolute-distance-between-genes"><i class="fa fa-check"></i><b>6.2</b> Considering the absolute distance between genes</a></li>
-<li class="chapter" data-level="6.3" data-path="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory.html"><a href="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory.html#enhanced-heatmap-pay-more-attention-to-shape-of-the-curve."><i class="fa fa-check"></i><b>6.3</b> Enhanced heatmap: pay more attention to “shape” of the “curve”.</a></li>
-<li class="chapter" data-level="6.4" data-path="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory.html"><a href="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory.html#examine-certain-genes"><i class="fa fa-check"></i><b>6.4</b> Examine certain genes</a></li>
+<li class="chapter" data-level="6" data-path="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory-hm.html"><a href="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory-hm.html"><i class="fa fa-check"></i><b>6</b> Heatmap Viewing of Informative Genes Used to Predict Sample Trajectory (#hm)</a><ul>
+<li class="chapter" data-level="6.1" data-path="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory-hm.html"><a href="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory-hm.html#transform-rpkm-to-rpc"><i class="fa fa-check"></i><b>6.1</b> Transform RPKM to RPC</a></li>
+<li class="chapter" data-level="6.2" data-path="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory-hm.html"><a href="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory-hm.html#set-ordering-genes-and-reduce-demisionality"><i class="fa fa-check"></i><b>6.2</b> Set ordering genes and reduce demisionality</a></li>
+<li class="chapter" data-level="6.3" data-path="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory-hm.html"><a href="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory-hm.html#ordering-the-samples-in-pseudotimetime"><i class="fa fa-check"></i><b>6.3</b> Ordering the samples in pseudotime/time</a></li>
+<li class="chapter" data-level="6.4" data-path="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory-hm.html"><a href="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory-hm.html#heatmap-samples-ordered-by-pseudotime"><i class="fa fa-check"></i><b>6.4</b> heatmap, samples ordered by Pseudotime</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="gene-expression-patterns-on-kidney-injury-across-species.html"><a href="gene-expression-patterns-on-kidney-injury-across-species.html"><i class="fa fa-check"></i><b>7</b> Gene expression patterns on kidney injury across species</a><ul>
+<li class="chapter" data-level="7.1" data-path="gene-expression-patterns-on-kidney-injury-across-species.html"><a href="gene-expression-patterns-on-kidney-injury-across-species.html#species-dominate-the-clustering"><i class="fa fa-check"></i><b>7.1</b> Species Dominate the clustering</a></li>
+<li class="chapter" data-level="7.2" data-path="gene-expression-patterns-on-kidney-injury-across-species.html"><a href="gene-expression-patterns-on-kidney-injury-across-species.html#variance-decomposition"><i class="fa fa-check"></i><b>7.2</b> Variance Decomposition</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 </ul>
@@ -148,7 +152,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
             <section class="normal" id="section-">
 <div id="pseudo-time-trajectory-prediction" class="section level1">
-<h1><span class="header-section-number">4</span> Pseudo-time trajectory prediction</h1>
+<h1><span class="header-section-number">Chapter 4</span> Pseudo-time trajectory prediction</h1>
 <div id="step-1-2-set-ordering-genes-and-reduce-demisionality" class="section level2">
 <h2><span class="header-section-number">4.1</span> Step 1-2: Set ordering genes and reduce demisionality</h2>
 <blockquote>
@@ -171,16 +175,16 @@ human &lt;-<span class="st"> </span><span class="kw">orderCells</span>(human)</c
 <h2><span class="header-section-number">4.2</span> Step 3: ordering the cells in pseudotime</h2>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot_cell_trajectory</span>(human, <span class="dt">color_by =</span> <span class="st">&quot;time&quot;</span>)</code></pre></div>
 <div class="figure"><span id="fig:time"></span>
-<img src="_main_files/figure-html/time-1.png" alt="Sample trajectory colored by real time points" width="672" />
+<img src="bookdown_files/figure-html/time-1.png" alt="Sample trajectory colored by real time points" width="672" />
 <p class="caption">
-Figure 4.1: Sample trajectory colored by real time points
+FIGURE 4.1: Sample trajectory colored by real time points
 </p>
 </div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot_cell_trajectory</span>(human, <span class="dt">color_by =</span> <span class="st">&quot;Pseudotime&quot;</span>)</code></pre></div>
 <div class="figure"><span id="fig:pseudotime"></span>
-<img src="_main_files/figure-html/pseudotime-1.png" alt="Same trajectory colored by Pseudotime" width="672" />
+<img src="bookdown_files/figure-html/pseudotime-1.png" alt="Same trajectory colored by Pseudotime" width="672" />
 <p class="caption">
-Figure 4.2: Same trajectory colored by Pseudotime
+FIGURE 4.2: Same trajectory colored by Pseudotime
 </p>
 </div>
 <p>Monocle doesn’t know a priori which of the trajectory of the tree to call the “beginning”. So the Pseudotime is plotted reversly. It’s a little bit tricky to make it right. But in our case, it’s clear that the left is beginning and the right is end since the left points are pre and right points are post, as suggested in the previous figuer.</p>
@@ -189,7 +193,7 @@ Figure 4.2: Same trajectory colored by Pseudotime
   <span class="dt">caption =</span> <span class="st">&#39;A table of the Pseudotime generated&#39;</span>
 )</code></pre></div>
 <table>
-<caption><span id="tab:unnamed-chunk-9">Table 4.1: </span>A table of the Pseudotime generated</caption>
+<caption><span id="tab:unnamed-chunk-9">TABLE 4.1: </span>A table of the Pseudotime generated</caption>
 <thead>
 <tr class="header">
 <th></th>
@@ -702,13 +706,14 @@ Figure 4.2: Same trajectory colored by Pseudotime
 </div>
 <div id="two-dimensional-case" class="section level2">
 <h2><span class="header-section-number">4.3</span> Two-dimensional case</h2>
+<p>Turned out to be useful, see Chapter 6 heatmap(Section <a href="#hm"><strong>??</strong></a>).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">diff_test_res &lt;-<span class="st"> </span><span class="kw">differentialGeneTest</span>(human[expressed.gene,],
                                       <span class="dt">fullModelFormulaStr =</span> <span class="st">&quot;~time + person&quot;</span>)</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot_cell_trajectory</span>(human, <span class="dt">color_by =</span> <span class="st">&quot;time&quot;</span>)</code></pre></div>
 <div class="figure"><span id="fig:2-covar-traj"></span>
-<img src="_main_files/figure-html/2-covar-traj-1.png" alt="A two dimensional trajectory colored by real time points" width="672" />
+<img src="bookdown_files/figure-html/2-covar-traj-1.png" alt="A two dimensional trajectory colored by real time points" width="672" />
 <p class="caption">
-Figure 4.3: A two dimensional trajectory colored by real time points
+FIGURE 4.3: A two dimensional trajectory colored by real time points
 </p>
 </div>
 <p>The sample rank and corresponding pseudo-time:</p>

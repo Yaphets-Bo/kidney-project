@@ -25,7 +25,7 @@
 <meta name="author" content="Bo Sun">
 
 
-<meta name="date" content="2018-01-02">
+<meta name="date" content="2018-02-09">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -123,11 +123,15 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="5.2.2" data-path="homologs-reduction-of-de-gene-set.html"><a href="homologs-reduction-of-de-gene-set.html#take-iri2h-as-early-reponse-only"><i class="fa fa-check"></i><b>5.2.2</b> Take IRI2h as early reponse only</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory.html"><a href="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory.html"><i class="fa fa-check"></i><b>6</b> Heatmap Viewing of Informative Genes Used to Predict Sample Trajectory</a><ul>
-<li class="chapter" data-level="6.1" data-path="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory.html"><a href="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory.html#selecting-genes"><i class="fa fa-check"></i><b>6.1</b> Selecting genes</a></li>
-<li class="chapter" data-level="6.2" data-path="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory.html"><a href="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory.html#considering-the-absolute-distance-between-genes"><i class="fa fa-check"></i><b>6.2</b> Considering the absolute distance between genes</a></li>
-<li class="chapter" data-level="6.3" data-path="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory.html"><a href="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory.html#enhanced-heatmap-pay-more-attention-to-shape-of-the-curve."><i class="fa fa-check"></i><b>6.3</b> Enhanced heatmap: pay more attention to “shape” of the “curve”.</a></li>
-<li class="chapter" data-level="6.4" data-path="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory.html"><a href="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory.html#examine-certain-genes"><i class="fa fa-check"></i><b>6.4</b> Examine certain genes</a></li>
+<li class="chapter" data-level="6" data-path="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory-hm.html"><a href="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory-hm.html"><i class="fa fa-check"></i><b>6</b> Heatmap Viewing of Informative Genes Used to Predict Sample Trajectory (#hm)</a><ul>
+<li class="chapter" data-level="6.1" data-path="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory-hm.html"><a href="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory-hm.html#transform-rpkm-to-rpc"><i class="fa fa-check"></i><b>6.1</b> Transform RPKM to RPC</a></li>
+<li class="chapter" data-level="6.2" data-path="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory-hm.html"><a href="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory-hm.html#set-ordering-genes-and-reduce-demisionality"><i class="fa fa-check"></i><b>6.2</b> Set ordering genes and reduce demisionality</a></li>
+<li class="chapter" data-level="6.3" data-path="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory-hm.html"><a href="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory-hm.html#ordering-the-samples-in-pseudotimetime"><i class="fa fa-check"></i><b>6.3</b> Ordering the samples in pseudotime/time</a></li>
+<li class="chapter" data-level="6.4" data-path="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory-hm.html"><a href="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory-hm.html#heatmap-samples-ordered-by-pseudotime"><i class="fa fa-check"></i><b>6.4</b> heatmap, samples ordered by Pseudotime</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="gene-expression-patterns-on-kidney-injury-across-species.html"><a href="gene-expression-patterns-on-kidney-injury-across-species.html"><i class="fa fa-check"></i><b>7</b> Gene expression patterns on kidney injury across species</a><ul>
+<li class="chapter" data-level="7.1" data-path="gene-expression-patterns-on-kidney-injury-across-species.html"><a href="gene-expression-patterns-on-kidney-injury-across-species.html#species-dominate-the-clustering"><i class="fa fa-check"></i><b>7.1</b> Species Dominate the clustering</a></li>
+<li class="chapter" data-level="7.2" data-path="gene-expression-patterns-on-kidney-injury-across-species.html"><a href="gene-expression-patterns-on-kidney-injury-across-species.html#variance-decomposition"><i class="fa fa-check"></i><b>7.2</b> Variance Decomposition</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 </ul>
@@ -148,13 +152,13 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
             <section class="normal" id="section-">
 <div id="quality-control" class="section level1">
-<h1><span class="header-section-number">3</span> Quality Control</h1>
+<h1><span class="header-section-number">Chapter 3</span> Quality Control</h1>
 <p>Note that Monocle assume the gene expresison is log-normally distributed. So here we perform some filtering and then give it a check..<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a> And it won’t intervere following analysis since in this bulk analysis, we are not facing issues of Single-Cell protocol like <em>low mRNA cell sample</em> or <em>doublets or triplets</em>, etc.</p>
 <div id="gf" class="section level2">
 <h2><span class="header-section-number">3.1</span> gene filtering</h2>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">human &lt;-<span class="st"> </span><span class="kw">detectGenes</span>(human, <span class="dt">min_expr =</span> <span class="fl">0.1</span>)
 <span class="kw">plot</span>(<span class="kw">density</span>(<span class="kw">fData</span>(human)<span class="op">$</span>num_cells_expressed))</code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-4-1.png" width="672" /> The number of cells express a certain gene is bimodal distributed, for <span class="math inline">\(threshold = .1\)</span>, some genes are expressed in all 163 samples, and some genes are only expressed in a little few samples.</p>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-4-1.png" width="672" /> The number of cells express a certain gene is bimodal distributed, for <span class="math inline">\(threshold = .1\)</span>, some genes are expressed in all 163 samples, and some genes are only expressed in a little few samples.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">expressed.gene &lt;-<span class="st"> </span><span class="kw">row.names</span>(<span class="kw">subset</span>(<span class="kw">fData</span>(human), num_cells_expressed <span class="op">&gt;=</span><span class="st"> </span><span class="dv">50</span>))</code></pre></div>
 <ul>
 <li>Genes has &gt;= 50 samples with <span class="math inline">\(RPKM &gt;= .1\)</span> are kept. (22047/54514 genes left)</li>
@@ -165,8 +169,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h2><span class="header-section-number">3.2</span> check log-nomality</h2>
 <p>As suggest in Monocle mannual, take log(rpkm + 1), scale each log-transformed gene expression(subtract the mean and divided by <span class="math inline">\(sd\)</span>), make the whole log-rpkm matrix a single vector then compare it to a standard normal.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">L &lt;-<span class="st"> </span><span class="kw">log</span>(<span class="kw">exprs</span>(human[expressed.gene,]) <span class="op">+</span><span class="st"> </span><span class="dv">1</span>)</code></pre></div>
-<p>Apparently, our filtered data pass the log-normality test. <img src="_main_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
-<p><img src="_main_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<p>Apparently, our filtered data pass the log-normality test. <img src="bookdown_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p><img src="bookdown_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
 
 </div>
 </div>

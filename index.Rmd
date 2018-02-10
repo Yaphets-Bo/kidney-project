@@ -2,12 +2,13 @@
 title: "A Report Example"
 author: "Bo Sun"
 date: "`r Sys.Date()`"
-site: bookdown::bookdown_site
+knit: "bookdown::render_book"
 output: bookdown::gitbook
 documentclass: book
 bibliography: [packages.bib]
 biblio-style: apalike
 link-citations: yes
+site: bookdown::bookdown_site
 github-repo: Yaphets-Bo/kidneyproject
 description: "My first attemp to write scientific report via bookdown."
 ---

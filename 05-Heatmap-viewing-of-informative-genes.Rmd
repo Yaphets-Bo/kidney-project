@@ -1,4 +1,4 @@
-# Heatmap Viewing of Informative Genes Used to Predict Sample Trajectory
+# Heatmap Viewing of Informative Genes Used to Predict Sample Trajectory (#hm)
 
 ## Transform RPKM to RPC
 ```{r rpkm_rpc, cache = T, include = F, warning = F}
@@ -84,15 +84,15 @@ Therefore I tried to decrease the number of genes entering in the heatmap by ver
 
 
 ## Ordering the samples in pseudotime/time
-```{r rpc_time, fig.cap = 'Sample trajectory colored by real time points'}
+```{r rpcTime, fig.cap = "Sample trajectory colored by real time points"}
 plot_cell_trajectory(human, color_by = "time")
 ```
 
-```{r rpc_pseudotime, fig.cap = 'Same trajectory colored by Pseudotime'}
+```{r rpcPseudotime, fig.cap = "Same trajectory colored by Pseudotime"}
 plot_cell_trajectory(human, color_by = "Pseudotime")
 ```
 ## heatmap, samples ordered by Pseudotime
-```{r good_hm, fig.cap = 'columns ordered by rank(Pseudotime)'}
+```{r good_hm, fig.cap = "columns ordered by rank(Pseudotime)"}
 ordering.expr <- rpc_matrix[ordering_genes,grep("post",rownames(pData(human)))][,order(pData(human)[grep("post",rownames(pData(human))),]$Pseu)]
 ordering.expr <- log(ordering.expr + 1)
 
@@ -109,6 +109,6 @@ pheatmap(
   cluster_cols      = FALSE,
   drop_levels       = TRUE,
   fontsize          = 14,
-  main              = "Scaled log-rpc heatmap, POST sample ordered by Pseudotime"
+  main              = "Scaled log-rpc heatmap\nPOST sample ordered by Pseudotime"
 )
 ```

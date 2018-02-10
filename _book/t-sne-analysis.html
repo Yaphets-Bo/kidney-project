@@ -25,7 +25,7 @@
 <meta name="author" content="Bo Sun">
 
 
-<meta name="date" content="2018-01-02">
+<meta name="date" content="2018-02-09">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -123,11 +123,15 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="5.2.2" data-path="homologs-reduction-of-de-gene-set.html"><a href="homologs-reduction-of-de-gene-set.html#take-iri2h-as-early-reponse-only"><i class="fa fa-check"></i><b>5.2.2</b> Take IRI2h as early reponse only</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory.html"><a href="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory.html"><i class="fa fa-check"></i><b>6</b> Heatmap Viewing of Informative Genes Used to Predict Sample Trajectory</a><ul>
-<li class="chapter" data-level="6.1" data-path="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory.html"><a href="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory.html#selecting-genes"><i class="fa fa-check"></i><b>6.1</b> Selecting genes</a></li>
-<li class="chapter" data-level="6.2" data-path="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory.html"><a href="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory.html#considering-the-absolute-distance-between-genes"><i class="fa fa-check"></i><b>6.2</b> Considering the absolute distance between genes</a></li>
-<li class="chapter" data-level="6.3" data-path="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory.html"><a href="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory.html#enhanced-heatmap-pay-more-attention-to-shape-of-the-curve."><i class="fa fa-check"></i><b>6.3</b> Enhanced heatmap: pay more attention to “shape” of the “curve”.</a></li>
-<li class="chapter" data-level="6.4" data-path="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory.html"><a href="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory.html#examine-certain-genes"><i class="fa fa-check"></i><b>6.4</b> Examine certain genes</a></li>
+<li class="chapter" data-level="6" data-path="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory-hm.html"><a href="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory-hm.html"><i class="fa fa-check"></i><b>6</b> Heatmap Viewing of Informative Genes Used to Predict Sample Trajectory (#hm)</a><ul>
+<li class="chapter" data-level="6.1" data-path="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory-hm.html"><a href="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory-hm.html#transform-rpkm-to-rpc"><i class="fa fa-check"></i><b>6.1</b> Transform RPKM to RPC</a></li>
+<li class="chapter" data-level="6.2" data-path="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory-hm.html"><a href="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory-hm.html#set-ordering-genes-and-reduce-demisionality"><i class="fa fa-check"></i><b>6.2</b> Set ordering genes and reduce demisionality</a></li>
+<li class="chapter" data-level="6.3" data-path="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory-hm.html"><a href="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory-hm.html#ordering-the-samples-in-pseudotimetime"><i class="fa fa-check"></i><b>6.3</b> Ordering the samples in pseudotime/time</a></li>
+<li class="chapter" data-level="6.4" data-path="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory-hm.html"><a href="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory-hm.html#heatmap-samples-ordered-by-pseudotime"><i class="fa fa-check"></i><b>6.4</b> heatmap, samples ordered by Pseudotime</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="gene-expression-patterns-on-kidney-injury-across-species.html"><a href="gene-expression-patterns-on-kidney-injury-across-species.html"><i class="fa fa-check"></i><b>7</b> Gene expression patterns on kidney injury across species</a><ul>
+<li class="chapter" data-level="7.1" data-path="gene-expression-patterns-on-kidney-injury-across-species.html"><a href="gene-expression-patterns-on-kidney-injury-across-species.html#species-dominate-the-clustering"><i class="fa fa-check"></i><b>7.1</b> Species Dominate the clustering</a></li>
+<li class="chapter" data-level="7.2" data-path="gene-expression-patterns-on-kidney-injury-across-species.html"><a href="gene-expression-patterns-on-kidney-injury-across-species.html#variance-decomposition"><i class="fa fa-check"></i><b>7.2</b> Variance Decomposition</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 </ul>
@@ -148,7 +152,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
             <section class="normal" id="section-">
 <div id="t-sne-analysis" class="section level1">
-<h1><span class="header-section-number">2</span> t-SNE analysis</h1>
+<h1><span class="header-section-number">Chapter 2</span> t-SNE analysis</h1>
 <div id="dataset-human" class="section level2">
 <h2><span class="header-section-number">2.1</span> Dataset Human</h2>
 <p>Dataset Summary: total 163 columns rpkm data<br />
@@ -163,9 +167,9 @@ tbl<span class="op">$</span>time_point =<span class="st"> </span>Labels
 tbl <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> V1, <span class="dt">y =</span> V2, <span class="dt">label =</span> persons, <span class="dt">col =</span> time_point)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">geom_text</span>()</code></pre></div>
 <div class="figure"><span id="fig:human"></span>
-<img src="_main_files/figure-html/human-1.png" alt="**Similarity between samples and time points(backgroud deducted).**" width="672" />
+<img src="bookdown_files/figure-html/human-1.png" alt="**Similarity between samples and time points(backgroud deducted).**" width="672" />
 <p class="caption">
-Figure 2.1: <strong>Similarity between samples and time points(backgroud deducted).</strong>
+FIGURE 2.1: <strong>Similarity between samples and time points(backgroud deducted).</strong>
 </p>
 </div>
 <p>In figure <a href="t-sne-analysis.html#fig:human">2.1</a>: <strong>pre</strong> expression profile(<span class="math inline">\(log(FPKM + 1)\)</span>) was deducted from <strong>post</strong>, <strong>1 year</strong>, and <strong>3 months</strong>. And then the dimension reduction was done using <a href="https://lvdmaaten.github.io/tsne/">t-SNE</a> algorithm.<br />
@@ -173,7 +177,7 @@ The plot makes more sense now: later time points(<strong>3 months</strong>, <str
 </div>
 <div id="independent-t-sne-on-each-time-point" class="section level3">
 <h3><span class="header-section-number">2.1.2</span> Independent t-SNE on each time point</h3>
-<p>It looks like there is two cluster in <strong>POST</strong> sample.</p>
+<p>It looks like there is two clusters in <strong>POST</strong> sample.</p>
 <pre><code>## Read the 41 x 41 data matrix successfully!
 ## Using no_dims = 2, perplexity = 6.000000, and theta = 0.500000
 ## Computing input similarities...
@@ -182,11 +186,11 @@ The plot makes more sense now: later time points(<strong>3 months</strong>, <str
 ##  - point 0 of 41
 ## Done in 0.00 seconds (sparsity = 0.621059)!
 ## Learning embedding...
-## Iteration 50: error is 63.805382 (50 iterations in 0.01 seconds)
+## Iteration 50: error is 63.805382 (50 iterations in 0.00 seconds)
 ## Iteration 100: error is 68.058653 (50 iterations in 0.00 seconds)
 ## Iteration 150: error is 63.996707 (50 iterations in 0.01 seconds)
-## Iteration 200: error is 69.092029 (50 iterations in 0.01 seconds)
-## Iteration 250: error is 62.928042 (50 iterations in 0.00 seconds)
+## Iteration 200: error is 69.092029 (50 iterations in 0.00 seconds)
+## Iteration 250: error is 62.928042 (50 iterations in 0.01 seconds)
 ## Iteration 300: error is 1.955468 (50 iterations in 0.00 seconds)
 ## Iteration 350: error is 1.455246 (50 iterations in 0.00 seconds)
 ## Iteration 400: error is 1.291848 (50 iterations in 0.00 seconds)
@@ -198,44 +202,11 @@ The plot makes more sense now: later time points(<strong>3 months</strong>, <str
 ## Iteration 700: error is 0.669030 (50 iterations in 0.00 seconds)
 ## Iteration 750: error is 0.634407 (50 iterations in 0.00 seconds)
 ## Iteration 800: error is 0.624864 (50 iterations in 0.00 seconds)
-## Fitting performed in 0.08 seconds.</code></pre>
-<pre><code>## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
-## font family not found in Windows font database
-
-## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
-## font family not found in Windows font database
-
-## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
-## font family not found in Windows font database
-
-## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
-## font family not found in Windows font database
-
-## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
-## font family not found in Windows font database
-
-## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
-## font family not found in Windows font database
-
-## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
-## font family not found in Windows font database
-
-## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
-## font family not found in Windows font database
-
-## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
-## font family not found in Windows font database
-
-## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
-## font family not found in Windows font database</code></pre>
-<pre><code>## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x
-## $y, : font family not found in Windows font database</code></pre>
-<pre><code>## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
-## font family not found in Windows font database</code></pre>
+## Fitting performed in 0.07 seconds.</code></pre>
 <div class="figure"><span id="fig:human-post-only"></span>
-<img src="_main_files/figure-html/human-post-only-1.png" alt="**t-SNE on POST samples only**" width="672" />
+<img src="bookdown_files/figure-html/human-post-only-1.png" alt="**t-SNE on POST samples only**" width="672" />
 <p class="caption">
-Figure 2.2: <strong>t-SNE on POST samples only</strong>
+FIGURE 2.2: <strong>t-SNE on POST samples only</strong>
 </p>
 </div>
 <pre><code>## Read the 40 x 40 data matrix successfully!
@@ -249,8 +220,8 @@ Figure 2.2: <strong>t-SNE on POST samples only</strong>
 ## Iteration 50: error is 63.697473 (50 iterations in 0.00 seconds)
 ## Iteration 100: error is 63.009840 (50 iterations in 0.00 seconds)
 ## Iteration 150: error is 63.315584 (50 iterations in 0.01 seconds)
-## Iteration 200: error is 59.099152 (50 iterations in 0.00 seconds)
-## Iteration 250: error is 67.647811 (50 iterations in 0.01 seconds)
+## Iteration 200: error is 59.099152 (50 iterations in 0.01 seconds)
+## Iteration 250: error is 67.647811 (50 iterations in 0.00 seconds)
 ## Iteration 300: error is 2.173040 (50 iterations in 0.00 seconds)
 ## Iteration 350: error is 1.815526 (50 iterations in 0.00 seconds)
 ## Iteration 400: error is 1.165833 (50 iterations in 0.00 seconds)
@@ -259,47 +230,14 @@ Figure 2.2: <strong>t-SNE on POST samples only</strong>
 ## Iteration 550: error is 0.532175 (50 iterations in 0.00 seconds)
 ## Iteration 600: error is 0.472545 (50 iterations in 0.00 seconds)
 ## Iteration 650: error is 0.444015 (50 iterations in 0.00 seconds)
-## Iteration 700: error is 0.564632 (50 iterations in 0.00 seconds)
+## Iteration 700: error is 0.564632 (50 iterations in 0.01 seconds)
 ## Iteration 750: error is 0.527065 (50 iterations in 0.00 seconds)
 ## Iteration 800: error is 0.470169 (50 iterations in 0.00 seconds)
-## Fitting performed in 0.08 seconds.</code></pre>
-<pre><code>## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
-## font family not found in Windows font database
-
-## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
-## font family not found in Windows font database
-
-## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
-## font family not found in Windows font database
-
-## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
-## font family not found in Windows font database
-
-## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
-## font family not found in Windows font database
-
-## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
-## font family not found in Windows font database
-
-## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
-## font family not found in Windows font database
-
-## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
-## font family not found in Windows font database
-
-## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
-## font family not found in Windows font database
-
-## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
-## font family not found in Windows font database</code></pre>
-<pre><code>## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x
-## $y, : font family not found in Windows font database</code></pre>
-<pre><code>## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
-## font family not found in Windows font database</code></pre>
+## Fitting performed in 0.07 seconds.</code></pre>
 <div class="figure"><span id="fig:human-month-only"></span>
-<img src="_main_files/figure-html/human-month-only-1.png" alt="**t-SNE on 3 Month samples only**" width="672" />
+<img src="bookdown_files/figure-html/human-month-only-1.png" alt="**t-SNE on 3 Month samples only**" width="672" />
 <p class="caption">
-Figure 2.3: <strong>t-SNE on 3 Month samples only</strong>
+FIGURE 2.3: <strong>t-SNE on 3 Month samples only</strong>
 </p>
 </div>
 <pre><code>## Read the 38 x 38 data matrix successfully!
@@ -311,10 +249,10 @@ Figure 2.3: <strong>t-SNE on 3 Month samples only</strong>
 ## Done in 0.00 seconds (sparsity = 0.519391)!
 ## Learning embedding...
 ## Iteration 50: error is 68.873762 (50 iterations in 0.00 seconds)
-## Iteration 100: error is 71.104464 (50 iterations in 0.01 seconds)
+## Iteration 100: error is 71.104464 (50 iterations in 0.00 seconds)
 ## Iteration 150: error is 65.638997 (50 iterations in 0.00 seconds)
 ## Iteration 200: error is 62.558994 (50 iterations in 0.00 seconds)
-## Iteration 250: error is 67.570975 (50 iterations in 0.01 seconds)
+## Iteration 250: error is 67.570975 (50 iterations in 0.00 seconds)
 ## Iteration 300: error is 2.132609 (50 iterations in 0.00 seconds)
 ## Iteration 350: error is 1.492879 (50 iterations in 0.00 seconds)
 ## Iteration 400: error is 1.049527 (50 iterations in 0.00 seconds)
@@ -326,44 +264,11 @@ Figure 2.3: <strong>t-SNE on 3 Month samples only</strong>
 ## Iteration 700: error is 0.577414 (50 iterations in 0.00 seconds)
 ## Iteration 750: error is 0.551946 (50 iterations in 0.00 seconds)
 ## Iteration 800: error is 0.524491 (50 iterations in 0.00 seconds)
-## Fitting performed in 0.07 seconds.</code></pre>
-<pre><code>## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
-## font family not found in Windows font database
-
-## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
-## font family not found in Windows font database
-
-## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
-## font family not found in Windows font database
-
-## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
-## font family not found in Windows font database
-
-## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
-## font family not found in Windows font database
-
-## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
-## font family not found in Windows font database
-
-## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
-## font family not found in Windows font database
-
-## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
-## font family not found in Windows font database
-
-## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
-## font family not found in Windows font database
-
-## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
-## font family not found in Windows font database</code></pre>
-<pre><code>## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x
-## $y, : font family not found in Windows font database</code></pre>
-<pre><code>## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
-## font family not found in Windows font database</code></pre>
+## Fitting performed in 0.06 seconds.</code></pre>
 <div class="figure"><span id="fig:human-year-only"></span>
-<img src="_main_files/figure-html/human-year-only-1.png" alt="**t-SNE on 1 Year samples only**" width="672" />
+<img src="bookdown_files/figure-html/human-year-only-1.png" alt="**t-SNE on 1 Year samples only**" width="672" />
 <p class="caption">
-Figure 2.4: <strong>t-SNE on 1 Year samples only</strong>
+FIGURE 2.4: <strong>t-SNE on 1 Year samples only</strong>
 </p>
 </div>
 <pre><code>## Read the 78 x 50 data matrix successfully!
@@ -372,7 +277,7 @@ Figure 2.4: <strong>t-SNE on 1 Year samples only</strong>
 ## Normalizing input...
 ## Building tree...
 ##  - point 0 of 78
-## Done in 0.00 seconds (sparsity = 0.719921)!
+## Done in 0.01 seconds (sparsity = 0.719921)!
 ## Learning embedding...
 ## Iteration 50: error is 56.771105 (50 iterations in 0.01 seconds)
 ## Iteration 100: error is 56.812182 (50 iterations in 0.01 seconds)
@@ -390,44 +295,11 @@ Figure 2.4: <strong>t-SNE on 1 Year samples only</strong>
 ## Iteration 700: error is 0.404124 (50 iterations in 0.01 seconds)
 ## Iteration 750: error is 0.404819 (50 iterations in 0.01 seconds)
 ## Iteration 800: error is 0.399680 (50 iterations in 0.01 seconds)
-## Fitting performed in 0.20 seconds.</code></pre>
-<pre><code>## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
-## font family not found in Windows font database
-
-## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
-## font family not found in Windows font database
-
-## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
-## font family not found in Windows font database
-
-## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
-## font family not found in Windows font database
-
-## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
-## font family not found in Windows font database
-
-## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
-## font family not found in Windows font database
-
-## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
-## font family not found in Windows font database
-
-## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
-## font family not found in Windows font database
-
-## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
-## font family not found in Windows font database
-
-## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
-## font family not found in Windows font database</code></pre>
-<pre><code>## Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x
-## $y, : font family not found in Windows font database</code></pre>
-<pre><code>## Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
-## font family not found in Windows font database</code></pre>
+## Fitting performed in 0.19 seconds.</code></pre>
 <div class="figure"><span id="fig:human-year-month"></span>
-<img src="_main_files/figure-html/human-year-month-1.png" alt="**t-SNE on 1 Year and 3 month samples**" width="672" />
+<img src="bookdown_files/figure-html/human-year-month-1.png" alt="**t-SNE on 1 Year and 3 month samples**" width="672" />
 <p class="caption">
-Figure 2.5: <strong>t-SNE on 1 Year and 3 month samples</strong>
+FIGURE 2.5: <strong>t-SNE on 1 Year and 3 month samples</strong>
 </p>
 </div>
 <p>But there is no sub-cluster behavior on <strong>3 months</strong> and <strong>1 year</strong> samples, and the <em>two-cluster</em> pattern in <strong>POST</strong> does not persist.</p>
@@ -450,14 +322,14 @@ Figure 2.5: <strong>t-SNE on 1 Year and 3 month samples</strong>
 ## Iteration 250: error is 56.325644 (50 iterations in 0.01 seconds)
 ## Iteration 300: error is 1.607589 (50 iterations in 0.00 seconds)
 ## Iteration 350: error is 0.545783 (50 iterations in 0.00 seconds)
-## Iteration 400: error is 0.351512 (50 iterations in 0.01 seconds)
+## Iteration 400: error is 0.351512 (50 iterations in 0.00 seconds)
 ## Iteration 450: error is 0.204200 (50 iterations in 0.01 seconds)
 ## Iteration 500: error is 0.186298 (50 iterations in 0.00 seconds)
 ## Fitting performed in 0.06 seconds.</code></pre>
 <div class="figure"><span id="fig:mouse"></span>
-<img src="_main_files/figure-html/mouse-1.png" alt="Same t-SNE analysis for mouse data." width="672" />
+<img src="bookdown_files/figure-html/mouse-1.png" alt="Same t-SNE analysis for mouse data." width="672" />
 <p class="caption">
-Figure 2.6: Same t-SNE analysis for mouse data.
+FIGURE 2.6: Same t-SNE analysis for mouse data.
 </p>
 </div>
 <p>As shown in the Figure <a href="t-sne-analysis.html#fig:mouse">2.6</a>:</p>

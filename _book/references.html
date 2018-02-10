@@ -25,14 +25,14 @@
 <meta name="author" content="Bo Sun">
 
 
-<meta name="date" content="2018-01-02">
+<meta name="date" content="2018-02-09">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory.html">
+<link rel="prev" href="gene-expression-patterns-on-kidney-injury-across-species.html">
 
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -123,11 +123,15 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="5.2.2" data-path="homologs-reduction-of-de-gene-set.html"><a href="homologs-reduction-of-de-gene-set.html#take-iri2h-as-early-reponse-only"><i class="fa fa-check"></i><b>5.2.2</b> Take IRI2h as early reponse only</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory.html"><a href="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory.html"><i class="fa fa-check"></i><b>6</b> Heatmap Viewing of Informative Genes Used to Predict Sample Trajectory</a><ul>
-<li class="chapter" data-level="6.1" data-path="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory.html"><a href="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory.html#selecting-genes"><i class="fa fa-check"></i><b>6.1</b> Selecting genes</a></li>
-<li class="chapter" data-level="6.2" data-path="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory.html"><a href="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory.html#considering-the-absolute-distance-between-genes"><i class="fa fa-check"></i><b>6.2</b> Considering the absolute distance between genes</a></li>
-<li class="chapter" data-level="6.3" data-path="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory.html"><a href="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory.html#enhanced-heatmap-pay-more-attention-to-shape-of-the-curve."><i class="fa fa-check"></i><b>6.3</b> Enhanced heatmap: pay more attention to “shape” of the “curve”.</a></li>
-<li class="chapter" data-level="6.4" data-path="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory.html"><a href="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory.html#examine-certain-genes"><i class="fa fa-check"></i><b>6.4</b> Examine certain genes</a></li>
+<li class="chapter" data-level="6" data-path="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory-hm.html"><a href="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory-hm.html"><i class="fa fa-check"></i><b>6</b> Heatmap Viewing of Informative Genes Used to Predict Sample Trajectory (#hm)</a><ul>
+<li class="chapter" data-level="6.1" data-path="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory-hm.html"><a href="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory-hm.html#transform-rpkm-to-rpc"><i class="fa fa-check"></i><b>6.1</b> Transform RPKM to RPC</a></li>
+<li class="chapter" data-level="6.2" data-path="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory-hm.html"><a href="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory-hm.html#set-ordering-genes-and-reduce-demisionality"><i class="fa fa-check"></i><b>6.2</b> Set ordering genes and reduce demisionality</a></li>
+<li class="chapter" data-level="6.3" data-path="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory-hm.html"><a href="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory-hm.html#ordering-the-samples-in-pseudotimetime"><i class="fa fa-check"></i><b>6.3</b> Ordering the samples in pseudotime/time</a></li>
+<li class="chapter" data-level="6.4" data-path="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory-hm.html"><a href="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory-hm.html#heatmap-samples-ordered-by-pseudotime"><i class="fa fa-check"></i><b>6.4</b> heatmap, samples ordered by Pseudotime</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="gene-expression-patterns-on-kidney-injury-across-species.html"><a href="gene-expression-patterns-on-kidney-injury-across-species.html"><i class="fa fa-check"></i><b>7</b> Gene expression patterns on kidney injury across species</a><ul>
+<li class="chapter" data-level="7.1" data-path="gene-expression-patterns-on-kidney-injury-across-species.html"><a href="gene-expression-patterns-on-kidney-injury-across-species.html#species-dominate-the-clustering"><i class="fa fa-check"></i><b>7.1</b> Species Dominate the clustering</a></li>
+<li class="chapter" data-level="7.2" data-path="gene-expression-patterns-on-kidney-injury-across-species.html"><a href="gene-expression-patterns-on-kidney-injury-across-species.html#variance-decomposition"><i class="fa fa-check"></i><b>7.2</b> Variance Decomposition</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 </ul>
@@ -170,7 +174,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           </div>
         </div>
       </div>
-<a href="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="gene-expression-patterns-on-kidney-injury-across-species.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 
     </div>
   </div>

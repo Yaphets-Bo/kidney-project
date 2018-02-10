@@ -1,7 +1,7 @@
 # Gene expression patterns on kidney injury across species
 
-## Variance Decomposition
-```{r, include = F, warning = F, message = F}
+## Species Dominate the clustering
+```{r, include = F, warning = F, message = F, cache = T}
 library(data.table)
 library(stringr)
 library(Rtsne)
@@ -55,10 +55,77 @@ time_point <- str_replace(time_point, "^[a-zA-Z]*24h", "24h")
 tbl$time_point = time_point
 tbl$sample_type <- c(rep("human", 163), str_replace(tbl$metadata[164:212], "(4h|24h|14d|28d|6mN|12m|3m|15m|2h|48h|7d|9m|72h)", ""))
 ```
-```{r tSNE_on_2_species, fig.cap = 'A t-SNE clustering on mouse and human samples'}
+```{r tsneTwoSpecies, fig.cap = "A t-SNE clustering on mouse and human samples"}
 tbl %>% ggplot(aes(x = V1, y = V2)) +
   geom_point(aes(color = time_point, shape = sample_type)) + 
   scale_color_manual(values=c(brewer.pal(12, "Paired"), brewer.pal(3,"Set3")))
 ```
 
-Gene expression patterns tended to cluster more by species rather than pre/post injury or later-on time point(\@ref(tSNE_on_2_species)).
+Gene expression patterns tended to cluster more by species rather than pre/post injury or later-on time point(\@ref(fig:tsneTwoSpecies)).
+
+## Variance Decomposition
+```{r include = F, warning = F, message = F, cache = T}
+library(lme4)
+library(optimx)
+mouse <- fread("C:/Users/Ryan/Documents/variance decomposition/MOUSE_all.gene_RPKM.csv")
+human <- fread("C:/Users/Ryan/Documents/variance decomposition/HUMAN_all.gene_RPKM.CSV")
+
+homolog <- fread("C:/Users/Ryan/Documents/variance decomposition/mart_export.txt")
+homolog <- homolog[`Mouse gene stable ID` != ""]
+setnames(mouse, "V1", "GENE_ID")
+
+mouse[,GENE_ID := str_replace(mouse[,GENE_ID], '\\..*', "")]
+
+setnames(homolog, "Gene stable ID", "ensembl_gene_id")
+
+human <- human[ensembl_gene_id %in% unique(homolog[,ensembl_gene_id])]
+setcolorder(human,
+            c(names(human)[1:7],
+              names(human)[-(1:7)][order(names(human)[-(1:7)])])
+)
+setkey(human,external_gene_name)
+mouse[,symbol := str_to_upper(symbol)]
+setkey(mouse, symbol)
+INNER.join = human[mouse, nomatch = F]
+INNER.join <- unique(INNER.join, by = "ensembl_gene_id")
+
+
+
+mat <- INNER.join[, -c(1:7, 171,172)]
+mat <- mat[, -c(170:175, 179:181)] # get rid of NORM, keep SHAM since it corresbonds to pre
+mat <- mat[,names(mat)[is.na(str_match(names(mat), "IRI4h|IRI24h|IRI48h|IRI72h|IRI7d|IRI14d"))], with = F] # get rid of those
+genes.filtered <- INNER.join[, ensembl_gene_id][apply(mat[,1:163],1,max) >= .1]# | apply(mat[,164:185],1,max) >= .1]
+mat <- mat[apply(mat[,1:163],1,max) >= .1,]# | apply(mat[,164:185],1,max) >= .1),]
+mat <- log10(mat + 0.01) #used log10 (RPKM) to normalize the data and
+                        #a pseudocount of 0.01 to deal with zero expression values.
+human.vd <- mat[,1:163]
+time <- unname(sapply(colnames(human.vd), get_time_point))
+indiv <- substr(colnames(human.vd), 15, 16)
+var.explain <- matrix(, nrow = length(genes.filtered), ncol = 2)
+for(i in 1:length(genes.filtered)){
+  model.dat <- data.frame(geneExp = unname(unlist(human.vd[i,])), time = time, indiv = indiv)
+  mixed.lmer <- lmer(geneExp ~ (1|indiv) + (1|time), data = model.dat, REML = F,
+                     control = lmerControl(optimizer ='optimx', optCtrl=list(method='L-BFGS-B')))
+  var.explain[i,] <- (c(as.data.frame(VarCorr(mixed.lmer))$vcov[1], as.data.frame(VarCorr(mixed.lmer))$vcov[2]) / sum(as.data.frame(VarCorr(mixed.lmer))$vcov))
+}
+var.explain = as.data.frame(var.explain + 1e-6)
+percent <- function(x){
+  if(x[1] > 0.50){
+    return("time_dominant")
+  }else if(x[2] > 0.58){
+    return("indiv_dominant")
+  }else{
+    return("NULL")
+  }
+}
+
+var.explain$state = apply(var.explain, 1, percent)
+var.explain$gene_id <- genes.filtered
+colnames(var.explain) <- c("indiv.exp", "time_exp", "state", "ensembl_gene_id")
+write.table(var.explain, file = "VD_ML.txt", row.names = F, col.names = T, quote = F)
+```
+```{r vd, fig.cap = "Variance explained by individual or time point"}
+ggplot(var.explain, aes(x = time_exp, y = indiv.exp, col = state)) + geom_point()
+```
+
+`r '# References {-}'`

@@ -20,3 +20,5 @@ viridis
 pheatmap
 cowplot
 gplots
+lme4
+optimx

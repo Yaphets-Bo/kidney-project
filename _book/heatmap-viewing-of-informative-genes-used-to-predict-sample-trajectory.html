@@ -25,7 +25,7 @@
 <meta name="author" content="Bo Sun">
 
 
-<meta name="date" content="2018-01-02">
+<meta name="date" content="2018-02-09">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -33,7 +33,7 @@
   
   
 <link rel="prev" href="homologs-reduction-of-de-gene-set.html">
-<link rel="next" href="references.html">
+<link rel="next" href="gene-expression-patterns-on-kidney-injury-across-species.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -124,10 +124,14 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory.html"><a href="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory.html"><i class="fa fa-check"></i><b>6</b> Heatmap Viewing of Informative Genes Used to Predict Sample Trajectory</a><ul>
-<li class="chapter" data-level="6.1" data-path="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory.html"><a href="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory.html#selecting-genes"><i class="fa fa-check"></i><b>6.1</b> Selecting genes</a></li>
-<li class="chapter" data-level="6.2" data-path="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory.html"><a href="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory.html#considering-the-absolute-distance-between-genes"><i class="fa fa-check"></i><b>6.2</b> Considering the absolute distance between genes</a></li>
-<li class="chapter" data-level="6.3" data-path="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory.html"><a href="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory.html#enhanced-heatmap-pay-more-attention-to-shape-of-the-curve."><i class="fa fa-check"></i><b>6.3</b> Enhanced heatmap: pay more attention to “shape” of the “curve”.</a></li>
-<li class="chapter" data-level="6.4" data-path="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory.html"><a href="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory.html#examine-certain-genes"><i class="fa fa-check"></i><b>6.4</b> Examine certain genes</a></li>
+<li class="chapter" data-level="6.1" data-path="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory.html"><a href="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory.html#transform-rpkm-to-rpc"><i class="fa fa-check"></i><b>6.1</b> Transform RPKM to RPC</a></li>
+<li class="chapter" data-level="6.2" data-path="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory.html"><a href="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory.html#set-ordering-genes-and-reduce-demisionality"><i class="fa fa-check"></i><b>6.2</b> Set ordering genes and reduce demisionality</a></li>
+<li class="chapter" data-level="6.3" data-path="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory.html"><a href="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory.html#ordering-the-samples-in-pseudotimetime"><i class="fa fa-check"></i><b>6.3</b> Ordering the samples in pseudotime/time</a></li>
+<li class="chapter" data-level="6.4" data-path="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory.html"><a href="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory.html#heatmap-samples-ordered-by-pseudotime"><i class="fa fa-check"></i><b>6.4</b> heatmap, samples ordered by Pseudotime</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="gene-expression-patterns-on-kidney-injury-across-species.html"><a href="gene-expression-patterns-on-kidney-injury-across-species.html"><i class="fa fa-check"></i><b>7</b> Gene expression patterns on kidney injury across species</a><ul>
+<li class="chapter" data-level="7.1" data-path="gene-expression-patterns-on-kidney-injury-across-species.html"><a href="gene-expression-patterns-on-kidney-injury-across-species.html#species-dominate-the-clustering"><i class="fa fa-check"></i><b>7.1</b> Species Dominate the clustering</a></li>
+<li class="chapter" data-level="7.2" data-path="gene-expression-patterns-on-kidney-injury-across-species.html"><a href="gene-expression-patterns-on-kidney-injury-across-species.html#variance-decomposition"><i class="fa fa-check"></i><b>7.2</b> Variance Decomposition</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 </ul>
@@ -149,88 +153,98 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
             <section class="normal" id="section-">
 <div id="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory" class="section level1">
 <h1><span class="header-section-number">6</span> Heatmap Viewing of Informative Genes Used to Predict Sample Trajectory</h1>
-<div id="selecting-genes" class="section level2">
-<h2><span class="header-section-number">6.1</span> Selecting genes</h2>
+<div id="transform-rpkm-to-rpc" class="section level2">
+<h2><span class="header-section-number">6.1</span> Transform RPKM to RPC</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">human &lt;-<span class="st"> </span><span class="kw">newCellDataSet</span>(<span class="kw">as.matrix</span>(expr),
+                        <span class="dt">phenoData =</span> pd,
+                        <span class="dt">featureData =</span> fd,
+                        <span class="dt">lowerDetectionLimit =</span> <span class="fl">0.1</span>,
+                        <span class="dt">expressionFamily =</span> <span class="kw">tobit</span>(<span class="dt">Lower =</span> <span class="fl">0.1</span>))
+
+rpc_matrix &lt;-<span class="st"> </span><span class="kw">relative2abs</span>(human, <span class="dt">method =</span> <span class="st">&quot;num_genes&quot;</span>)
+
+human &lt;-<span class="st"> </span><span class="kw">newCellDataSet</span>(<span class="kw">as</span>(<span class="kw">as.matrix</span>(rpc_matrix), <span class="st">&quot;sparseMatrix&quot;</span>),
+                        <span class="dt">phenoData =</span> pd,
+                        <span class="dt">featureData =</span> fd,
+                        <span class="dt">lowerDetectionLimit =</span> <span class="fl">0.5</span>,
+                        <span class="dt">expressionFamily =</span> <span class="kw">negbinomial.size</span>())
+human &lt;-<span class="st"> </span><span class="kw">estimateSizeFactors</span>(human)
+human &lt;-<span class="st"> </span><span class="kw">estimateDispersions</span>(human)</code></pre></div>
+<pre><code>## Warning: Deprecated, use tibble::rownames_to_column() instead.</code></pre>
+<pre><code>## Removing 77 outliers</code></pre>
+<p>expr(RPKMS), phenoData(samples) and featureData(genes) are pre-processed in the back end, from the original RPKM file. And then transform RPKM data to mRNA counts data(RPC = RNA per cell), which make the use of negative binomial distribution possible and thence claimed more suitable for this Monocle 2 software.</p>
+<div class="rmdcaution">
+<p>
+The transformation was done by an algorithm called <em>Census</em>. And you can find the whole documentation here at <a href="http://cole-trapnell-lab.github.io/monocle-release/docs/#converting-tpm-fpkm-values-into-mrna-counts-alternative">Monocle 2</a>.
+</p>
+</div>
+</div>
+<div id="set-ordering-genes-and-reduce-demisionality" class="section level2">
+<h2><span class="header-section-number">6.2</span> Set ordering genes and reduce demisionality</h2>
+<blockquote>
+<p>&quot; Monocle looks for genes that vary in “interesting” (i.e. not just noisy) ways, and uses these to structure the data.&quot;</p>
+<p>— Monocle Mannual</p>
+</blockquote>
+<p>This is the <em>feature selection</em> step in the Monocle’s machine learning algorithm for this job, which has major impact of the shape of the trajectory to be constructed<span class="citation">(Trapnell <a href="#ref-R-monocle">2017</a>)</span>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">human &lt;-<span class="st"> </span><span class="kw">detectGenes</span>(human, <span class="dt">min_expr =</span> <span class="fl">0.1</span>)
 expressed.gene &lt;-<span class="st"> </span><span class="kw">row.names</span>(<span class="kw">subset</span>(<span class="kw">fData</span>(human), num_cells_expressed <span class="op">&gt;=</span><span class="st"> </span><span class="dv">35</span>))
 diff_test_res &lt;-<span class="st"> </span><span class="kw">differentialGeneTest</span>(human[expressed.gene,],
-                                      <span class="dt">fullModelFormulaStr =</span> <span class="st">&quot;~time&quot;</span>, <span class="dt">cores =</span> <span class="dv">2</span>)
-ordering_genes &lt;-<span class="st"> </span><span class="kw">row.names</span> (<span class="kw">subset</span>(diff_test_res, qval <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.05</span>))</code></pre></div>
-<p>Selecting genes that express in at least 35 samples with a detection threshold $RPKM &gt;= 0.1, considering our sample size: 42 post samples and 41 pre samples.</p>
-<blockquote>
-<p>191 genes pass the multiple testing correction with <span class="math inline">\(Q-value &lt; 0.05\)</span></p>
-</blockquote>
-<div class="figure"><span id="fig:t2"></span>
-<img src="_main_files/figure-html/t2-1.png" alt="Dispersion v.s. Expression of genes used in the prediction" width="672" />
-<p class="caption">
-Figure 6.1: Dispersion v.s. Expression of genes used in the prediction
-</p>
+                                      <span class="dt">fullModelFormulaStr =</span> <span class="st">&quot;~time + person&quot;</span>, <span class="dt">cores =</span> <span class="dv">2</span>)
+ordering_genes &lt;-<span class="st"> </span><span class="kw">row.names</span> (<span class="kw">subset</span>(diff_test_res, qval <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.000001</span>))
+human &lt;-<span class="st"> </span><span class="kw">setOrderingFilter</span>(human, ordering_genes)
+<span class="kw">plot_ordering_genes</span>(human)</code></pre></div>
+<p><img src="_main_files/figure-html/rpc_de-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">human &lt;-<span class="st"> </span><span class="kw">reduceDimension</span>(human, <span class="dt">max_components =</span> <span class="dv">2</span>,
+                         <span class="dt">method =</span> <span class="st">&#39;tSNE&#39;</span>)
+human &lt;-<span class="st"> </span><span class="kw">orderCells</span>(human,<span class="dt">reverse =</span> T)</code></pre></div>
+<p>The gene selection algorithm a machine learning algorithm inside monocle 2, and the model ~time + person means the gene expression was modeled as a linear function of time point and person(individual difference), then due to the variability of the human dataset, tens of genes tend to be varied on different time point and individual.</p>
+<p>Therefore I tried to decrease the number of genes entering in the heatmap by very stringent q-value cut-off(&lt;1e-6).</p>
+<p>157 of 12518 de genes pass the q-value cut-off and are used to plot the heat map. (from a total of 22047 genes that are defined express “interestingly” as described in Section <a href="quality-control.html#gf">3.1</a>).</p>
 </div>
-<p>Plots genes by mean vs. dispersion, highlighting those selected for ordering. Dispersion was estimated by first transform RPKM to RPC through Monocle 2.<br />
-Size factors help us normalize for differences in mRNA recovered across cells, and “dispersion” values will help us perform differential expression analysis later<span class="citation">(Trapnell <a href="#ref-R-monocle">2017</a>)</span>.</p>
+<div id="ordering-the-samples-in-pseudotimetime" class="section level2">
+<h2><span class="header-section-number">6.3</span> Ordering the samples in pseudotime/time</h2>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot_cell_trajectory</span>(human, <span class="dt">color_by =</span> <span class="st">&quot;time&quot;</span>)</code></pre></div>
-<div class="figure"><span id="fig:trajectory-by-time"></span>
-<img src="_main_files/figure-html/trajectory-by-time-1.png" alt="post/pre Samples along the path predicted based on Pseudo-time" width="672" />
+<div class="figure">
+<img src="_main_files/figure-html/rpc_time-1.png" alt="Sample trajectory colored by real time points" width="672" />
 <p class="caption">
-Figure 6.2: post/pre Samples along the path predicted based on Pseudo-time
+(#fig:rpc_time)Sample trajectory colored by real time points
+</p>
+</div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot_cell_trajectory</span>(human, <span class="dt">color_by =</span> <span class="st">&quot;Pseudotime&quot;</span>)</code></pre></div>
+<div class="figure">
+<img src="_main_files/figure-html/rpc_pseudotime-1.png" alt="Same trajectory colored by Pseudotime" width="672" />
+<p class="caption">
+(#fig:rpc_pseudotime)Same trajectory colored by Pseudotime
 </p>
 </div>
 </div>
-<div id="considering-the-absolute-distance-between-genes" class="section level2">
-<h2><span class="header-section-number">6.2</span> Considering the absolute distance between genes</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">pheatmap</span>(
+<div id="heatmap-samples-ordered-by-pseudotime" class="section level2">
+<h2><span class="header-section-number">6.4</span> heatmap, samples ordered by Pseudotime</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ordering.expr &lt;-<span class="st"> </span>rpc_matrix[ordering_genes,<span class="kw">grep</span>(<span class="st">&quot;post&quot;</span>,<span class="kw">rownames</span>(<span class="kw">pData</span>(human)))][,<span class="kw">order</span>(<span class="kw">pData</span>(human)[<span class="kw">grep</span>(<span class="st">&quot;post&quot;</span>,<span class="kw">rownames</span>(<span class="kw">pData</span>(human))),]<span class="op">$</span>Pseu)]
+ordering.expr &lt;-<span class="st"> </span><span class="kw">log</span>(ordering.expr <span class="op">+</span><span class="st"> </span><span class="dv">1</span>)
+
+
+<span class="kw">pheatmap</span>(
   <span class="dt">mat               =</span> ordering.expr,
   <span class="dt">scale             =</span> <span class="st">&quot;row&quot;</span>,
   <span class="dt">color             =</span> <span class="kw">brewer.pal</span>(<span class="dv">4</span>, <span class="st">&quot;Set3&quot;</span>),
   <span class="dt">border_color      =</span> <span class="ot">NA</span>,
   <span class="dt">show_colnames     =</span> <span class="ot">FALSE</span>,
   <span class="dt">show_rownames     =</span> T,
-  <span class="dt">annotation_col    =</span> col_ann,
-  <span class="dt">annotation_colors =</span> color_ann,
+  <span class="co">#annotation_col    = col_ann,</span>
+  <span class="co">#annotation_colors = color_ann,</span>
   <span class="dt">cluster_cols      =</span> <span class="ot">FALSE</span>,
   <span class="dt">drop_levels       =</span> <span class="ot">TRUE</span>,
   <span class="dt">fontsize          =</span> <span class="dv">14</span>,
-  <span class="dt">main              =</span> <span class="st">&quot;Scaled log-expression Ordering by Pseudo-time&quot;</span>
+  <span class="dt">main              =</span> <span class="st">&quot;Scaled log-rpc heatmap, POST sample ordered by Pseudotime&quot;</span>
 )</code></pre></div>
-<div class="figure"><span id="fig:heatmap"></span>
-<img src="_main_files/figure-html/heatmap-1.png" alt="The heatmap viewing of the informative genes used in Pseudo-time trajectory prediction" width="672" />
+<div class="figure">
+<img src="_main_files/figure-html/good_hm-1.png" alt="columns ordered by rank(Pseudotime)" width="672" />
 <p class="caption">
-Figure 6.3: The heatmap viewing of the informative genes used in Pseudo-time trajectory prediction
+(#fig:good_hm)columns ordered by rank(Pseudotime)
 </p>
 </div>
-<p>This gives us a visual verification of the reliability/effectiveness of the Pseudo-time prediction. It indicates a good separation of the expression of these 191 informative genes over pre/post samples. And it gives us a visual sense of those genes that cause the only 3 mis-placed post samples, which will definitely be the focus of the following studies.</p>
-</div>
-<div id="enhanced-heatmap-pay-more-attention-to-shape-of-the-curve." class="section level2">
-<h2><span class="header-section-number">6.3</span> Enhanced heatmap: pay more attention to “shape” of the “curve”.</h2>
-<p>Since the distance is calculated using <strong>Euclidean distance</strong>, the heatmap in previous section focuses on only the “absolute distance” between points(gene expression is modeled as points in high-dimensional space).<br />
-In this section, another popular approach in plotting heatmap was implemented, I learned this from <a href="http://www.ark-genomics.org/events-online-training/heatmaps-r">ARK-Genomics website</a>. Using Pearson’s Correlation as distance measure, we achieved clustering on “shape” of the “curve”(gene expression profiling over time.)</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">hc &lt;-<span class="st"> </span><span class="kw">hclust</span>(<span class="kw">as.dist</span>(<span class="dv">1</span><span class="op">-</span><span class="kw">cor</span>(<span class="kw">t</span>(ordering.expr))), <span class="dt">method =</span> <span class="st">&quot;average&quot;</span>)
 
-<span class="kw">heatmap.2</span>(ordering.expr,
-  <span class="dt">Rowv  =</span> <span class="kw">as.dendrogram</span>(hc),
-  <span class="dt">Colv  =</span> <span class="ot">NULL</span>,
-  <span class="dt">col   =</span> <span class="kw">brewer.pal</span>(<span class="dv">5</span>, <span class="st">&quot;Set3&quot;</span>),
-  <span class="dt">scale =</span> <span class="st">&quot;row&quot;</span>,
-  <span class="dt">dendrogram =</span> <span class="st">&quot;row&quot;</span>
-)</code></pre></div>
-<div class="figure"><span id="fig:enhanced-heatmap"></span>
-<img src="_main_files/figure-html/enhanced-heatmap-1.png" alt="Distance measure: 1 - correlation" width="672" />
-<p class="caption">
-Figure 6.4: Distance measure: 1 - correlation
-</p>
-</div>
-<p>Again, different measures have their own focus and drawbacks, the effectiveness requires further subsequent examinations.</p>
-</div>
-<div id="examine-certain-genes" class="section level2">
-<h2><span class="header-section-number">6.4</span> Examine certain genes</h2>
-<p>You can examine certain genes of interest using this function I wrapped for you as following, only basic R &amp; RStdio operation required. * First, open a new R workspace(R empty project in RStdio) since you don’t want to mess up your other works. * Second, load the RData I provide for you. And then examine genes by EnsemblID by calling function <strong>visual_profile</strong> as shown before.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#setwd(&quot;...&quot;), or you can simply open up a empty project and copy the RData into that directory</span>
-<span class="co">#load(&quot;heatmap.RData&quot;)   # I comment these two lines since I already have them, you need to load it though</span>
-<span class="kw">visual_profile</span>(<span class="kw">c</span>(<span class="st">&quot;ENSG00000277639&quot;</span>, <span class="st">&quot;ENSG00000277452&quot;</span>, <span class="st">&quot;ENSG00000004799&quot;</span>))</code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
-<blockquote>
-<p>NOTE: the rownames(gene name on the side of the plot) of these two heatmaps are different. The first heatmap<a href="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory.html#fig:heatmap">6.3</a> corresponds to file <strong>heatmap_genes_pre-popst_euclidean.txt</strong>, and the first gene in the file is the top one in this heatmap. The second heatmap<a href="heatmap-viewing-of-informative-genes-used-to-predict-sample-trajectory.html#fig:enhanced-heatmap">6.4</a> corresponds to file <strong>heatmap_genes_pre-popst_cor.txt</strong>, and and the first gene in the file is the bottom one in this heatmap. }</p>
-</blockquote>
 </div>
 </div>
 <h3>References</h3>
@@ -245,7 +259,7 @@ Figure 6.4: Distance measure: 1 - correlation
         </div>
       </div>
 <a href="homologs-reduction-of-de-gene-set.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="gene-expression-patterns-on-kidney-injury-across-species.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
